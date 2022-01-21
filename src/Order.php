@@ -2,7 +2,7 @@
 
 namespace GingerPluginSdk;
 
-use GingerPluginSdk\Properties\IdTrait\IdTrait;
+use GingerPluginSdk\Properties\IdTrait;
 
 class Order
 {

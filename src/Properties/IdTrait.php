@@ -1,6 +1,6 @@
 <?php
 
-namespace GingerPluginSdk\Properties\IdTrait;
+namespace GingerPluginSdk\Properties;
 
 trait IdTrait
 {
