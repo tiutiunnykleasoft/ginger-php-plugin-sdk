@@ -1,7 +1,6 @@
 {
   "name": "gingerplugins/ginger-plugin-sdk",
   "description": "Extra layer for ginger-php library to use in plugin development.",
-  "type": "library",
   "license": "MIT",
   "authors": [
     {
