@@ -9,6 +9,7 @@ class ClientOptions
     public function setEndpoint(string $string)
     {
         $this->endpoint = $string;
+        return $this;
     }
 
     public bool $useBundle;
@@ -16,6 +17,7 @@ class ClientOptions
     public function setUseBundle(bool $use)
     {
         $this->useBundle = $use;
+        return $this;
     }
 
     public string $apiKey;
@@ -23,5 +25,6 @@ class ClientOptions
     public function setApiKey(string $key)
     {
         $this->apiKey = $key;
+        return $this;
     }
 }
