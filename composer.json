@@ -8,9 +8,12 @@
       "email": "alexander.tutunnik@leasoft.org"
     }
   ],
+  "require": {
+    "gingerpayments/ginger-php": "^2.1"
+  },
   "autoload": {
     "psr-4": {
-      "GingerPluginSdk\\": "src/"
+      "GingerPluginSdk\\": "src"
     }
   }
 }

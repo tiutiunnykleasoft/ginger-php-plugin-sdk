@@ -2,11 +2,11 @@
 
 namespace GingerPluginSdk;
 
-use GingerPluginSdk\Properties\IdTrait;
+use GingerPluginSdk\Helpers\orderHelperTrait;
 
 class Order
 {
-    use IdTrait;
+    use orderHelperTrait;
 
     private $merchant_order_id;
 
@@ -18,5 +18,17 @@ class Order
     public function getMerchantOrderId(): string
     {
         return $this->merchant_order_id;
+    }
+
+    private $amount;
+
+    public function setAmount($amount)
+    {
+        $this->amount = $this->calculateValueInCents($amount);
+    }
+
+    public function getAmount()
+    {
+        return $this->amount;
     }
 }
