@@ -4,6 +4,7 @@ namespace GingerPluginSdk\Entities;
 
 use Exception;
 use GingerPluginSdk\Exceptions\OutOfEnumException;
+use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\HelperTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
@@ -12,6 +13,7 @@ class Line implements MultiFieldsEntityInterface
 {
     use HelperTrait;
     use MultiFieldsEntityTrait;
+    use FieldsValidatorTrait;
 
     /**
      * 'name' => $product->getLabel(),

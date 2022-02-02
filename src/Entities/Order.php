@@ -4,6 +4,7 @@ namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Collections\AbstractCollection;
 use GingerPluginSdk\Exceptions\LackOfRequiredFieldsException;
+use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\HelperTrait;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
@@ -13,6 +14,7 @@ class Order implements MultiFieldsEntityInterface
 {
     use HelperTrait;
     use MultiFieldsEntityTrait;
+    use FieldsValidatorTrait;
 
     private string $merchant_order_id;
     private int $amount;
@@ -28,8 +30,8 @@ class Order implements MultiFieldsEntityInterface
     {
         $this->fields = [
             "amount" => true,             // Amount in cents
-            "transactions" => true,       // Transactions Array
-            "webhook_url" => true,        // Webhook URL
+            "transactions" => false,       // Transactions Array
+            "webhook_url" => false,        // Webhook URL
             "customer" => true,           // Customer information
             'currency' => false,          // Currency
             'merchant_order_id' => false, // Merchant Order Id
@@ -64,7 +66,6 @@ class Order implements MultiFieldsEntityInterface
 
     public function setExtra(Extra $extra): Order
     {
-        $this->extra->checkRequiredFields();
         $this->extra = $extra;
         return $this;
     }

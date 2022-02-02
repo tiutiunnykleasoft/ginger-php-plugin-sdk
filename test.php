@@ -48,7 +48,7 @@ $phone_numbers->add('0951018201');
 $customer->setPhoneNumbers($phone_numbers);
 $customer->setAddress($address);
 
-$order_builder->createEmptyOrder()
+$order = $order_builder->createEmptyOrder()
     ->setAmount(15)
     ->setDescription('test')
     ->setExtra($extra)
@@ -57,5 +57,5 @@ $order_builder->createEmptyOrder()
     ->setCustomer($customer);
 
 
-$result = $order_builder->getOrder()->toArray();
+$result = $order->toArray();
 print_r($result);

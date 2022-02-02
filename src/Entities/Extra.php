@@ -2,11 +2,13 @@
 
 namespace GingerPluginSdk\Entities;
 
+use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 
 class Extra implements MultiFieldsEntityInterface
 {
+    use FieldsValidatorTrait;
     use MultiFieldsEntityTrait {
         toArray as private defaultToArray;
     }

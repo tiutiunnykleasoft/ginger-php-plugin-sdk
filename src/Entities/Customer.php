@@ -30,6 +30,7 @@ class Customer implements MultiFieldsEntityInterface
     private BaseField|null $ip_address = null;
     private BaseField|null $gender = null;
     private BaseField|null $birthdate = null;
+    private BaseField|null $address_line;
 
     public function __construct()
     {
@@ -361,19 +362,33 @@ class Customer implements MultiFieldsEntityInterface
     }
 
     /**
+     * @TODO: The last 4 methods is not proofed, just a mock. Take a look!
      * @param \GingerPluginSdk\Entities\Address $address
-     * @throws \GingerPluginSdk\Exceptions\LackOfRequiredFieldsException
      */
-    public function setAddress(Address $address): void
+    public function setAddress(Address $address): static
     {
-        $this->address = $address->getAddress() ?? "";
-        $this->address_type = $address->getAddressType();
+        $this->address = $address;
+        return $this;
     }
 
-    /** ------------------------------------------------------------------------- */
+    public function setAddressLine(): static
+    {
+        $this->address_line = new class extends BaseField {
+            public function __construct()
+            {
+                parent::__construct('address_line');
+            }
+        };
+        $this->address_line->set($this->address->generateAddress());
+        return $this;
+    }
 
+    #[Pure] public function getAddressLine()
+    {
+        return $this->address_line->get();
+    }
 
-    public function getAddress(): ?string
+    #[Pure] public function getAddress(): Address
     {
         return $this->address;
     }
