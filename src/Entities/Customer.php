@@ -20,7 +20,7 @@ class Customer
         private ?string $locale = null,
         private ?string $ip_address = null,
         private ?string $gender = null,
-        private ?string $birthdate = null,
+        private ?DateOfBirth $birthdate = null,
         private ?string $address_line = null,
     ) {
         $this->address = $this->address ?? new Address();
