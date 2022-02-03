@@ -15,12 +15,13 @@ $options = (new ClientOptions())->setEndpoint('api.online.emspay.eu')->setUseBun
 $client = new Client($options);
 $order_builder = $client->getOrderBuilder();
 
-$extra = new Extra();
-$extra->setPlatformName('shopware')
-    ->setPlatformVersion('6')
-    ->setPluginName('ems-shopware-6')
-    ->setPluginVersion('1.1')
-    ->setAdditionalField('sw_order_id', '5001');
+$extra = new Extra(
+    platform_name: 'shopware',
+    platform_version: '6',
+    plugin_name: 'ems-shopware-6',
+    plugin_version: '1.1',
+    additional_fields: ['sw_order_id' => '5001']
+);
 
 $product_line = new Line();
 $product_line->setAmount(50.12)
@@ -40,14 +41,7 @@ $address->setHousenumber(10);
 $address->setPostalCode('NL 1234');
 $address->setAddress();
 
-$customer = new Customer();
-
-$phone_numbers = new AbstractCollection("");
-$phone_numbers->add('0951018201');
-
-$customer->setPhoneNumbers($phone_numbers);
-$customer->setAddress($address);
-
+$customer = new Customer(phone_numbers: ['0951018201'], address: $address);
 $order = $order_builder->createEmptyOrder()
     ->setAmount(15)
     ->setDescription('test')
