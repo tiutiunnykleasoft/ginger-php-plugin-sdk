@@ -2,18 +2,10 @@
 
 namespace GingerPluginSdk\Entities;
 
-use GingerPluginSdk\Helpers\FieldsValidatorTrait;
-use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
-use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use JetBrains\PhpStorm\Pure;
 
-class Customer implements MultiFieldsEntityInterface
+class Customer
 {
-    use MultiFieldsEntityTrait;
-    use FieldsValidatorTrait;
-
-    private array $fields;
-
     public function __construct(
         private ?Address $address = null,
         private array $phone_numbers = [],
@@ -32,22 +24,6 @@ class Customer implements MultiFieldsEntityInterface
         private ?string $address_line = null,
     ) {
         $this->address = $this->address ?? new Address();
-        $this->fields = [
-            "merchant_customer_id" => false,
-            "email_address" => false,
-            "first_name" => false,
-            "last_name" => false,
-            "address_type" => false,
-            "address" => false,
-            "postal_code" => false,
-            "housenumber" => false,
-            "country" => false,
-            "locale" => false,
-            "phone_numbers" => false,
-            "ip_address" => false,
-            "gender" => false,
-            "birthdate" => false
-        ];
     }
 
     /** -------------------------------- Reworked ------------------------------- */
@@ -133,4 +109,27 @@ class Customer implements MultiFieldsEntityInterface
         return $this->address;
     }
 
+    /**
+     * @return array<string, string|int>
+     */
+    public function toArray(): array
+    {
+        return array_filter([
+            'address' => $this->address,
+            'phone_numbers' => $this->phone_numbers,
+            'merchant_customer_id' => $this->merchant_customer_id,
+            'email_address' => $this->email_address,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'address_type' => $this->address_type,
+            'postal_code' => $this->postal_code,
+            'housenumber' => $this->housenumber,
+            'country' => $this->country,
+            'locale' => $this->locale,
+            'ip_address' => $this->ip_address,
+            'gender' => $this->gender,
+            'birthdate' => $this->birthdate,
+            'address_line' => $this->address_line,
+        ], fn($value) => $value !== null);
+    }
 }
