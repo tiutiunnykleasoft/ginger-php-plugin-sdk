@@ -2,12 +2,9 @@
 
 namespace GingerPluginSdk\Entities;
 
-use GingerPluginSdk\Bases\BaseField;
-use GingerPluginSdk\Collections\AbstractCollection;
 use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
-use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
 use JetBrains\PhpStorm\Pure;
 
 class Customer implements MultiFieldsEntityInterface
@@ -54,97 +51,61 @@ class Customer implements MultiFieldsEntityInterface
     }
 
     /** -------------------------------- Reworked ------------------------------- */
-    /**
-     * @return string|null
-     */
     #[Pure] public function getFirstName(): ?string
     {
         return $this->first_name;
     }
 
-    /**
-     * @return string|null
-     */
     #[Pure] public function getLastName(): ?string
     {
         return $this->last_name;
     }
 
-    /**
-     * @return string|null
-     */
     #[Pure] public function getEmailAddress(): ?string
     {
         return $this->email_address;
     }
 
-    /**
-     * @return string|null
-     */
     #[Pure] public function getCountry(): ?string
     {
         return $this->country;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAddressType(): ?string
     {
         return $this->address_type;
     }
 
-    /**
-     * @return string
-     */
-    #[Pure] public function getBirthdate(): string
+    #[Pure] public function getBirthdate(): ?string
     {
         return $this->birthdate;
     }
 
-    /**
-     * @return string|null
-     */
     public function getHousenumber(): ?string
     {
         return $this->housenumber;
     }
 
-    /**
-     * @return string
-     */
-    #[Pure] public function getGender(): string
+    #[Pure] public function getGender(): ?string
     {
         return $this->gender;
     }
 
-    /**
-     * @return string|null
-     */
     #[Pure] public function getLocale(): ?string
     {
         return $this->locale;
     }
 
-    /**
-     * @return string
-     */
-    #[Pure] public function getIpAddress(): string
+    #[Pure] public function getIpAddress(): ?string
     {
         return $this->ip_address;
     }
 
-    /**
-     * @return string|null
-     */
     #[Pure] public function getMerchantCustomerId(): ?string
     {
         return $this->merchant_customer_id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPostalCode(): ?string
     {
         return $this->postal_code;
@@ -162,7 +123,7 @@ class Customer implements MultiFieldsEntityInterface
      * @TODO: The last 4 methods is not proofed, just a mock. Take a look!
      * @param \GingerPluginSdk\Entities\Address $address
      */
-    #[Pure] public function getAddressLine()
+    #[Pure] public function getAddressLine(): ?string
     {
         return $this->address_line;
     }
