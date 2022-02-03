@@ -2,7 +2,6 @@
 
 namespace GingerPluginSdk\Helpers;
 
-use GingerPluginSdk\Exceptions\LackOfRequiredFieldsException;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 
 trait MultiFieldsEntityTrait
