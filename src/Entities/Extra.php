@@ -4,7 +4,6 @@ namespace GingerPluginSdk\Entities;
 
 class Extra
 {
-
     public function __construct(
         private ?string $platform_name = null,
         private ?string $platform_version = null,
@@ -28,30 +27,5 @@ class Extra
             'additional_fields' => $this->additional_fields,
             'fields' => $this->fields,
         ];
-    }
-
-    public function getUserAgent(): string
-    {
-        return $this->user_agent;
-    }
-
-    public function getPlatformName(): string
-    {
-        return $this->platform_name;
-    }
-
-    public function getPlatformVersion(): string
-    {
-        return $this->platform_version;
-    }
-
-    public function getPluginName(): string
-    {
-        return $this->plugin_name;
-    }
-
-    public function getPluginVersion(): string
-    {
-        return $this->plugin_version;
     }
 }
