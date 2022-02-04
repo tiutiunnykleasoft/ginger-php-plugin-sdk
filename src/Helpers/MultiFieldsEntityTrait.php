@@ -2,6 +2,7 @@
 
 namespace GingerPluginSdk\Helpers;
 
+use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 
 trait MultiFieldsEntityTrait
@@ -11,27 +12,12 @@ trait MultiFieldsEntityTrait
         return $this->$fieldName ?? null;
     }
 
-    /**
-     * @throws \GingerPluginSdk\Exceptions\LackOfRequiredFieldsException
-     * @TODO: ROLLBACK!!!!!
-     */
-
     public function toArray(): array
     {
-        $this->validateRequiredFields();
         $response = [];
-        foreach ($this->fields as $field => $required) {
-            $requested_field = $this->getField($field);
-
-            if ($requested_field instanceof MultiFieldsEntityInterface) {
-                $requested_field = $requested_field->toArray();
-                $response[$field] = $requested_field;
-            } else {
-                if ($field instanceof \stdClass) {
-                    $response[$field] = $requested_field?->get();
-                } else {
-                    $response[$field] = $requested_field;
-                }
+        foreach (get_object_vars($this) as $var) {
+            if ($var instanceof BaseField) {
+                $response[$var->getPropertyName()] = $var->get();
             }
         }
         return array_filter($response);

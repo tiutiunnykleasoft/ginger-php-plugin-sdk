@@ -15,19 +15,19 @@ abstract class BaseField
         $this->property_name = $property_name;
     }
 
-    public function set($value): static
+    final public function set($value): BaseField
     {
+        if ($this instanceof ValidateFieldsInterface) $this->validate($value);
         $this->value = $value;
-        if ($this instanceof ValidateFieldsInterface) $this->validate();
         return $this;
     }
 
-    public function get()
+    final public function get()
     {
         return $this->value;
     }
 
-    public function getPropertyName(): string
+    final public function getPropertyName(): string
     {
         return $this->property_name;
     }

@@ -24,12 +24,10 @@ trait FieldsValidatorTrait
     /**
      * @throws \GingerPluginSdk\Exceptions\OutOfEnumException
      */
-    public function validateEnum()
+    public function validateEnum($value)
     {
         /** @var \GingerPluginSdk\Bases\BaseField $this */
-        $value = $this->get();
         if (!in_array($value, $this->enum)) {
-            $this->set(null);
             throw new OutOfEnumException($this->getPropertyName(), $value, json_encode($this->enum));
         }
     }
@@ -37,10 +35,9 @@ trait FieldsValidatorTrait
     /**
      * @throws \GingerPluginSdk\Exceptions\OutOfPatternException
      */
-    public function validatePattern($pattern, $valid)
+    public function validatePattern($value, $pattern, $valid)
     {
         /** @var \GingerPluginSdk\Bases\BaseField $this */
-        $value = $this->get();
         if (!preg_match($pattern, $value)) {
             throw new OutOfPatternException($this->getPropertyName(), $valid);
         }

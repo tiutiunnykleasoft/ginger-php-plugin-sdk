@@ -4,5 +4,5 @@ namespace GingerPluginSdk\Interfaces;
 
 interface ValidateFieldsInterface
 {
-    public function validate();
+    public function validate($value);
 }
