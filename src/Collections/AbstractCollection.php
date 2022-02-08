@@ -12,9 +12,9 @@ class AbstractCollection implements MultiFieldsEntityInterface
 
     /**
      * @template T
-     * @var T $classname
+     * @var class-string T $classname
      */
-    public function __construct(mixed $classObj)
+    public function __construct(mixed $class_string)
     {
     }
 
@@ -40,6 +40,12 @@ class AbstractCollection implements MultiFieldsEntityInterface
     public function getField($fieldName): mixed
     {
         return $this->items[$fieldName] ?? "";
+    }
+
+    public function remove($index): static
+    {
+        unset($this->items[$index]);
+        return $this;
     }
 
     public function toArray(): array

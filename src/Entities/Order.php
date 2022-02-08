@@ -26,20 +26,11 @@ class Order implements MultiFieldsEntityInterface
     private AbstractCollection $order_lines;
     private Customer $customer;
 
-    public function __construct()
+    public function __construct(
+        private Transactions $transactions
+    )
     {
-        $this->fields = [
-            "amount" => true,             // Amount in cents
-            "transactions" => false,       // Transactions Array
-            "webhook_url" => false,        // Webhook URL
-            "customer" => true,           // Customer information
-            'currency' => false,          // Currency
-            'merchant_order_id' => false, // Merchant Order Id
-            'description' => false,       // Description
-            'order_lines' => false,       // Order Lines
-            'return_url' => false,        // Return URL
-            'extra' => false,             // Extra information
-        ];
+        $this->transactions = $transactions;
     }
 
     public function setCustomer(Customer $customer): static

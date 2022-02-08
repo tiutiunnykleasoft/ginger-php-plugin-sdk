@@ -8,7 +8,7 @@ use JetBrains\PhpStorm\Pure;
 
 trait SingleFieldTrait
 {
-    public function createSimpleField($property_name, $value): BaseField
+    protected function createSimpleField($property_name, $value): BaseField
     {
         $new_class = new class($property_name) extends BaseField {
             #[Pure] public function __construct($property_name)
@@ -20,7 +20,7 @@ trait SingleFieldTrait
         return $new_class;
     }
 
-    public function createEnumeratedField($property_name, $value, $enum): ValidateFieldsInterface|BaseField
+    protected function createEnumeratedField($property_name, $value, $enum): ValidateFieldsInterface|BaseField
     {
         $new_class = new class($property_name, $enum, $value) extends BaseField implements ValidateFieldsInterface {
             use FieldsValidatorTrait;

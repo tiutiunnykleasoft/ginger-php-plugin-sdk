@@ -10,6 +10,10 @@ use GingerPluginSdk\Entities\Country;
 use GingerPluginSdk\Entities\Customer;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Entities\Line;
+use GingerPluginSdk\Entities\Order;
+use GingerPluginSdk\Entities\PaymentMethodDetails;
+use GingerPluginSdk\Entities\Transaction;
+use GingerPluginSdk\Entities\Transactions;
 
 require_once "ClientOptions.php";
 require_once "Client.php";
@@ -17,6 +21,33 @@ require_once "Client.php";
 $options = (new ClientOptions())->setEndpoint('api.online.emspay.eu')->setUseBundle(false)->setApiKey("164694cda13340e4b4f61a56ad9f0613");
 $client = new Client($options);
 $order_builder = $client->getOrderBuilder();
+
+
+$transactions = new Transactions(
+    new Transaction(
+        payment_method: 'ideal',
+        payment_method_details: new PaymentMethodDetails(
+            issuer_id: "15"
+        )
+    )
+);
+print_r($transactions->toArray());
+exit;
+$order = new Order(
+    transactions: new Transactions(
+        item: new Transaction(
+            payment_method: 'ideal'
+        )
+    )
+);
+print_r($order->toArray());
+exit;
+
+$transaction = new Transaction(
+    payment_method: 'ideal'
+);
+print_r($transaction->toArray());
+exit;
 
 $address = new Address(
     address_type: 'customer',
@@ -28,7 +59,6 @@ $address = new Address(
     )
 );
 $address->setHousenumber("30");
-
 
 
 $extra = new Extra(
