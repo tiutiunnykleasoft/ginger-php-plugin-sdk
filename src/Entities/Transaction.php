@@ -15,6 +15,7 @@ final class Transaction implements MultiFieldsEntityInterface
     use MultiFieldsEntityTrait;
     use SingleFieldTrait;
 
+    protected string $property_name = '';
     private BaseField $payment_method;
     private MultiFieldsEntityInterface $payment_method_details;
 

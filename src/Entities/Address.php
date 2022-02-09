@@ -22,22 +22,22 @@ final class Address implements MultiFieldsEntityInterface
     private BaseField $street;
     private BaseField $address;
     private BaseField|null $housenumber = null;
-    private array $fields;
-    private array $acceptable_types;
-
+    private string $property_name = 'address';
     /**
      * @param string $address_type
      * @param string $postal_code
      * @param string $street
      * @param string $city
      * @param \GingerPluginSdk\Entities\Country $country
+     * @param string|null $property_name
      */
     public function __construct(
         string  $address_type,
         string  $postal_code,
         string  $street,
         string  $city,
-        Country $country
+        Country $country,
+        string $property_name = null
     )
     {
         $this->address_type = $this->createEnumeratedField(
@@ -65,6 +65,8 @@ final class Address implements MultiFieldsEntityInterface
             property_name: 'address',
             value: $this->generateAddress()
         );
+
+        if ($property_name) $this->property_name = $property_name;
     }
 
     #[Pure] public function getAddressType(): BaseField

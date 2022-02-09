@@ -11,7 +11,7 @@ class Country extends BaseField implements ValidateFieldsInterface
 {
     use FieldsValidatorTrait;
 
-    #[Pure] public function __construct($value)
+    public function __construct($value)
     {
         parent::__construct("country");
         $this->set($value);

@@ -13,6 +13,12 @@ trait MultiFieldsEntityTrait
         return $this->$fieldName ?? null;
     }
 
+
+    public function getPropertyName(): string
+    {
+        return $this->property_name ?: false;
+    }
+
     public function toArray(): array
     {
         $response = [];
@@ -20,9 +26,10 @@ trait MultiFieldsEntityTrait
             if ($var instanceof BaseField) {
                 $response[$var->getPropertyName()] = $var->get();
             } elseif ($var instanceof MultiFieldsEntityInterface) {
-                $response[$var->getField('property_name')] = $var->toArray();
+                $response[$var->getPropertyName()] = $var->toArray();
             }
         }
+
         return array_filter($response);
     }
 }

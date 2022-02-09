@@ -15,6 +15,9 @@ class PaymentMethodDetails implements MultiFieldsEntityInterface
     private string $property_name = 'payment_method_details';
     private BaseField|null $issuer_id = null;
 
+    /**
+     * @param string ...$attributes
+     */
     public function __construct(string ...$attributes)
     {
         foreach ($attributes as $title => $value) {

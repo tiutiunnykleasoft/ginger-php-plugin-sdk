@@ -2,47 +2,62 @@
 
 namespace GingerPluginSdk\Entities;
 
+use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Collections\AbstractCollection;
 use GingerPluginSdk\Exceptions\LackOfRequiredFieldsException;
 use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\HelperTrait;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
+use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
+use JetBrains\PhpStorm\Pure;
 
 class Order implements MultiFieldsEntityInterface
 {
     use HelperTrait;
     use MultiFieldsEntityTrait;
     use FieldsValidatorTrait;
+    use SingleFieldTrait;
 
-    private string $merchant_order_id;
-    private int $amount;
+
     private string $description;
     private array $fields;
     private string $webhook_url;
     private string $return_url;
     private Extra $extra;
     private AbstractCollection $order_lines;
-    private Customer $customer;
+
+    /** -------------------------------- Reworked ------------------------------- */
+    private string $property_name = 'order';
+    private BaseField|null $merchant_order_id;
+    private BaseField $amount;
+
 
     public function __construct(
-        private Transactions $transactions
+        int                  $amount,
+        private Transactions $transactions,
+        private Customer     $customer
     )
     {
-        $this->transactions = $transactions;
+        $this->amount = $this->createSimpleField(
+            property_name: 'amount',
+            value: $this->calculateValueInCents($amount)
+        );
     }
 
-    public function setCustomer(Customer $customer): static
-    {
-        $this->customer = $customer;
-        return $this;
-    }
-
-    public function getCustomer(): Customer
+    #[Pure] public function getCustomer(): Customer
     {
         return $this->customer;
     }
+
+    #[Pure] public function getAmount(): int
+    {
+        return $this->amount->get();
+    }
+
+    /** ------------------------------------------------------------------------- */
+
 
     public function setOrderLines($lines): Order
     {
@@ -97,18 +112,6 @@ class Order implements MultiFieldsEntityInterface
     public function getMerchantOrderId(): string
     {
         return $this->merchant_order_id;
-    }
-
-
-    public function setAmount(int $amount): Order
-    {
-        $this->amount = $this->calculateValueInCents($amount);
-        return $this;
-    }
-
-    public function getAmount(): int|bool
-    {
-        return $this->amount ?? false;
     }
 
     public function setDescription(string $description): Order

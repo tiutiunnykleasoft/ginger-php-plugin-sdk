@@ -8,10 +8,12 @@ use GingerPluginSdk\Collections\AbstractCollection;
 use GingerPluginSdk\Entities\Address;
 use GingerPluginSdk\Entities\Country;
 use GingerPluginSdk\Entities\Customer;
+use GingerPluginSdk\Entities\Email;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Entities\Line;
 use GingerPluginSdk\Entities\Order;
 use GingerPluginSdk\Entities\PaymentMethodDetails;
+use GingerPluginSdk\Entities\PhoneNumbers;
 use GingerPluginSdk\Entities\Transaction;
 use GingerPluginSdk\Entities\Transactions;
 
@@ -22,22 +24,39 @@ $options = (new ClientOptions())->setEndpoint('api.online.emspay.eu')->setUseBun
 $client = new Client($options);
 $order_builder = $client->getOrderBuilder();
 
-
-$transactions = new Transactions(
-    new Transaction(
-        payment_method: 'ideal',
-        payment_method_details: new PaymentMethodDetails(
-            issuer_id: "15"
-        )
-    )
-);
-print_r($transactions->toArray());
-exit;
 $order = new Order(
+    amount: 500,
     transactions: new Transactions(
-        item: new Transaction(
-            payment_method: 'ideal'
+        new Transaction(
+            payment_method: 'ideal',
+            payment_method_details: new PaymentMethodDetails(
+                issuer_id: "15"
+            )
         )
+    ),
+    customer: new Customer(
+        address_object: new Address(
+            address_type: 'customer',
+            postal_code: '12345',
+            street: 'Soborna',
+            city: 'Poltava',
+            country: new Country(
+                'UA'
+            ),
+            property_name: 'additional_address'
+        ),
+        first_name: 'Alexander',
+        last_name: 'Tiutiunnyk',
+        email_address: new Email(
+            'tutunikssa@gmail.com'
+        ),
+        gender: 'male',
+        phone_numbers: new PhoneNumbers(
+            '0951018201'
+        ),
+        merchant_customer_id: '15',
+        birthdate: '1999-09-01',
+        locale: 'NL_nl'
     )
 );
 print_r($order->toArray());

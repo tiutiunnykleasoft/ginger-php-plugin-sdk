@@ -3,27 +3,89 @@
 This library is custom developed for Ginger API, based on schemas from API. <br>
 Should be used with payment plugins or for order creation. <br>
 
-## Available functionality :
+# Available functionality :
+
 - Creation Order entity with all related entities.
 - Post the new order to Ginger API.
 
-## Overview : 
+# Overview :
 
-## Entities Overview
-    - Transactions
-      - Transaction
-        - Payment Method 
-        - [Payment Method Details](#payment-method-details)
-    - Description
-    - Amount
-    - Customer
-      - DateOfBirth
-      - Address
-        - Country 
-    - Order Lines
-      - Line
-    - Extra 
-    - Client
+# Entities Overview
+
+- [Transactions](#transactions)
+    - Transaction
+        - Payment Method
+            - [Payment Method Details](#payment-method-details)
+- Description
+- Amount
+- Customer
+    - DateOfBirth
+    - Address
+        - Country
+- Order Lines
+    - Line
+- Extra
+- Client
+
+## Transactions
+
+<i>This entity contains several single transactions, basically no more than 1 transaction.</i>
+
+- To initialize new object :
+
+```
+$transactions = new Transactions(
+    new Transaction(...)
+);
+```
+
+- To add new transaction :
+
+```
+$transactions->addTransaction($transaction);
+```
+
+- To remove transaction by index :
+
+```
+$transactions->removeTransaction($index);
+```
+
+### Transaction
+
+<i>This entity contains general payment information. You should use this entity to tell the API how to process your
+request.</i>
+
+- To initialize new object :
+
+```
+$transaction = new Transaction(
+    payment_method: "apple-pay"
+);
+```
+
+- To add Payment Method Details there is two ways :
+    - While initializing
+  ```
+  $transaction = new Transaction(
+    payment_method: "ideal",
+    payment_method_details: new PaymentMethodDetails(...)
+  );  
+    ```
+  - Through std object exemplar, in way of expanding its properties (for now only with prepared for payment methods).
+  ```
+  $transaction->getPaymentMethodDetails()->setPaymentMethodDetailsIdeal();
+  ```
+
+- To receive a Payment Method Details :
+
+```
+$transaction->getPaymentMethodDetails();
+```
+
+### Payment Method
+
+<i>This field should be used to store payment name.</i>
 
 #### Payment Method Details
 
