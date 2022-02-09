@@ -33,7 +33,7 @@ Should be used with payment plugins or for order creation. <br>
 
 - To initialize new object :
 
-```
+```php
 $transactions = new Transactions(
     new Transaction(...)
 );
@@ -41,13 +41,13 @@ $transactions = new Transactions(
 
 - To add new transaction :
 
-```
+```php
 $transactions->addTransaction($transaction);
 ```
 
 - To remove transaction by index :
 
-```
+```php
 $transactions->removeTransaction($index);
 ```
 
@@ -58,7 +58,7 @@ request.</i>
 
 - To initialize new object :
 
-```
+```php
 $transaction = new Transaction(
     payment_method: "apple-pay"
 );
@@ -66,20 +66,20 @@ $transaction = new Transaction(
 
 - To add Payment Method Details there is two ways :
     - While initializing
-  ```
+  ```php
   $transaction = new Transaction(
     payment_method: "ideal",
     payment_method_details: new PaymentMethodDetails(...)
   );  
     ```
   - Through std object exemplar, in way of expanding its properties (for now only with prepared for payment methods).
-  ```
+  ```php
   $transaction->getPaymentMethodDetails()->setPaymentMethodDetailsIdeal();
   ```
 
 - To receive a Payment Method Details :
 
-```
+```php
 $transaction->getPaymentMethodDetails();
 ```
 
