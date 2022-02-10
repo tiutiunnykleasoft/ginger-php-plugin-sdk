@@ -4,12 +4,14 @@ namespace GingerPluginSdk;
 
 use Ginger\ApiClient;
 use Ginger\Ginger;
-use GingerPluginSdk\ClientOptions;
-use GingerPluginSdk\OrderBuilder;
+use GingerPluginSdk\Helpers\OrderBuilderTrait;
+use GingerPluginSdk\Properties\ClientOptions;
 
 class Client
 {
-    private ApiClient $api_client;
+    use OrderBuilderTrait;
+
+    protected ApiClient $api_client;
 
     public function __construct(ClientOptions $options)
     {
@@ -41,10 +43,5 @@ class Client
                     CURLOPT_CAINFO => self::getCaCertPath()
                 ] : []
         );
-    }
-    
-    public function getOrderBuilder(): \GingerPluginSdk\OrderBuilder
-    {
-        return new OrderBuilder();
     }
 }

@@ -4,27 +4,16 @@ namespace GingerPluginSdk\Properties;
 
 class ClientOptions
 {
-    public string $endpoint;
-
-    public function setEndpoint(string $string)
+    /**
+     * @param string $endpoint
+     * @param bool $useBundle
+     * @param string $apiKey
+     */
+    public function __construct(
+        public string $endpoint,
+        public bool   $useBundle,
+        public string $apiKey
+    )
     {
-        $this->endpoint = $string;
-        return $this;
-    }
-
-    public bool $useBundle;
-
-    public function setUseBundle(bool $use)
-    {
-        $this->useBundle = $use;
-        return $this;
-    }
-
-    public string $apiKey;
-
-    public function setApiKey(string $key)
-    {
-        $this->apiKey = $key;
-        return $this;
     }
 }

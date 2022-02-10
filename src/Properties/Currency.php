@@ -1,6 +1,6 @@
 <?php
 
-namespace GingerPluginSdk\Entities;
+namespace GingerPluginSdk\Properties;
 
 use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Exceptions\OutOfEnumException;

@@ -8,6 +8,7 @@ use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Bases\BaseField;
+use GingerPluginSdk\Properties\Country;
 use JetBrains\PhpStorm\Pure;
 
 final class Address implements MultiFieldsEntityInterface
@@ -23,12 +24,13 @@ final class Address implements MultiFieldsEntityInterface
     private BaseField $address;
     private BaseField|null $housenumber = null;
     private string $property_name = 'address';
+
     /**
      * @param string $address_type
      * @param string $postal_code
      * @param string $street
      * @param string $city
-     * @param \GingerPluginSdk\Entities\Country $country
+     * @param Country $country
      * @param string|null $property_name
      */
     public function __construct(

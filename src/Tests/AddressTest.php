@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace GingerPluginSdk\Tests;
 
-use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Entities\Address;
-use GingerPluginSdk\Entities\Country;
+use GingerPluginSdk\Properties\Country;
 use GingerPluginSdk\Exceptions\OutOfEnumException;
 use GingerPluginSdk\Exceptions\OutOfPatternException;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
