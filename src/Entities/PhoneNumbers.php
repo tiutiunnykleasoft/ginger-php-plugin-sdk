@@ -6,7 +6,7 @@ use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Collections\AbstractCollection;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 
-class PhoneNumbers extends AbstractCollection
+final class PhoneNumbers extends AbstractCollection
 {
     use SingleFieldTrait;
 

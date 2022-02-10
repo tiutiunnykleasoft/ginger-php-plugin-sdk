@@ -7,11 +7,13 @@ use GingerPluginSdk\ClientOptions;
 use GingerPluginSdk\Collections\AbstractCollection;
 use GingerPluginSdk\Entities\Address;
 use GingerPluginSdk\Entities\Country;
+use GingerPluginSdk\Entities\Currency;
 use GingerPluginSdk\Entities\Customer;
 use GingerPluginSdk\Entities\Email;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Entities\Line;
 use GingerPluginSdk\Entities\Order;
+use GingerPluginSdk\Entities\OrderLines;
 use GingerPluginSdk\Entities\PaymentMethodDetails;
 use GingerPluginSdk\Entities\PhoneNumbers;
 use GingerPluginSdk\Entities\Transaction;
@@ -25,6 +27,7 @@ $client = new Client($options);
 $order_builder = $client->getOrderBuilder();
 
 $order = new Order(
+    currency: new Currency('UA'),
     amount: 500,
     transactions: new Transactions(
         new Transaction(
@@ -57,7 +60,21 @@ $order = new Order(
         merchant_customer_id: '15',
         birthdate: '1999-09-01',
         locale: 'NL_nl'
-    )
+    ),
+    order_lines: new OrderLines(
+        new Line(
+            type: 'physical',
+            merchant_order_line_id: "5",
+            name: 'Milk',
+            quantity: 1,
+            amount: 1.00,
+            vat_percentage: 50,
+            currency: new Currency(
+                'EUR'
+            )
+        )
+    ),
+    description: 'Test Product'
 );
 print_r($order->toArray());
 exit;

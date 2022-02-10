@@ -6,7 +6,7 @@ use GingerPluginSdk\Interfaces\AbstractCollectionContainerInterface;
 use GingerPluginSdk\Collections\AbstractCollection;
 use JetBrains\PhpStorm\Pure;
 
-class Transactions extends AbstractCollection implements AbstractCollectionContainerInterface
+final class Transactions extends AbstractCollection implements AbstractCollectionContainerInterface
 {
     public function __construct(Transaction $item)
     {

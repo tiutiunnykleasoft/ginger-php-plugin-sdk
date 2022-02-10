@@ -2,7 +2,6 @@
 
 namespace GingerPluginSdk\Entities;
 
-
 use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Exceptions\OutOfPatternException;
 use GingerPluginSdk\Interfaces\ValidateFieldsInterface;

@@ -7,7 +7,7 @@ use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 
-class PaymentMethodDetails implements MultiFieldsEntityInterface
+final class PaymentMethodDetails implements MultiFieldsEntityInterface
 {
     use MultiFieldsEntityTrait;
     use SingleFieldTrait;

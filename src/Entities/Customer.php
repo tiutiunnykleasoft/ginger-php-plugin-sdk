@@ -2,19 +2,14 @@
 
 namespace GingerPluginSdk\Entities;
 
-use Cassandra\Date;
 use GingerPluginSdk\Bases\BaseField;
-use GingerPluginSdk\Collections\AbstractCollection;
-use GingerPluginSdk\Entities\Email;
 use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
-use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
 use JetBrains\PhpStorm\Pure;
-use phpDocumentor\Reflection\Types\This;
 
-class Customer implements MultiFieldsEntityInterface
+final class Customer implements MultiFieldsEntityInterface
 {
     use MultiFieldsEntityTrait;
     use FieldsValidatorTrait;
@@ -51,9 +46,8 @@ class Customer implements MultiFieldsEntityInterface
      * @param string $gender
      * @param \GingerPluginSdk\Entities\PhoneNumbers|null $phone_numbers
      * @param string|null $merchant_customer_id
-     * @param \GingerPluginSdk\Entities\DateOfBirth|null $birthdate
+     * @param string|null $birthdate
      * @param string|null $locale
-     * @param string|null $ip_address
      */
     public function __construct(
         private Address $address_object,
@@ -84,10 +78,6 @@ class Customer implements MultiFieldsEntityInterface
             ->setBirthdate($birthdate)
             ->setLocale($locale)
             ->setIpAddress();
-//        $this->country = $this->address_object->getCountry();
-//        $this->postal_code = $this->address_object->getPostalCode();
-//        $this->address_type = $this->address_object->getAddressType();
-//        $this->address = $this->address_object->getAddressLine();
     }
 
 
@@ -137,26 +127,26 @@ class Customer implements MultiFieldsEntityInterface
         return $this->merchant_customer_id->get();
     }
 
-    #[Pure] public function getPhoneNumbers(): array
+    public function getPhoneNumbers(): array
     {
         return $this->phone_numbers->toArray();
     }
 
     /**
-     * @param string $date
+     * @param string|null $date
      * @return $this
      */
-    public function setBirthdate(?string $date): static
+    public function setBirthdate(?string $date): Customer
     {
         $this->birthdate = $date ? new DateOfBirth($date) : null;
         return $this;
     }
 
     /**
-     * @param string $locale
+     * @param string|null $locale
      * @return $this
      */
-    public function setLocale(?string $locale): static
+    public function setLocale(?string $locale): Customer
     {
         $this->locale = $this->createSimpleField(
             property_name: 'locale',
@@ -168,7 +158,7 @@ class Customer implements MultiFieldsEntityInterface
     /**
      * @return $this
      */
-    public function setIpAddress(): static
+    public function setIpAddress(): Customer
     {
         $this->ip_address = $this->createSimpleField(
             property_name: "ip_address",
@@ -181,7 +171,7 @@ class Customer implements MultiFieldsEntityInterface
      * @param string|null $id
      * @return $this
      */
-    public function setMerchantCustomerId(?string $id): static
+    public function setMerchantCustomerId(?string $id): Customer
     {
         $this->merchant_customer_id = $this->createSimpleField(
             property_name: 'merchant_customer_id',
@@ -194,7 +184,7 @@ class Customer implements MultiFieldsEntityInterface
      * @param \GingerPluginSdk\Entities\PhoneNumbers $phone_numbers
      * @return \GingerPluginSdk\Entities\Customer
      */
-    public function setPhoneNumbers(PhoneNumbers $phone_numbers): static
+    public function setPhoneNumbers(PhoneNumbers $phone_numbers): Customer
     {
         $this->phone_numbers = $phone_numbers;
         return $this;
