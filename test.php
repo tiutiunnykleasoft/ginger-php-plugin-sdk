@@ -24,7 +24,7 @@ $client = new Client(
     new ClientOptions(
         endpoint: 'https://api.online.emspay.eu',
         useBundle: false,
-        apiKey: ""
+        apiKey: "c1bf3378b1b04b8bae900d91c6992369"
     ));
 
 $order = new Order(
@@ -78,6 +78,13 @@ $order = new Order(
     description: 'Test Product',
     extra: new Extra(
         ['sw_order_id' => 501]
+    ),
+    client: new \GingerPluginSdk\Entities\Client(
+        user_agent: $_SERVER['HTTP_USER_AGENT'],
+        platform_name: 'docker',
+        platform_version: '1',
+        plugin_name: 'ginger-plugin-sdk',
+        plugin_version: '1.0.0'
     )
 );
 

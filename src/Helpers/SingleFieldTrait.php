@@ -9,6 +9,11 @@ use JetBrains\PhpStorm\Pure;
 
 trait SingleFieldTrait
 {
+    /**
+     * @param $property_name - This attribute will be used while parsing in toArray method as key
+     * @param $value - This attribute will be used while parsing in toArray method as value
+     * @return \GingerPluginSdk\Bases\BaseField
+     */
     protected function createSimpleField($property_name, $value): BaseField
     {
         $new_class = new class($property_name) extends BaseField {

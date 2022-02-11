@@ -83,8 +83,6 @@ final class Customer implements MultiFieldsEntityInterface
             ->setIpAddress();
     }
 
-
-    /** -------------------------------- Reworked ------------------------------- */
     #[Pure] public function getFirstName(): string
     {
         return $this->first_name->get();
@@ -184,8 +182,8 @@ final class Customer implements MultiFieldsEntityInterface
     }
 
     /**
-     * @param \GingerPluginSdk\Entities\PhoneNumbers $phone_numbers
-     * @return \GingerPluginSdk\Entities\Customer
+     * @param PhoneNumbers $phone_numbers
+     * @return Customer
      */
     public function setPhoneNumbers(PhoneNumbers $phone_numbers): Customer
     {

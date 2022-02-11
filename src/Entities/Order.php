@@ -25,6 +25,7 @@ class Order implements MultiFieldsEntityInterface
     private BaseField $return_url;
     private BaseField $description;
     private ?Extra $extra;
+    private ?Client $client;
 
 
     public function __construct(
@@ -37,7 +38,8 @@ class Order implements MultiFieldsEntityInterface
         ?string              $webhook_url = null,
         ?string              $merchant_order_id = null,
         ?string              $description = null,
-        ?Extra               $extra = null
+        ?Extra               $extra = null,
+        ?Client              $client = null
     )
     {
         $this->amount = $this->createSimpleField(
@@ -48,7 +50,13 @@ class Order implements MultiFieldsEntityInterface
             ->setMerchantOrderId($merchant_order_id)
             ->setReturnUrl($return_url)
             ->setDescription($description)
-            ->setExtra($extra);
+            ->setExtra($extra)
+            ->setClient($client);
+    }
+
+    public function getClient(): array
+    {
+        return $this->client?->toArray();
     }
 
     public function getCustomer(): array
@@ -63,7 +71,7 @@ class Order implements MultiFieldsEntityInterface
 
     public function getOrderLines(): ?OrderLines
     {
-        return $this->order_lines->get();
+        return $this->order_lines?->get();
     }
 
     #[Pure] public function getReturnUrl(): string
@@ -83,12 +91,18 @@ class Order implements MultiFieldsEntityInterface
 
     #[Pure] public function getExtra(): array
     {
-        return $this->extra->toArray();
+        return $this->extra?->toArray();
     }
 
     #[Pure] public function getDescription(): string
     {
         return $this->description->get();
+    }
+
+    public function setClient(?Client $client): Order
+    {
+        $this->client = $client;
+        return $this;
     }
 
     /**
