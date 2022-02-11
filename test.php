@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use GingerPluginSdk\Client;
+use GingerPluginSdk\Entities\AdditionalAddresses;
 use GingerPluginSdk\Entities\Address;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Properties\ClientOptions;
@@ -24,7 +25,7 @@ $client = new Client(
     new ClientOptions(
         endpoint: 'https://api.online.emspay.eu',
         useBundle: false,
-        apiKey: "c1bf3378b1b04b8bae900d91c6992369"
+        apiKey: ""
     ));
 
 $order = new Order(
@@ -39,15 +40,16 @@ $order = new Order(
         )
     ),
     customer: new Customer(
-        address_object: new Address(
-            address_type: 'customer',
-            postal_code: '12345',
-            street: 'Soborna',
-            city: 'Poltava',
-            country: new Country(
-                'UA'
-            ),
-            property_name: 'additional_address'
+        additional_addresses: new AdditionalAddresses(
+            new Address(
+                address_type: 'customer',
+                postal_code: '12345',
+                street: 'Soborna',
+                city: 'Poltava',
+                country: new Country(
+                    'UA'
+                )
+            )
         ),
         first_name: 'Alexander',
         last_name: 'Tiutiunnyk',
@@ -89,7 +91,8 @@ $order = new Order(
 );
 
 try {
-    $response = $client->setOrder($order)->sendOrder();
+    $client->setOrder($order);
+    $response = $client->sendOrder();
 } catch (Exception $e) {
     print_r($e);
 }

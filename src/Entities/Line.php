@@ -29,15 +29,15 @@ final class Line implements MultiFieldsEntityInterface
     private BaseField $url;
 
     /**
-     * @param string $type
-     * @param string $merchant_order_line_id
-     * @param string $name
+     * @param string $type - Type: physical, discount, shipping_fee, sales_tax, digital, gift_card, store_credit or surcharge
+     * @param string $merchant_order_line_id - Merchant's internal order line identifier
+     * @param string $name - Name, usually a short description
      * @param int $quantity
-     * @param float $amount
-     * @param int $vat_percentage
+     * @param float $amount - Amount for a single item (including VAT) in cents
+     * @param int $vat_percentage - Percentage of tax rate, will be multiplied by 100 and provided as an integer. i.e. 17.50% would be sent as 1750
      * @param Currency|null $currency
-     * @param int|null $discount_rate
-     * @param string|null $url
+     * @param int|null $discount_rate - Percentage of discount, will be multiplied by 100 and provided as an integer. i.e. 11.57% would be sent as 1157
+     * @param string|null $url - Item product page URI
      */
     public function __construct(
         string            $type,

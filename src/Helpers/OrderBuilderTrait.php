@@ -20,10 +20,22 @@ trait OrderBuilderTrait
     /**
      * @throws \Exception
      */
+    public function debugOrder()
+    {
+        if (!isset($this->order)) {
+            throw  new \Exception("Firstly execute the `setOrder` method, to debug the order");
+        }
+        print_r($this->order->toArray());
+        die(200);
+    }
+
+    /**
+     * @throws \Exception
+     */
     #[ArrayShape(['status' => "bool", 'body' => "array"])] public function sendOrder(): array
     {
         if (!isset($this->order)) {
-            throw  new \Exception("Firstly execute `setOrder` method, to save order");
+            throw  new \Exception("Firstly execute the `setOrder` method, to save the order");
         }
         try {
             $success_response = $this->api_client->createOrder($this->order->toArray());

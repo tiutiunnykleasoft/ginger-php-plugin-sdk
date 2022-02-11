@@ -30,7 +30,7 @@ final class Address implements MultiFieldsEntityInterface
      * @param string $postal_code
      * @param string $street
      * @param string $city
-     * @param Country $country
+     * @param Country $country - ISO 3166-1 alpha-2 country code
      * @param string|null $property_name
      */
     public function __construct(
@@ -39,7 +39,7 @@ final class Address implements MultiFieldsEntityInterface
         string  $street,
         string  $city,
         Country $country,
-        string $property_name = null
+        string  $property_name = null
     )
     {
         $this->address_type = $this->createEnumeratedField(
@@ -69,6 +69,12 @@ final class Address implements MultiFieldsEntityInterface
         );
 
         if ($property_name) $this->property_name = $property_name;
+    }
+
+    public function setPropertyName($name): Address
+    {
+        $this->property_name = $name;
+        return $this;
     }
 
     #[Pure] public function getAddressType(): BaseField

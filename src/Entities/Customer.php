@@ -36,32 +36,33 @@ final class Customer implements MultiFieldsEntityInterface
     private PhoneNumbers|null $phone_numbers = null;
     private BaseField|null $merchant_customer_id = null;
     private BaseField|null $locale = null;
+    /** @var BaseField|null - Customer's IP address */
     private BaseField|null $ip_address = null;
 
     private DateOfBirth|null $birthdate = null;
 
 
     /**
-     * @param Address $address_object
+     * @param AdditionalAddresses $additional_addresses
      * @param string $first_name
      * @param string $last_name
      * @param Email $email_address
-     * @param string $gender
+     * @param string $gender - Customer's gender
      * @param PhoneNumbers|null $phone_numbers
-     * @param string|null $merchant_customer_id
-     * @param string|null $birthdate
-     * @param string|null $locale
+     * @param string|null $merchant_customer_id - Merchant's internal customer identifier
+     * @param string|null $birthdate - Customer's birthdate (ISO 8601 / RFC 3339)
+     * @param string|null $locale - POSIX locale or RFC 5646 language tag; only language and region are supported
      */
     public function __construct(
-        private Address $address_object,
-        string          $first_name,
-        string          $last_name,
-        private Email   $email_address,
-        string          $gender,
-        ?PhoneNumbers   $phone_numbers = null,
-        ?string         $merchant_customer_id = null,
-        ?string         $birthdate = null,
-        ?string         $locale = null,
+        private AdditionalAddresses $additional_addresses,
+        string                      $first_name,
+        string                      $last_name,
+        private Email               $email_address,
+        string                      $gender,
+        ?PhoneNumbers               $phone_numbers = null,
+        ?string                     $merchant_customer_id = null,
+        ?string                     $birthdate = null,
+        ?string                     $locale = null
     )
     {
         $this->first_name = $this->createSimpleField(
@@ -100,7 +101,7 @@ final class Customer implements MultiFieldsEntityInterface
 
     public function getAdditionalAddress(): array
     {
-        return $this->address_object->toArray();
+        return $this->additional_addresses->toArray();
     }
 
     #[Pure] public function getBirthdate(): string
