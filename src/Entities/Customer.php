@@ -9,6 +9,7 @@ use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Properties\DateOfBirth;
 use GingerPluginSdk\Properties\Email;
+use GingerPluginSdk\Properties\Locale;
 use GingerPluginSdk\Properties\PhoneNumbers;
 use JetBrains\PhpStorm\Pure;
 
@@ -51,7 +52,7 @@ final class Customer implements MultiFieldsEntityInterface
      * @param PhoneNumbers|null $phone_numbers
      * @param string|null $merchant_customer_id - Merchant's internal customer identifier
      * @param string|null $birthdate - Customer's birthdate (ISO 8601 / RFC 3339)
-     * @param string|null $locale - POSIX locale or RFC 5646 language tag; only language and region are supported
+     * @param Locale|null $locale - POSIX locale or RFC 5646 language tag; only language and region are supported
      */
     public function __construct(
         private AdditionalAddresses $additional_addresses,
@@ -62,7 +63,7 @@ final class Customer implements MultiFieldsEntityInterface
         ?PhoneNumbers               $phone_numbers = null,
         ?string                     $merchant_customer_id = null,
         ?string                     $birthdate = null,
-        ?string                     $locale = null
+        ?Locale                     $locale = null
     )
     {
         $this->first_name = $this->createSimpleField(
@@ -73,9 +74,12 @@ final class Customer implements MultiFieldsEntityInterface
             property_name: 'last_name',
             value: $last_name
         );
-        $this->gender = $this->createSimpleField(
+        $this->gender = $this->createEnumeratedField(
             property_name: 'gender',
-            value: $gender
+            value: $gender,
+            enum: [
+                'male', 'female'
+            ]
         );
         $this->setMerchantCustomerId($merchant_customer_id)
             ->setPhoneNumbers($phone_numbers)
@@ -145,15 +149,12 @@ final class Customer implements MultiFieldsEntityInterface
     }
 
     /**
-     * @param string|null $locale
+     * @param \GingerPluginSdk\Properties\Locale|null $locale
      * @return $this
      */
-    public function setLocale(?string $locale): Customer
+    public function setLocale(?Locale $locale): Customer
     {
-        $this->locale = $this->createSimpleField(
-            property_name: 'locale',
-            value: $locale
-        );
+        $this->locale = $locale;
         return $this;
     }
 
