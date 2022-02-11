@@ -7,6 +7,8 @@ use Ginger\Ginger;
 use GingerPluginSdk\Helpers\OrderBuilderTrait;
 use GingerPluginSdk\Properties\ClientOptions;
 
+require_once "./vendor/autoload.php";
+
 class Client
 {
     use OrderBuilderTrait;

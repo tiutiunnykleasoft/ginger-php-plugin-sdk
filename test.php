@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use GingerPluginSdk\Client;
 use GingerPluginSdk\Entities\Address;
+use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Properties\ClientOptions;
 use GingerPluginSdk\Properties\Country;
 use GingerPluginSdk\Properties\Currency;
@@ -27,7 +28,7 @@ $client = new Client(
     ));
 
 $order = new Order(
-    currency: new Currency('UA'),
+    currency: new Currency('EUR'),
     amount: 500,
     transactions: new Transactions(
         new Transaction(
@@ -74,12 +75,16 @@ $order = new Order(
             )
         )
     ),
-    description: 'Test Product'
+    description: 'Test Product',
+    extra: new Extra(
+        ['sw_order_id' => 501]
+    )
 );
 
 try {
-    $response = $client->getApiClient()->createOrder($order->toArray());
-} catch (Exception $exception) {
-    $response = $exception;
+    $response = $client->setOrder($order)->sendOrder();
+} catch (Exception $e) {
+    print_r($e);
 }
+
 print_r($response);

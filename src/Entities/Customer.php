@@ -7,6 +7,9 @@ use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
+use GingerPluginSdk\Properties\DateOfBirth;
+use GingerPluginSdk\Properties\Email;
+use GingerPluginSdk\Properties\PhoneNumbers;
 use JetBrains\PhpStorm\Pure;
 
 final class Customer implements MultiFieldsEntityInterface
@@ -44,7 +47,7 @@ final class Customer implements MultiFieldsEntityInterface
      * @param string $last_name
      * @param Email $email_address
      * @param string $gender
-     * @param \GingerPluginSdk\Entities\PhoneNumbers|null $phone_numbers
+     * @param PhoneNumbers|null $phone_numbers
      * @param string|null $merchant_customer_id
      * @param string|null $birthdate
      * @param string|null $locale

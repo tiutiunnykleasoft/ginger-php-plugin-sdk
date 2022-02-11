@@ -10,6 +10,7 @@ use GingerPluginSdk\Helpers\HelperTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
+use GingerPluginSdk\Properties\Currency;
 use JetBrains\PhpStorm\Pure;
 
 final class Line implements MultiFieldsEntityInterface
@@ -34,7 +35,7 @@ final class Line implements MultiFieldsEntityInterface
      * @param int $quantity
      * @param float $amount
      * @param int $vat_percentage
-     * @param \GingerPluginSdk\Entities\Currency|null $currency
+     * @param Currency|null $currency
      * @param int|null $discount_rate
      * @param string|null $url
      */

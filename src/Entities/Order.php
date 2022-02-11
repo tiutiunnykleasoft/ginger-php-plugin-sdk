@@ -3,14 +3,12 @@
 namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Bases\BaseField;
-use GingerPluginSdk\Collections\AbstractCollection;
-use GingerPluginSdk\Exceptions\LackOfRequiredFieldsException;
 use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\HelperTrait;
-use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
+use GingerPluginSdk\Properties\Currency;
 use JetBrains\PhpStorm\Pure;
 
 class Order implements MultiFieldsEntityInterface
