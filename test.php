@@ -62,7 +62,9 @@ $order = new Order(
         ),
         merchant_customer_id: '15',
         birthdate: '1999-09-01',
-        locale: 'NL_nl'
+        locale: new \GingerPluginSdk\Properties\Locale(
+            'Ua-Ua'
+        )
     ),
     order_lines: new OrderLines(
         new Line(

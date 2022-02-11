@@ -47,11 +47,17 @@ trait OrderBuilderTrait
                 )
             );
         } catch (\Exception $exception) {
-            $error_body = current(current($exception->getTrace())["args"])["error"];
+            $trace = $exception->getTrace();
+            $error_body = current(current($trace)["args"])["error"];
+            $additional_error_data = [
+                'property_description' => $error_body['property_description'] ?? null,
+                'property_path' => $error_body['property_path'] ?? null
+            ];
             $response = new GingerHTTPResponse(
                 status: false,
                 body: new GingerHTTPResponseBody(
                     code: $error_body['status'],
+                    data: $error_body["type"] == 'ValidationError' ? $additional_error_data : null,
                     type: $error_body['type'],
                     message: $error_body["value"]
                 )
