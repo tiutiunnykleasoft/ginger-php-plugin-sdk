@@ -24,7 +24,7 @@ final class Country extends BaseField implements ValidateFieldsInterface
         $this->validatePattern(
             value: $value,
             pattern: "/^[a-zA-Z]{2}$/",
-            valid: ['UA,NL,BE,FR']
+            valid: ['UA', 'NL', 'BE', 'FR']
         );
     }
 }

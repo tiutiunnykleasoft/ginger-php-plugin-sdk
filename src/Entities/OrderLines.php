@@ -8,7 +8,7 @@ final class OrderLines extends AbstractCollection
 {
     public function __construct(Line $item)
     {
-        $this->property_name = 'order_lines';
+        $this->propertyName = 'order_lines';
         $this->add($item);
         parent::__construct(Line::class, 'order_lines');
     }

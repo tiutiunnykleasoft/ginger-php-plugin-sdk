@@ -7,8 +7,6 @@ use Ginger\Ginger;
 use GingerPluginSdk\Helpers\OrderBuilderTrait;
 use GingerPluginSdk\Properties\ClientOptions;
 
-require_once "./vendor/autoload.php";
-
 class Client
 {
     use OrderBuilderTrait;
@@ -17,7 +15,6 @@ class Client
 
     public function __construct(ClientOptions $options)
     {
-        require_once "./vendor/autoload.php";
         $this->api_client = $this->createClient(
             $options->apiKey,
             $options->useBundle,

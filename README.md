@@ -60,7 +60,7 @@ request.</i>
 
 ```php
 $transaction = new Transaction(
-    payment_method: "apple-pay"
+    paymentMethod: "apple-pay"
 );
 ```
 
@@ -68,11 +68,11 @@ $transaction = new Transaction(
     - While initializing
   ```php
   $transaction = new Transaction(
-    payment_method: "ideal",
-    payment_method_details: new PaymentMethodDetails(...)
+    paymentMethod: "ideal",
+    paymentMethodDetails: new PaymentMethodDetails(...)
   );  
     ```
-  - Through std object exemplar, in way of expanding its properties (for now only with prepared for payment methods).
+    - Through std object exemplar, in way of expanding its properties (for now only with prepared for payment methods).
   ```php
   $transaction->getPaymentMethodDetails()->setPaymentMethodDetailsIdeal();
   ```

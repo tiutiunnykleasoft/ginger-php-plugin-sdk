@@ -5,6 +5,7 @@ namespace GingerPluginSdk\Properties;
 use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Exceptions\OutOfPatternException;
 use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
+use JetBrains\PhpStorm\Pure;
 
 final class DateOfBirth extends BaseField implements ValidateFieldsInterface
 {
@@ -23,5 +24,10 @@ final class DateOfBirth extends BaseField implements ValidateFieldsInterface
     {
         parent::__construct('birthdate');
         $this->set($value);
+    }
+
+    #[Pure] public function __toString(): string
+    {
+        return $this->get();
     }
 }

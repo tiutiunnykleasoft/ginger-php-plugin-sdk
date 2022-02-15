@@ -10,27 +10,26 @@ final class PhoneNumbers extends AbstractCollection
 {
     use SingleFieldTrait;
 
-    public function __construct(string $number)
+    public function __construct(string ...$numbers)
     {
-        $this->property_name = 'phone_numbers';
-        $this->add($number);
+        $this->propertyName = 'phoneNumbers';
+
+        foreach ($numbers as $number) {
+            $this->add($number);
+        }
+
         parent::__construct(BaseField::class, 'phone_numbers');
     }
 
-    public function addPhoneNumber(BaseField $transaction): static
+    public function addPhoneNumber(string $number): PhoneNumbers
     {
-        $this->add($transaction);
+        $this->add($number);
         return $this;
     }
 
-    public function removePhoneNumber(string $index): static
+    public function removePhoneNumber(string $index): PhoneNumbers
     {
         $this->remove($index);
         return $this;
-    }
-
-    public function getAll(): array
-    {
-        return $this->getAll();
     }
 }

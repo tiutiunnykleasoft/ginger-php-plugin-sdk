@@ -1,7 +1,9 @@
 <?php
 
-namespace GingerPluginSdk\Entities;
+namespace GingerPluginSdk\Tests;
 
+use GingerPluginSdk\Exceptions\OutOfPatternException;
+use GingerPluginSdk\Properties\DateOfBirth;
 use PHPUnit\Framework\TestCase;
 
 class DateOfBirthTest extends TestCase
@@ -15,7 +17,7 @@ class DateOfBirthTest extends TestCase
 
     public function test_disallows_invalid_date()
     {
-        self::expectException(InvalidDateOfBirth::class);
+        self::expectException(OutOfPatternException::class);
         $dateOfBirth = new DateOfBirth('not-a-date');
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace GingerPluginSdk\Entities;
+namespace GingerPluginSdk\Properties;
 
+use GingerPluginSdk\Entities\Transaction;
 use GingerPluginSdk\Interfaces\AbstractCollectionContainerInterface;
 use GingerPluginSdk\Collections\AbstractCollection;
 use JetBrains\PhpStorm\Pure;
@@ -10,23 +11,23 @@ final class Transactions extends AbstractCollection implements AbstractCollectio
 {
     public function __construct(Transaction $item)
     {
-        $this->property_name = 'transactions';
+        $this->propertyName = 'transactions';
         $this->add($item);
         parent::__construct($item, 'transactions');
     }
 
     public function getPropertyName(): string
     {
-        return $this->property_name;
+        return $this->propertyName;
     }
 
-    public function addTransaction(Transaction $transaction): static
+    public function addTransaction(Transaction $transaction): Transactions
     {
         $this->add($transaction);
         return $this;
     }
 
-    public function removeTransaction(string $index): static
+    public function removeTransaction(string $index): Transactions
     {
         $this->remove($index);
         return $this;

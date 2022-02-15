@@ -9,12 +9,12 @@ class AbstractCollection implements MultiFieldsEntityInterface
 {
     private int $pointer = 0;
     private array $items;
-    protected string $property_name;
+    protected string $propertyName;
     /**
      * @template T
      * @var class-string T $classname
      */
-    public function __construct(mixed $class_string, $property_name)
+    public function __construct(mixed $class_string, $propertyName)
     {
     }
 
@@ -84,6 +84,6 @@ class AbstractCollection implements MultiFieldsEntityInterface
 
     public function getPropertyName(): string
     {
-        return $this->property_name;
+        return $this->propertyName;
     }
 }

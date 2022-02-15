@@ -13,47 +13,47 @@ final class Client implements MultiFieldsEntityInterface
     use MultiFieldsEntityTrait;
     use SingleFieldTrait;
 
-    protected string $property_name = 'client';
+    protected string $propertyName = 'client';
     private BaseField $user_agent;
-    private BaseField $platform_name;
-    private BaseField $platform_version;
-    private BaseField $plugin_name;
-    private BaseField $plugin_version;
+    private BaseField $platformName;
+    private BaseField $platformVersion;
+    private BaseField $pluginName;
+    private BaseField $pluginVersion;
 
     /**
      * @param string $user_agent - HTTP user agent
-     * @param string $platform_name - Name of the software used to connect to the API, e.g. Magento Community Edition
-     * @param string $platform_version - Version of the software used to connect to the API, e.g. 1.9.2.2
-     * @param string $plugin_name - Name of the plugin used to connect to the API, e.g. ginger-magento
-     * @param string $plugin_version - Version of the plugin used to connect to the API, e.g. 1.0.0
+     * @param string $platformName - Name of the software used to connect to the API, e.g. Magento Community Edition
+     * @param string $platformVersion - Version of the software used to connect to the API, e.g. 1.9.2.2
+     * @param string $pluginName - Name of the plugin used to connect to the API, e.g. ginger-magento
+     * @param string $pluginVersion - Version of the plugin used to connect to the API, e.g. 1.0.0
      */
     public function __construct(
         string $user_agent,
-        string $platform_name,
-        string $platform_version,
-        string $plugin_name,
-        string $plugin_version
+        string $platformName,
+        string $platformVersion,
+        string $pluginName,
+        string $pluginVersion
     )
     {
         $this->user_agent = $this->createSimpleField(
-            property_name: 'user_agent',
+            propertyName: 'user_agent',
             value: $user_agent
         );
-        $this->platform_name = $this->createSimpleField(
-            property_name: 'platform_name',
-            value: $platform_name
+        $this->platformName = $this->createSimpleField(
+            propertyName: 'platform_name',
+            value: $platformName
         );
-        $this->platform_version = $this->createSimpleField(
-            property_name: 'platform_version',
-            value: $platform_version
+        $this->platformVersion = $this->createSimpleField(
+            propertyName: 'platform_version',
+            value: $platformVersion
         );
-        $this->plugin_name = $this->createSimpleField(
-            property_name: 'plugin_name',
-            value: $plugin_name
+        $this->pluginName = $this->createSimpleField(
+            propertyName: 'plugin_name',
+            value: $pluginName
         );
-        $this->plugin_version = $this->createSimpleField(
-            property_name: 'plugin_version',
-            value: $plugin_version
+        $this->pluginVersion = $this->createSimpleField(
+            propertyName: 'plugin_version',
+            value: $pluginVersion
         );
     }
 
@@ -64,21 +64,21 @@ final class Client implements MultiFieldsEntityInterface
 
     #[Pure] public function getPlatformName(): string
     {
-        return $this->plugin_name->get();
+        return $this->pluginName->get();
     }
 
     #[Pure] public function getPlatformVersion(): string
     {
-        return $this->platform_version->get();
+        return $this->platformVersion->get();
     }
 
     #[Pure] public function getPluginName(): string
     {
-        return $this->plugin_name->get();
+        return $this->pluginName->get();
     }
 
     #[Pure] public function getPluginVersion(): string
     {
-        return $this->plugin_version->get();
+        return $this->pluginVersion->get();
     }
 }

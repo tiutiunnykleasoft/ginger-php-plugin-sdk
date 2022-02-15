@@ -9,6 +9,7 @@ use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Properties\Currency;
+use GingerPluginSdk\Properties\Transactions;
 use JetBrains\PhpStorm\Pure;
 
 class Order implements MultiFieldsEntityInterface
@@ -18,11 +19,11 @@ class Order implements MultiFieldsEntityInterface
     use FieldsValidatorTrait;
     use SingleFieldTrait;
 
-    private string $property_name = 'order';
-    private BaseField $merchant_order_id;
+    private string $propertyName = 'order';
+    private BaseField $merchantOrderId;
     private BaseField $amount;
-    private BaseField $webhook_url;
-    private BaseField $return_url;
+    private BaseField $webhookUrl;
+    private BaseField $returnUrl;
     private BaseField $description;
     private ?Extra $extra;
     private ?Client $client;
@@ -33,22 +34,22 @@ class Order implements MultiFieldsEntityInterface
         int                  $amount,
         private Transactions $transactions,
         private Customer     $customer,
-        private ?OrderLines  $order_lines = null,
-        ?string              $return_url = null,
-        ?string              $webhook_url = null,
-        ?string              $merchant_order_id = null,
+        private ?OrderLines  $orderLines = null,
+        ?string              $returnUrl = null,
+        ?string              $webhookUrl = null,
+        ?string              $merchantOrderId = null,
         ?string              $description = null,
         ?Extra               $extra = null,
         ?Client              $client = null
     )
     {
         $this->amount = $this->createSimpleField(
-            property_name: 'amount',
+            propertyName: 'amount',
             value: $this->calculateValueInCents($amount)
         );
-        $this->setWebhookUrl($webhook_url)
-            ->setMerchantOrderId($merchant_order_id)
-            ->setReturnUrl($return_url)
+        $this->setWebhookUrl($webhookUrl)
+            ->setMerchantOrderId($merchantOrderId)
+            ->setReturnUrl($returnUrl)
             ->setDescription($description)
             ->setExtra($extra)
             ->setClient($client);
@@ -71,22 +72,22 @@ class Order implements MultiFieldsEntityInterface
 
     public function getOrderLines(): ?OrderLines
     {
-        return $this->order_lines?->get();
+        return $this->orderLines?->get();
     }
 
     #[Pure] public function getReturnUrl(): string
     {
-        return $this->return_url->get();
+        return $this->returnUrl->get();
     }
 
     #[Pure] public function getWebhookUrl(): string
     {
-        return $this->webhook_url->get();
+        return $this->webhookUrl->get();
     }
 
     #[Pure] public function getMerchantOrderId(): string
     {
-        return $this->merchant_order_id->get();
+        return $this->merchantOrderId->get();
     }
 
     #[Pure] public function getExtra(): array
@@ -111,8 +112,8 @@ class Order implements MultiFieldsEntityInterface
      */
     public function setMerchantOrderId(?string $id_string): Order
     {
-        $this->merchant_order_id = $this->createSimpleField(
-            property_name: 'merchant_order_id',
+        $this->merchantOrderId = $this->createSimpleField(
+            propertyName: 'merchant_order_id',
             value: $id_string
         );
         return $this;
@@ -124,8 +125,8 @@ class Order implements MultiFieldsEntityInterface
      */
     public function setWebhookUrl(?string $url): Order
     {
-        $this->webhook_url = $this->createSimpleField(
-            property_name: 'webhook_url',
+        $this->webhookUrl = $this->createSimpleField(
+            propertyName: 'webhook_url',
             value: $url
         );
         return $this;
@@ -137,8 +138,8 @@ class Order implements MultiFieldsEntityInterface
      */
     public function setReturnUrl(?string $url): Order
     {
-        $this->return_url = $this->createSimpleField(
-            property_name: 'return_url',
+        $this->returnUrl = $this->createSimpleField(
+            propertyName: 'return_url',
             value: $url
         );
         return $this;
@@ -150,7 +151,7 @@ class Order implements MultiFieldsEntityInterface
      */
     public function setOrderLines(OrderLines $lines): Order
     {
-        $this->order_lines = $lines;
+        $this->orderLines = $lines;
         return $this;
     }
 
@@ -171,7 +172,7 @@ class Order implements MultiFieldsEntityInterface
     public function setDescription(?string $description): Order
     {
         $this->description = $this->createSimpleField(
-            property_name: 'description',
+            propertyName: 'description',
             value: $description
         );
         return $this;

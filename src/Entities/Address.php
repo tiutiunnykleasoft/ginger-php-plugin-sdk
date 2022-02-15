@@ -16,105 +16,108 @@ final class Address implements MultiFieldsEntityInterface
     use SingleFieldTrait;
     use MultiFieldsEntityTrait;
 
-    private BaseField $address_type;
-    private BaseField $postal_code;
+    private BaseField $addressType;
+    private BaseField $postalCode;
     private BaseField $country;
     private BaseField $city;
     private BaseField $street;
     private BaseField $address;
     private BaseField|null $housenumber = null;
-    private string $property_name = 'address';
+    private string $propertyName = 'address';
 
     /**
-     * @param string $address_type
-     * @param string $postal_code
+     * @param string $addressType
+     * @param string $postalCode
      * @param string $street
      * @param string $city
      * @param Country $country - ISO 3166-1 alpha-2 country code
-     * @param string|null $property_name
+     * @param string|null $propertyName
+     * @param string|null $housenumber
      */
     public function __construct(
-        string  $address_type,
-        string  $postal_code,
+        string  $addressType,
+        string  $postalCode,
         string  $street,
         string  $city,
         Country $country,
-        string  $property_name = null
+        ?string $propertyName = null,
+        ?string $housenumber = null
     )
     {
-        $this->address_type = $this->createEnumeratedField(
-            property_name: 'address_type',
-            value: $address_type,
+        $this->addressType = $this->createEnumeratedField(
+            propertyName: 'address_type',
+            value: $addressType,
             enum: [
                 "customer",
                 "delivery",
                 "billing"
             ]);
-        $this->postal_code = $this->createSimpleField(
-            property_name: 'postal_code',
-            value: $postal_code
+        $this->postalCode = $this->createSimpleField(
+            propertyName: 'postal_code',
+            value: $postalCode
         );
         $this->street = $this->createSimpleField(
-            property_name: 'street',
+            propertyName: 'street',
             value: $street
         );
         $this->city = $this->createSimpleField(
-            property_name: "city",
+            propertyName: "city",
             value: $city
         );
         $this->country = $country;
         $this->address = $this->createSimpleField(
-            property_name: 'address',
+            propertyName: 'address',
             value: $this->generateAddress()
         );
 
-        if ($property_name) $this->property_name = $property_name;
+        $this->setHousenumber($housenumber);
+        if ($propertyName) $this->propertyName = $propertyName;
     }
 
     public function setPropertyName($name): Address
     {
-        $this->property_name = $name;
+        $this->propertyName = $name;
         return $this;
     }
 
-    #[Pure] public function getAddressType(): BaseField
+    #[Pure] public function getAddressType(): string
     {
-        return $this->address_type;
+        return $this->addressType->get();
     }
 
-    #[Pure] public function getPostalCode(): BaseField
+    #[Pure] public function getPostalCode(): string
     {
-        return $this->postal_code;
+        return $this->postalCode->get();
     }
 
-    #[Pure] public function getCountry(): BaseField
+    #[Pure] public function getCountry(): string
     {
-        return $this->country;
+        return $this->country->get();
     }
 
-    #[Pure] public function getCity(): BaseField
+    #[Pure] public function getCity(): string
     {
-        return $this->city;
+        return $this->city->get();
     }
 
-    #[Pure] public function getStreet(): BaseField
+    #[Pure] public function getStreet(): string
     {
-        return $this->street;
+        return $this->street->get();
     }
 
-    #[Pure] public function getHousenumber(): ?BaseField
+    #[Pure] public function getHousenumber(): ?string
     {
-        return $this->housenumber;
+        return $this->housenumber?->get();
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      * @return $this
      */
-    public function setHousenumber(string $value): static
+    public function setHousenumber(?string $value): Address
     {
         $this->housenumber = $this->createSimpleField(
-            property_name: 'housenumber',
+            propertyName: 'housenumber',
             value: $value
         );
         $this->setAddressLine();
@@ -124,7 +127,7 @@ final class Address implements MultiFieldsEntityInterface
     public function setAddressLine()
     {
         $this->address = $this->createSimpleField(
-            property_name: 'address',
+            propertyName: 'address',
             value: $this->generateAddress()
         );
     }
@@ -137,10 +140,10 @@ final class Address implements MultiFieldsEntityInterface
     public function generateAddress(): string
     {
         return implode(' ', array_filter([
-            $this->getStreet()->get(),
-            $this->getHousenumber()?->get(),
-            $this->getPostalCode()->get(),
-            $this->getCity()->get(),
+            $this->getStreet(),
+            $this->getHousenumber(),
+            $this->getPostalCode(),
+            $this->getCity(),
         ]));
     }
 }

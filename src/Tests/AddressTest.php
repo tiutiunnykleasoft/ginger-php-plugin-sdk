@@ -15,38 +15,50 @@ class AddressTest extends TestCase
 {
     private Address $address;
 
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    public function setUp(): void
     {
         $this->address = new Address(
-            address_type: "customer",
-            postal_code: "38714",
+            addressType: "customer",
+            postalCode: "38714",
             street: "Soborna",
             city: "Poltava",
             country: new Country(
                 "UA"
             )
         );
-        self::assertSame((bool)$this->address, true);
-        parent::__construct($name, $data, $dataName);
     }
 
     public function test_address_type_invalid_enumeration_exception()
     {
         self::expectException(OutOfEnumException::class);
-        $this->address->getAddressType()->set('james_bond');
+        $super_test_address = new Address(
+            addressType: "rabotiaga",
+            postalCode: "38714",
+            street: "Soborna",
+            city: "Poltava",
+            country: new Country(
+                "UA"
+            )
+        );
     }
 
     public function test_country_pattern_exception()
     {
         self::expectException(OutOfPatternException::class);
-        $this->address->getCountry()->set(new Country('NIGERIA'));
+        $super_test_address = new Address(
+            addressType: "customer",
+            postalCode: "38714",
+            street: "Soborna",
+            city: "Poltava",
+            country: new Country('NIGERIA')
+        );
     }
 
     public function test_invalid_types_constructor_exception()
     {
         self::expectException(TypeError::class);
         new Address(
-            address_type: "customer", postal_code: "38714", street: "Red", city: "Amsterdam", country: 4
+            addressType: "customer", postalCode: "38714", street: "Red", city: "Amsterdam", country: 4
         );
     }
 
@@ -54,12 +66,12 @@ class AddressTest extends TestCase
     public function test_set_housenumber()
     {
         $expected = $this->createSimpleField(
-            property_name: 'housenumber',
+            propertyName: 'housenumber',
             value: "30"
         );
 
         $this->address->setHousenumber("30");
-        self::assertSame($this->address->getHousenumber()->get(), $expected->get());
+        self::assertSame($this->address->getHousenumber(), $expected->get());
 
     }
 

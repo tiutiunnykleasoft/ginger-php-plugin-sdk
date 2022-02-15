@@ -20,39 +20,39 @@ final class Line implements MultiFieldsEntityInterface
     use SingleFieldTrait;
 
     private BaseField $type;
-    private BaseField $merchant_order_line_id;
+    private BaseField $merchantOrderLineId;
     private BaseField $name;
     private BaseField $quantity;
     private BaseField $amount;
-    private BaseField $vat_percentage;
-    private BaseField $discount_rate;
+    private BaseField $vatPercentage;
+    private BaseField $discountRate;
     private BaseField $url;
 
     /**
      * @param string $type - Type: physical, discount, shipping_fee, sales_tax, digital, gift_card, store_credit or surcharge
-     * @param string $merchant_order_line_id - Merchant's internal order line identifier
+     * @param string $merchantOrderLineId - Merchant's internal order line identifier
      * @param string $name - Name, usually a short description
      * @param int $quantity
      * @param float $amount - Amount for a single item (including VAT) in cents
-     * @param int $vat_percentage - Percentage of tax rate, will be multiplied by 100 and provided as an integer. i.e. 17.50% would be sent as 1750
+     * @param int $vatPercentage - Percentage of tax rate, will be multiplied by 100 and provided as an integer. i.e. 17.50% would be sent as 1750
      * @param Currency|null $currency
-     * @param int|null $discount_rate - Percentage of discount, will be multiplied by 100 and provided as an integer. i.e. 11.57% would be sent as 1157
+     * @param int|null $discountRate - Percentage of discount, will be multiplied by 100 and provided as an integer. i.e. 11.57% would be sent as 1157
      * @param string|null $url - Item product page URI
      */
     public function __construct(
         string            $type,
-        string            $merchant_order_line_id,
+        string            $merchantOrderLineId,
         string            $name,
         int               $quantity,
         float             $amount,
-        int               $vat_percentage,
+        int               $vatPercentage,
         private ?Currency $currency = null,
-        ?int              $discount_rate = null,
+        ?int              $discountRate = null,
         ?string           $url = null
     )
     {
         $this->type = $this->createEnumeratedField(
-            property_name: 'type',
+            propertyName: 'type',
             value: $type,
             enum: [
                 "physical",
@@ -65,31 +65,31 @@ final class Line implements MultiFieldsEntityInterface
                 "surcharge"
             ]
         );
-        $this->merchant_order_line_id = $this->createSimpleField(
-            property_name: 'merchant_order_line_id',
-            value: $merchant_order_line_id
+        $this->merchantOrderLineId = $this->createSimpleField(
+            propertyName: 'merchant_order_line_id',
+            value: $merchantOrderLineId
         );
         $this->name = $this->createSimpleField(
-            property_name: 'name',
+            propertyName: 'name',
             value: $name
         );
 
         $this->quantity = $this->createFieldWithDiapasonOfValues(
-            property_name: 'quantity',
+            propertyName: 'quantity',
             value: $quantity,
             min: 1
         );
         $this->amount = $this->createSimpleField(
-            property_name: 'amount',
+            propertyName: 'amount',
             value: $this->calculateValueInCents($amount)
         );
-        $this->vat_percentage = $this->createFieldWithDiapasonOfValues(
-            property_name: 'vat_percentage',
-            value: $this->calculateValueInCents($vat_percentage),
+        $this->vatPercentage = $this->createFieldWithDiapasonOfValues(
+            propertyName: 'vat_percentage',
+            value: $this->calculateValueInCents($vatPercentage),
             min: 0,
             max: 10000
         );
-        $this->setDiscountRate($discount_rate);
+        $this->setDiscountRate($discountRate);
         $this->setUrl($url);
     }
 
@@ -100,12 +100,12 @@ final class Line implements MultiFieldsEntityInterface
 
     #[Pure] public function getVatPercentage(): ?string
     {
-        return $this->vat_percentage->get();
+        return $this->vatPercentage->get();
     }
 
     #[Pure] public function getDiscountRate(): ?string
     {
-        return $this->discount_rate->get();
+        return $this->discountRate->get();
     }
 
     #[Pure] public function getAmount(): int
@@ -120,7 +120,7 @@ final class Line implements MultiFieldsEntityInterface
 
     #[Pure] public function getMerchantOrderLineId(): string
     {
-        return $this->merchant_order_line_id->get();
+        return $this->merchantOrderLineId->get();
     }
 
     #[Pure] public function getName(): string
@@ -145,7 +145,7 @@ final class Line implements MultiFieldsEntityInterface
     public function setUrl(?string $url): Line
     {
         $this->url = $this->createSimpleField(
-            property_name: 'url',
+            propertyName: 'url',
             value: $url
         );
         return $this;
@@ -157,8 +157,8 @@ final class Line implements MultiFieldsEntityInterface
      */
     public function setDiscountRate(?int $value): Line
     {
-        $this->discount_rate = $this->createFieldWithDiapasonOfValues(
-            property_name: 'discount_rate',
+        $this->discountRate = $this->createFieldWithDiapasonOfValues(
+            propertyName: 'discount_rate',
             value: $this->calculateValueInCents($value),
             min: 0, max: 10000
         );

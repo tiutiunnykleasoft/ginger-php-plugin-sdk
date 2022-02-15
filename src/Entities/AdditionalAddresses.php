@@ -6,16 +6,18 @@ use GingerPluginSdk\Collections\AbstractCollection;
 
 class AdditionalAddresses extends AbstractCollection
 {
-    public function __construct(Address $item)
+    public function __construct(Address ...$addresses)
     {
-        $this->property_name = 'additional_addresses';
-        $this->add($item);
-        parent::__construct(Address::class, $this->property_name);
+        $this->propertyName = 'additional_addresses';
+        foreach ($addresses as $address) {
+            $this->add($address);
+        }
+        parent::__construct(Address::class, $this->propertyName);
     }
 
-    public function addAddress(Address $item): AdditionalAddresses
+    public function addAddress(Address $address): AdditionalAddresses
     {
-        $this->add($item);
+        $this->add($address);
         return $this;
     }
 
