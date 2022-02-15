@@ -15,7 +15,7 @@ jobs:
       - name: Install dependecies
         run: composer install
       - name: Setup API-Key const to tests
-        run:  sudo find src/Tests -name 'CreateOrderTest.php' -exec sed -i 's%const API_KEY = "..."%const API_KEY = "${{ steps.version.outputs.TAG_NAME }}"%' {} +
+        run:  sudo find src/Tests -name 'CreateOrderTest.php' -exec sed -i 's%const API_KEY = "..."%const API_KEY = "${{ secrets.GINGER_API_KEY }}"%' {} +
         
       - name: Run all tests
         run: vendor/bin/phpunit src/Tests
