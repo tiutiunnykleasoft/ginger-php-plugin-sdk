@@ -3,6 +3,8 @@
 namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Bases\BaseField;
+use GingerPluginSdk\Collections\AdditionalAddresses;
+use GingerPluginSdk\Collections\PhoneNumbers;
 use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
@@ -10,7 +12,6 @@ use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Properties\DateOfBirth;
 use GingerPluginSdk\Properties\Email;
 use GingerPluginSdk\Properties\Locale;
-use GingerPluginSdk\Properties\PhoneNumbers;
 use JetBrains\PhpStorm\Pure;
 
 final class Customer implements MultiFieldsEntityInterface

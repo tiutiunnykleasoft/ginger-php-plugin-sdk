@@ -1,8 +1,9 @@
 <?php
 
-namespace GingerPluginSdk\Entities;
+namespace GingerPluginSdk\Collections;
 
 use GingerPluginSdk\Collections\AbstractCollection;
+use GingerPluginSdk\Entities\Address;
 
 class AdditionalAddresses extends AbstractCollection
 {

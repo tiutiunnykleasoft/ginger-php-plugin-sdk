@@ -14,7 +14,7 @@ final class Email extends BaseField implements ValidateFieldsInterface
     public function validate($value)
     {
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            throw new OutOfPatternException($this->getPropertyName(), ['test@mail.com', 'another@gmail.com']);
+            throw new OutOfPatternException($this->getPropertyName());
         }
     }
 

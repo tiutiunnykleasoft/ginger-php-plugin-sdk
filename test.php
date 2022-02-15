@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use GingerPluginSdk\Client;
-use GingerPluginSdk\Entities\AdditionalAddresses;
+use GingerPluginSdk\Collections\AdditionalAddresses;
+use GingerPluginSdk\Collections\OrderLines;
+use GingerPluginSdk\Collections\PhoneNumbers;
+use GingerPluginSdk\Collections\Transactions;
 use GingerPluginSdk\Entities\Address;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Properties\ClientOptions;
@@ -13,11 +16,8 @@ use GingerPluginSdk\Entities\Customer;
 use GingerPluginSdk\Properties\Email;
 use GingerPluginSdk\Entities\Line;
 use GingerPluginSdk\Entities\Order;
-use GingerPluginSdk\Entities\OrderLines;
 use GingerPluginSdk\Entities\PaymentMethodDetails;
-use GingerPluginSdk\Properties\PhoneNumbers;
 use GingerPluginSdk\Entities\Transaction;
-use GingerPluginSdk\Properties\Transactions;
 
 require_once "vendor/autoload.php";
 

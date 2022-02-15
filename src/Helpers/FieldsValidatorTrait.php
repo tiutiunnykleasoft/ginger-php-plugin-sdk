@@ -2,8 +2,6 @@
 
 namespace GingerPluginSdk\Helpers;
 
-use GingerPluginSdk\Exceptions\LackOfRequiredFieldsException;
-use GingerPluginSdk\Exceptions\NotInTypeException;
 use GingerPluginSdk\Exceptions\OutOfEnumException;
 use GingerPluginSdk\Exceptions\OutOfPatternException;
 
@@ -27,7 +25,7 @@ trait FieldsValidatorTrait
     {
         /** @var \GingerPluginSdk\Bases\BaseField $this */
         if (!preg_match($pattern, $value)) {
-            throw new OutOfPatternException($this->getPropertyName(), $valid);
+            throw new OutOfPatternException($this->getPropertyName());
         }
     }
 }

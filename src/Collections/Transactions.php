@@ -1,10 +1,9 @@
 <?php
 
-namespace GingerPluginSdk\Properties;
+namespace GingerPluginSdk\Collections;
 
 use GingerPluginSdk\Entities\Transaction;
 use GingerPluginSdk\Interfaces\AbstractCollectionContainerInterface;
-use GingerPluginSdk\Collections\AbstractCollection;
 use JetBrains\PhpStorm\Pure;
 
 final class Transactions extends AbstractCollection implements AbstractCollectionContainerInterface
@@ -14,11 +13,6 @@ final class Transactions extends AbstractCollection implements AbstractCollectio
         $this->propertyName = 'transactions';
         $this->add($item);
         parent::__construct($item, 'transactions');
-    }
-
-    public function getPropertyName(): string
-    {
-        return $this->propertyName;
     }
 
     public function addTransaction(Transaction $transaction): Transactions
@@ -31,10 +25,5 @@ final class Transactions extends AbstractCollection implements AbstractCollectio
     {
         $this->remove($index);
         return $this;
-    }
-
-    #[Pure] public function getAll(): array
-    {
-        return $this->getAll();
     }
 }

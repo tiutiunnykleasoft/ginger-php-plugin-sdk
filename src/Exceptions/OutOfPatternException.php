@@ -8,9 +8,9 @@ use Throwable;
 
 class OutOfPatternException extends Exception
 {
-    public function __construct($property, $valid)
+    public function __construct($property)
     {
-        $message = sprintf('Property `%s` is out of the pattern, valid example for this property : {%s}', $property, json_encode($valid));
+        $message = sprintf('Property `%s` is out of the pattern.', $property);
         parent::__construct($message);
     }
 }

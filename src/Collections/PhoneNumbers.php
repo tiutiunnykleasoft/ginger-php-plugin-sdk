@@ -1,9 +1,8 @@
 <?php
 
-namespace GingerPluginSdk\Properties;
+namespace GingerPluginSdk\Collections;
 
 use GingerPluginSdk\Bases\BaseField;
-use GingerPluginSdk\Collections\AbstractCollection;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 
 final class PhoneNumbers extends AbstractCollection

@@ -3,13 +3,14 @@
 namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Bases\BaseField;
+use GingerPluginSdk\Collections\OrderLines;
+use GingerPluginSdk\Collections\Transactions;
 use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\HelperTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Properties\Currency;
-use GingerPluginSdk\Properties\Transactions;
 use JetBrains\PhpStorm\Pure;
 
 class Order implements MultiFieldsEntityInterface
@@ -146,7 +147,7 @@ class Order implements MultiFieldsEntityInterface
     }
 
     /**
-     * @param \GingerPluginSdk\Entities\OrderLines $lines
+     * @param OrderLines $lines
      * @return $this
      */
     public function setOrderLines(OrderLines $lines): Order

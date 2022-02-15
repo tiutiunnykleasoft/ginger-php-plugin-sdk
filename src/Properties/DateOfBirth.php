@@ -16,7 +16,7 @@ final class DateOfBirth extends BaseField implements ValidateFieldsInterface
     {
         $date = \DateTimeImmutable::createFromFormat('Y-m-d', $value);
         if ($date === false || $date->format('Y-m-d') !== $value) {
-            throw new OutOfPatternException($this->getPropertyName(),['2021-09-21', '2022-01-30']);
+            throw new OutOfPatternException($this->getPropertyName());
         }
     }
 
