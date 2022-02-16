@@ -2,10 +2,12 @@
 
 namespace GingerPluginSdk\Helpers;
 
+use Ginger\HttpClient\HttpException;
 use GingerPluginSdk\Entities\Order;
 use GingerPluginSdk\Response\GingerHTTPResponse;
 use GingerPluginSdk\Response\GingerHTTPResponseBody;
 use JetBrains\PhpStorm\ArrayShape;
+use RuntimeException;
 
 trait OrderBuilderTrait
 {
@@ -46,9 +48,9 @@ trait OrderBuilderTrait
                     data: $success_response
                 )
             );
-        } catch (\Exception $exception) {
-            $trace = $exception->getTrace();
-            $error_body = current(current($trace)["args"])["error"];
+        } catch (RuntimeException $exception) {
+            $args = $exception->getTrace()[0]["args"][0];
+            $error_body = $args["error"];
             $additional_error_data = [
                 'property_description' => $error_body['property_description'] ?? null,
                 'property_path' => $error_body['property_path'] ?? null
@@ -58,7 +60,7 @@ trait OrderBuilderTrait
                 body: new GingerHTTPResponseBody(
                     code: $error_body['status'],
                     data: $error_body["type"] == 'ValidationError' ? $additional_error_data : null,
-                    type: $error_body['type'],
+                    type: $error_body['type'] ?? null,
                     message: $error_body["value"]
                 )
             );

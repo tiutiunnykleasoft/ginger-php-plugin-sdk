@@ -25,6 +25,7 @@ class Client
 
     private static function getCaCertPath()
     {
+        return __DIR__ . '/Assets/cacert.pem';
     }
 
     public function getApiClient(): ApiClient

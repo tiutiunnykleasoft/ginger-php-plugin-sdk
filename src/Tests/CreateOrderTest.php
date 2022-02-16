@@ -20,19 +20,18 @@ use PHPUnit\Framework\TestCase;
 
 class CreateOrderTest extends TestCase
 {
-    const API_KEY = "...";
-
     private \GingerPluginSdk\Client $client;
 
     public function setUp(): void
     {
         $_SERVER["REMOTE_ADDR"] = "173.0.2.5";
         $_SERVER["HTTP_USER_AGENT"] = "PHPUnit Tests";
+
         $this->client = new \GingerPluginSdk\Client(
             new \GingerPluginSdk\Properties\ClientOptions(
                 endpoint: "https://api.online.emspay.eu",
-                useBundle: false,
-                apiKey: self::API_KEY)
+                useBundle: true,
+                apiKey: getenv('GINGER_API_KEY'))
         );
     }
 
@@ -116,6 +115,10 @@ class CreateOrderTest extends TestCase
             )
         );
         $response = $this->client->setOrder($order)->sendOrder();
-        self::assertSame($response["body"]["data"]["status"],'new');
+        if (!array_key_exists("data", $response["body"])) {
+
+        }
+        self::assertArrayHasKey(key: "data", array: $response['body']);
+        self::assertSame($response["body"]["data"]["status"], 'new');
     }
 }
