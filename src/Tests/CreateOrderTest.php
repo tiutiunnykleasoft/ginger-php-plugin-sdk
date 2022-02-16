@@ -83,7 +83,7 @@ class CreateOrderTest extends TestCase
                     '0951018201'
                 ),
                 merchantCustomerId: '15',
-                birthdate: '1999-09-01',
+                birthdate: new \GingerPluginSdk\Properties\DateOfBirth('1999-09-01'),
                 locale: new Locale(
                     'Ua_ua'
 

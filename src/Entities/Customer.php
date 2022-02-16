@@ -2,6 +2,7 @@
 
 namespace GingerPluginSdk\Entities;
 
+use Cassandra\Date;
 use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Collections\AdditionalAddresses;
 use GingerPluginSdk\Collections\PhoneNumbers;
@@ -41,9 +42,6 @@ final class Customer implements MultiFieldsEntityInterface
     /** @var BaseField|null - Customer's IP address */
     private BaseField|null $ipAddress = null;
 
-    private DateOfBirth|null $birthdate = null;
-
-
     /**
      * @param AdditionalAddresses $additional_addresses
      * @param string $firstName
@@ -63,7 +61,7 @@ final class Customer implements MultiFieldsEntityInterface
         string                      $gender,
         ?PhoneNumbers               $phoneNumbers = null,
         ?string                     $merchantCustomerId = null,
-        ?string                     $birthdate = null,
+        private ?DateOfBirth        $birthdate = null,
         ?Locale                     $locale = null
     )
     {
@@ -84,7 +82,6 @@ final class Customer implements MultiFieldsEntityInterface
         );
         $this->setMerchantCustomerId($merchantCustomerId)
             ->setPhoneNumbers($phoneNumbers)
-            ->setBirthdate($birthdate)
             ->setLocale($locale)
             ->setIpAddress();
     }
@@ -140,12 +137,12 @@ final class Customer implements MultiFieldsEntityInterface
     }
 
     /**
-     * @param string|null $date
+     * @param DateOfBirth|null $date
      * @return $this
      */
-    public function setBirthdate(?string $date): Customer
+    public function setBirthdate(?DateOfBirth $date): Customer
     {
-        $this->birthdate = $date ? new DateOfBirth($date) : null;
+        $this->birthdate = $date ?: null;
         return $this;
     }
 
