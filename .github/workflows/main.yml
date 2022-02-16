@@ -16,8 +16,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependecies
         run: composer install
-      - name: Add API-Key to ENV
-        run: ${{ env.GINGER_API_KEY = secrets.GINGER_API_KEY }} 
-        
       - name: Run all tests
         run: vendor/bin/phpunit src/Tests
