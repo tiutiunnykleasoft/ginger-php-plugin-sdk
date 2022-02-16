@@ -8,10 +8,12 @@ use JetBrains\PhpStorm\Pure;
 
 final class Transactions extends AbstractCollection implements AbstractCollectionContainerInterface
 {
-    public function __construct(Transaction $item)
+    public function __construct(Transaction ...$items)
     {
         $this->propertyName = 'transactions';
-        $this->add($item);
+        foreach ($items as $item) {
+            $this->add($item);
+        }
         parent::__construct($item, 'transactions');
     }
 
