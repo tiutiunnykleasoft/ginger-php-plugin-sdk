@@ -20,4 +20,12 @@ class DateOfBirthTest extends TestCase
         self::expectException(OutOfPatternException::class);
         $dateOfBirth = new DateOfBirth('not-a-date');
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            (new DateOfBirth("2021-08-09"))->getPropertyName(),
+            'birthdate'
+        );
+    }
 }

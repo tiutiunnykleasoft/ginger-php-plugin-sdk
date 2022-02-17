@@ -72,4 +72,12 @@ class OrderLinesTest extends TestCase
             actual: $real
         );
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            $this->order_lines->getPropertyName(),
+            'order_lines'
+        );
+    }
 }

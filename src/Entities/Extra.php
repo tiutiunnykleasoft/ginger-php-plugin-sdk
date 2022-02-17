@@ -15,7 +15,7 @@ class Extra implements MultiFieldsEntityInterface
     protected string $propertyName = 'extra';
 
     public function __construct(
-        ...$attributes
+        array ...$attributes
     )
     {
         foreach ($attributes as $attribute) {

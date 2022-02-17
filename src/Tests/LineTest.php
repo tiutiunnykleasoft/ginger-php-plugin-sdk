@@ -114,4 +114,12 @@ class LineTest extends TestCase
             currency: 'EUR'
         );
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            $this->line->getPropertyName(),
+            ""
+        );
+    }
 }

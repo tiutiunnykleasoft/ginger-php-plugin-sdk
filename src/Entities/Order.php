@@ -20,7 +20,6 @@ class Order implements MultiFieldsEntityInterface
     use FieldsValidatorTrait;
     use SingleFieldTrait;
 
-    private string $propertyName = 'order';
     private BaseField $merchantOrderId;
     private BaseField $amount;
     private BaseField $webhookUrl;

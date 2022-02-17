@@ -98,4 +98,12 @@ class AddressTest extends TestCase
         $real = $this->address->toArray();
         self::assertSame($expected, $real);
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            $this->address->getPropertyName(),
+            ''
+        );
+    }
 }

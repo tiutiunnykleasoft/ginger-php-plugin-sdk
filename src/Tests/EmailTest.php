@@ -20,4 +20,12 @@ class EmailTest extends TestCase
         self::expectException(OutOfPatternException::class);
         $test = new Email('Netherlands');
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            (new Email("nanallew@dota.com"))->getPropertyName(),
+            'email'
+        );
+    }
 }

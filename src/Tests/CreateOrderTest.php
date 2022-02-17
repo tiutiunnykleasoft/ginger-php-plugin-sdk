@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 class CreateOrderTest extends TestCase
 {
-    private \GingerPluginSdk\Client $client;
+    private Order $order;
 
     public function setUp(): void
     {
@@ -33,14 +33,7 @@ class CreateOrderTest extends TestCase
                 useBundle: true,
                 apiKey: getenv('GINGER_API_KEY'))
         );
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function test_sending()
-    {
-        $order = new Order(
+        $this->order = new Order(
             currency: new Currency('EUR'),
             amount: 500,
             transactions: new Transactions(
@@ -114,9 +107,24 @@ class CreateOrderTest extends TestCase
                 pluginVersion: '1.0.0'
             )
         );
-        $response = $this->client->setOrder($order)->sendOrder();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function test_sending()
+    {
+        $response = $this->client->setOrder($this->order)->sendOrder();
 
         self::assertArrayHasKey(key: "data", array: $response['body']);
         self::assertSame($response["body"]["data"]["status"], 'new');
+    }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            $this->order->getPropertyName(),
+            ''
+        );
     }
 }

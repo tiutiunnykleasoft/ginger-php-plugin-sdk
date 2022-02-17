@@ -59,4 +59,12 @@ class AdditionalAddressesTest extends TestCase
             actual:$real
         );
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            $this->additionalAddresses->getPropertyName(),
+            'additional_addresses'
+        );
+    }
 }

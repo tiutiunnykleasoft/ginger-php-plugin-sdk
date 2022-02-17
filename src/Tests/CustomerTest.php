@@ -230,4 +230,12 @@ class CustomerTest extends TestCase
             actual: $actual
         );
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            $this->customer->getPropertyName(),
+            'customer'
+        );
+    }
 }

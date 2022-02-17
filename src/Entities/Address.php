@@ -23,7 +23,6 @@ final class Address implements MultiFieldsEntityInterface
     private BaseField $street;
     private BaseField $address;
     private BaseField|null $housenumber = null;
-    private string $propertyName = 'address';
 
     /**
      * @param string $addressType

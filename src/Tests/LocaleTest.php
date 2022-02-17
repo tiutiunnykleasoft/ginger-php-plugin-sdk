@@ -21,4 +21,11 @@ class LocaleTest extends TestCase
         $test = new Locale('Netherlands');
     }
 
+    public function test_get_property()
+    {
+        self::assertSame(
+            (new Locale('NL_nl'))->getPropertyName(),
+            'locale'
+        );
+    }
 }

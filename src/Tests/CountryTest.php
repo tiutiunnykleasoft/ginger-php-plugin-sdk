@@ -20,4 +20,12 @@ class CountryTest extends TestCase
         self::expectException(OutOfPatternException::class);
         $test = new Country('Netherlands');
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            (new Country('LN'))->getPropertyName(),
+            'country'
+        );
+    }
 }
