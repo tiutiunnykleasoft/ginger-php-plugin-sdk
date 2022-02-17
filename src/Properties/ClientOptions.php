@@ -2,6 +2,9 @@
 
 namespace GingerPluginSdk\Properties;
 
+use GingerPluginSdk\Exceptions\EmptyApiKeyException;
+use function PHPUnit\Framework\throwException;
+
 class ClientOptions
 {
     /**
@@ -15,5 +18,8 @@ class ClientOptions
         public string $apiKey
     )
     {
+        if (empty($this->apiKey)) {
+            throw new EmptyApiKeyException('Client can\'t be initialized with empty API Key');
+        }
     }
 }
