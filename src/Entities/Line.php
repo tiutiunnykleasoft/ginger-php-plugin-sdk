@@ -98,12 +98,12 @@ final class Line implements MultiFieldsEntityInterface
         return $this->url->get();
     }
 
-    #[Pure] public function getVatPercentage(): ?string
+    #[Pure] public function getVatPercentage(): ?int
     {
         return $this->vatPercentage->get();
     }
 
-    #[Pure] public function getDiscountRate(): ?string
+    #[Pure] public function getDiscountRate(): ?int
     {
         return $this->discountRate->get();
     }
