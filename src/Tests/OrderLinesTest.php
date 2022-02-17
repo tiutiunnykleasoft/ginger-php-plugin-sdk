@@ -65,9 +65,11 @@ class OrderLinesTest extends TestCase
             ]
         ];
         $real = $this->order_lines->toArray();
+        sort($expected_array);
+        sort($real);
         self::assertSame(
-            expected: sort($expected_array),
-            actual: sort($real)
+            expected: $expected_array,
+            actual: $real
         );
     }
 }

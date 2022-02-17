@@ -199,13 +199,15 @@ class CustomerTest extends TestCase
     {
         $expected_customer = [
             'additional_address' => [
-                'address_type' => 'customer',
-                'postal_code' => '1642AJ',
-                'country' => 'NL',
-                'city' => 'Amsterdam',
-                'street' => 'Weednesday',
-                'address' => 'Weednesday 10 1642AJ Amsterdam',
-                'housenumber' => '10'
+                [
+                    'address_type' => 'customer',
+                    'postal_code' => '1642AJ',
+                    'country' => 'NL',
+                    'city' => 'Amsterdam',
+                    'street' => 'Weednesday',
+                    'address' => 'Weednesday 10 1642AJ Amsterdam',
+                    'housenumber' => '10'
+                ]
             ],
             'email' => 'order@weed.you',
             'birthdate' => '2021-07-01',
@@ -221,9 +223,11 @@ class CustomerTest extends TestCase
             'last_name' => 'Paris'
         ];
         $actual = $this->customer->toArray();
+        sort($expected_customer);
+        sort($actual);
         self::assertSame(
-            expected: sort($expected_customer),
-            actual: sort($actual)
+            expected: $expected_customer,
+            actual: $actual
         );
     }
 }
