@@ -115,9 +115,7 @@ class CreateOrderTest extends TestCase
             )
         );
         $response = $this->client->setOrder($order)->sendOrder();
-        if (!array_key_exists("data", $response["body"])) {
 
-        }
         self::assertArrayHasKey(key: "data", array: $response['body']);
         self::assertSame($response["body"]["data"]["status"], 'new');
     }
