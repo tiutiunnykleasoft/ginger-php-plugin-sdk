@@ -11,7 +11,7 @@ final class PhoneNumbers extends AbstractCollection
 
     public function __construct(string ...$numbers)
     {
-        $this->propertyName = 'phoneNumbers';
+        $this->propertyName = 'phone_numbers';
 
         foreach ($numbers as $number) {
             $this->add($number);
