@@ -1,7 +1,8 @@
 <?php
 
-namespace GingerPluginSdk\Entities;
+namespace GingerPluginSdk\Tests;
 
+use GingerPluginSdk\Entities\PaymentMethodDetails;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 

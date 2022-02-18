@@ -1,5 +1,6 @@
 <?php
 
+namespace GingerPluginSdk\Tests;
 
 use GingerPluginSdk\Collections\AdditionalAddresses;
 use GingerPluginSdk\Collections\OrderLines;

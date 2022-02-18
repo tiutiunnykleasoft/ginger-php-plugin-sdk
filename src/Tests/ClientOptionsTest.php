@@ -1,10 +1,11 @@
 <?php
 
-namespace GingerPluginSdk\Properties;
+namespace GingerPluginSdk\Tests;
 
 use ArgumentCountError;
 use GingerPluginSdk\Exceptions\EmptyApiKeyException;
 use GingerPluginSdk\Exceptions\OutOfPatternException;
+use GingerPluginSdk\Properties\ClientOptions;
 use PHPUnit\Framework\TestCase;
 
 class ClientOptionsTest extends TestCase

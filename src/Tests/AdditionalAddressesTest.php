@@ -1,7 +1,8 @@
 <?php
 
-namespace GingerPluginSdk\Collections;
+namespace GingerPluginSdk\Tests;
 
+use GingerPluginSdk\Collections\AdditionalAddresses;
 use GingerPluginSdk\Entities\Address;
 use GingerPluginSdk\Properties\Country;
 use GingerPluginSdk\Properties\Locale;

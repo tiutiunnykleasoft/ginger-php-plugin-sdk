@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace GingerPluginSdk\Entities;
+namespace GingerPluginSdk\Tests;
 
+use GingerPluginSdk\Entities\Line;
 use GingerPluginSdk\Exceptions\OutOfDiapasonException;
 use GingerPluginSdk\Exceptions\OutOfEnumException;
 use PHPUnit\Framework\TestCase;

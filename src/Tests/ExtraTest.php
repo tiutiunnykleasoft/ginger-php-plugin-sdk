@@ -1,7 +1,8 @@
 <?php
 
-namespace GingerPluginSdk\Entities;
+namespace GingerPluginSdk\Tests;
 
+use GingerPluginSdk\Entities\Extra;
 use PHPUnit\Framework\TestCase;
 
 class ExtraTest extends TestCase
