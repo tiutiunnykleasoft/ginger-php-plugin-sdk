@@ -36,7 +36,7 @@ final class Transaction implements MultiFieldsEntityInterface
                 "bank-transfer",
                 "credit-card",
                 "google-pay",
-                "ideal" => true,
+                "ideal",
                 "klarna-direct-debit",
                 "klarna-pay-later",
                 "klarna-pay-now",
