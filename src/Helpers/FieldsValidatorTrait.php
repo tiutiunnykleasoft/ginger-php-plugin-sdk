@@ -21,7 +21,7 @@ trait FieldsValidatorTrait
     /**
      * @throws \GingerPluginSdk\Exceptions\OutOfPatternException
      */
-    public function validatePattern($value, $pattern, $valid)
+    public function validatePattern($value, $pattern)
     {
         /** @var \GingerPluginSdk\Bases\BaseField $this */
         if (!preg_match($pattern, $value)) {
