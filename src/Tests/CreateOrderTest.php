@@ -7,12 +7,14 @@ use GingerPluginSdk\Collections\OrderLines;
 use GingerPluginSdk\Collections\PhoneNumbers;
 use GingerPluginSdk\Collections\Transactions;
 use GingerPluginSdk\Entities\Address;
+use GingerPluginSdk\Entities\Client;
 use GingerPluginSdk\Entities\Customer;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Entities\Line;
 use GingerPluginSdk\Entities\Order;
 use GingerPluginSdk\Entities\PaymentMethodDetails;
 use GingerPluginSdk\Entities\Transaction;
+use GingerPluginSdk\Properties\ClientOptions;
 use GingerPluginSdk\Properties\Country;
 use GingerPluginSdk\Properties\Currency;
 use GingerPluginSdk\Properties\Email;
@@ -22,6 +24,7 @@ use PHPUnit\Framework\TestCase;
 class CreateOrderTest extends TestCase
 {
     private Order $order;
+    private \GingerPluginSdk\Client $client;
 
     public function setUp(): void
     {
@@ -29,7 +32,7 @@ class CreateOrderTest extends TestCase
         $_SERVER["HTTP_USER_AGENT"] = "PHPUnit Tests";
 
         $this->client = new \GingerPluginSdk\Client(
-            new \GingerPluginSdk\Properties\ClientOptions(
+            new ClientOptions(
                 endpoint: "https://api.online.emspay.eu",
                 useBundle: true,
                 apiKey: getenv('GINGER_API_KEY'))
@@ -115,7 +118,7 @@ class CreateOrderTest extends TestCase
      */
     public function test_sending()
     {
-        $response = $this->client->setOrder($this->order)->sendOrder();
+        $response = $this->client->sendOrder($this->order);
 
         self::assertArrayHasKey(key: "data", array: $response['body']);
         self::assertSame($response["body"]["data"]["status"], 'new');

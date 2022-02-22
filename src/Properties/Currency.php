@@ -18,16 +18,6 @@ final class Currency extends BaseField implements ValidateFieldsInterface
         $this->set($value);
     }
 
-    public function update()
-    {
-
-    }
-
-    public function getActualList(&$client)
-    {
-
-    }
-
     /**
      * @throws \GingerPluginSdk\Exceptions\OutOfPatternException
      */
