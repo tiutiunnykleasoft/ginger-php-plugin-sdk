@@ -19,4 +19,12 @@ class CurrencyTest extends TestCase
         self::expectException(OutOfPatternException::class);
         $test = new Currency('EU');
     }
+
+    public function test_get_property()
+    {
+        self::assertSame(
+            (new Currency('EUR'))->getPropertyName(),
+            'currency'
+        );
+    }
 }
