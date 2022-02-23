@@ -49,4 +49,23 @@ class MultiCurrencyTest extends TestCase
             realpath(__DIR__ . "/../Assets/payment_method_currencies.json")
         );
     }
+
+    public function test_removing_cache_file()
+    {
+        $this->client->checkAvailabilityForPaymentMethodUsingCurrency(
+            payment_method_name: 'ideal',
+            currency: new Currency('EUR')
+        );
+
+        $valid_file = file_exists($this->client::MULTI_CURRENCY_CACHE_FILE_PATH);
+
+        $this->client->removeCachedMultiCurrency();
+
+        $non_exist_file = file_exists($this->client::MULTI_CURRENCY_CACHE_FILE_PATH);
+
+        self::assertNotSame(
+            $valid_file,
+            $non_exist_file
+        );
+    }
 }

@@ -45,6 +45,14 @@ class Client
         );
     }
 
+    /**
+     * Methods checks if the payment method is available for the selected currency.
+     * The currency list will be retrieved from API or from the cached currency list.
+     *
+     * @param string $payment_method_name in format without bank label, just `ideal` or `apple-pay`
+     * @param \GingerPluginSdk\Properties\Currency $currency
+     * @return bool true if method is available / false if creating order with selected payment method and currency is not supporting
+     */
     public function checkAvailabilityForPaymentMethodUsingCurrency(string $payment_method_name, Currency $currency): bool
     {
         $file_content = "";
@@ -65,6 +73,15 @@ class Client
         return in_array($currency->get(), $currency_list->payment_methods->$payment_method_name->currencies);
     }
 
+    /**
+     * Remove file which is used for store cached multi-currency.
+     * Basically, that action will be needed if users want to update the existing currency array.
+     */
+    public function removeCachedMultiCurrency()
+    {
+        unlink(self::MULTI_CURRENCY_CACHE_FILE_PATH);
+    }
+
     public function sendOrder(Order $order): array
     {
         try {
@@ -77,7 +94,8 @@ class Client
                 )
             );
         } catch (RuntimeException $exception) {
-            print_r($exception->getMessage());exit;
+            print_r($exception->getMessage());
+            exit;
             $args = $exception->getTrace()[0]["args"][0];
             $error_body = $args["error"];
             $additional_error_data = [

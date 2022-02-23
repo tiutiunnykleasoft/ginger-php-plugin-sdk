@@ -104,7 +104,7 @@ class CreateOrderTest extends TestCase
                 ['sw_order_id' => 501]
             ),
             client: new \GingerPluginSdk\Entities\Client(
-                user_agent: $_SERVER['HTTP_USER_AGENT'],
+                userAgent: $_SERVER['HTTP_USER_AGENT'],
                 platformName: 'docker',
                 platformVersion: '1',
                 pluginName: 'ginger-plugin-sdk',

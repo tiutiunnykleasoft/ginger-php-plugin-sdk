@@ -14,30 +14,30 @@ final class Client implements MultiFieldsEntityInterface
     use SingleFieldTrait;
 
     protected string $propertyName = 'client';
-    private BaseField $user_agent;
+    private BaseField $userAgent;
     private BaseField $platformName;
     private BaseField $platformVersion;
     private BaseField $pluginName;
     private BaseField $pluginVersion;
 
     /**
-     * @param string $user_agent - HTTP user agent
+     * @param string $userAgent - HTTP user agent
      * @param string $platformName - Name of the software used to connect to the API, e.g. Magento Community Edition
      * @param string $platformVersion - Version of the software used to connect to the API, e.g. 1.9.2.2
      * @param string $pluginName - Name of the plugin used to connect to the API, e.g. ginger-magento
      * @param string $pluginVersion - Version of the plugin used to connect to the API, e.g. 1.0.0
      */
     public function __construct(
-        string $user_agent,
+        string $userAgent,
         string $platformName,
         string $platformVersion,
         string $pluginName,
         string $pluginVersion
     )
     {
-        $this->user_agent = $this->createSimpleField(
+        $this->userAgent = $this->createSimpleField(
             propertyName: 'user_agent',
-            value: $user_agent
+            value: $userAgent
         );
         $this->platformName = $this->createSimpleField(
             propertyName: 'platform_name',
@@ -59,7 +59,7 @@ final class Client implements MultiFieldsEntityInterface
 
     #[Pure] public function getUserAgent(): string
     {
-        return $this->user_agent->get();
+        return $this->userAgent->get();
     }
 
     #[Pure] public function getPlatformName(): string
