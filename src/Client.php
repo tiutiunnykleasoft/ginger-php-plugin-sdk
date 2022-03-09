@@ -5,11 +5,13 @@ namespace GingerPluginSdk;
 use Ginger\ApiClient;
 use Ginger\Ginger;
 use GingerPluginSdk\Entities\Order;
+use GingerPluginSdk\Exceptions\ValidationException;
 use GingerPluginSdk\Properties\ClientOptions;
 use GingerPluginSdk\Properties\Currency;
 use GingerPluginSdk\Response\GingerHTTPResponse;
 use GingerPluginSdk\Response\GingerHTTPResponseBody;
 use RuntimeException;
+use function PHPUnit\Framework\throwException;
 
 class Client
 {
@@ -82,6 +84,10 @@ class Client
         unlink(self::MULTI_CURRENCY_CACHE_FILE_PATH);
     }
 
+    /**
+     * @throws \GingerPluginSdk\Exceptions\ValidationException
+     * @throws \Exception
+     */
     public function sendOrder(Order $order): array
     {
         try {
@@ -94,23 +100,13 @@ class Client
                 )
             );
         } catch (RuntimeException $exception) {
-            print_r($exception->getMessage());
-            exit;
-            $args = $exception->getTrace()[0]["args"][0];
-            $error_body = $args["error"];
-            $additional_error_data = [
-                'property_description' => $error_body['property_description'] ?? null,
-                'property_path' => $error_body['property_path'] ?? null
-            ];
-            $response = new GingerHTTPResponse(
-                status: false,
-                body: new GingerHTTPResponseBody(
-                    code: $error_body['status'],
-                    data: $error_body["type"] == 'ValidationError' ? $additional_error_data : null,
-                    type: $error_body['type'] ?? null,
-                    message: $error_body["value"]
-                )
-            );
+            if (array_key_exists("args", current($exception->getTrace())) && array_key_exists("error", current(current($exception->getTrace())["args"]))) {
+                $error = current(current($exception->getTrace())["args"])["error"];
+                if (array_key_exists("type", $error) && $error['type'] == 'ValidationError') {
+                    throw new ValidationException($error['value'], $error['status']);
+                }
+            }
+            throw new \Exception('Unhandled Client exception');
         }
         return $response->toArray();
     }
