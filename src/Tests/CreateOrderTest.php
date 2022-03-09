@@ -7,14 +7,13 @@ use GingerPluginSdk\Collections\OrderLines;
 use GingerPluginSdk\Collections\PhoneNumbers;
 use GingerPluginSdk\Collections\Transactions;
 use GingerPluginSdk\Entities\Address;
-use GingerPluginSdk\Entities\Client;
 use GingerPluginSdk\Entities\Customer;
 use GingerPluginSdk\Entities\Extra;
 use GingerPluginSdk\Entities\Line;
 use GingerPluginSdk\Entities\Order;
 use GingerPluginSdk\Entities\PaymentMethodDetails;
 use GingerPluginSdk\Entities\Transaction;
-use GingerPluginSdk\Exceptions\ValidationException;
+use GingerPluginSdk\Exceptions\APIException;
 use GingerPluginSdk\Properties\ClientOptions;
 use GingerPluginSdk\Properties\Country;
 use GingerPluginSdk\Properties\Currency;
@@ -121,8 +120,7 @@ class CreateOrderTest extends TestCase
     {
         $response = $this->client->sendOrder($this->order);
 
-        self::assertArrayHasKey(key: "data", array: $response['body']);
-        self::assertSame($response["body"]["data"]["status"], 'new');
+        self::assertSame($response["status"], 'new');
     }
 
     public function test_get_property()
@@ -135,7 +133,7 @@ class CreateOrderTest extends TestCase
 
     public function test_exception_validation()
     {
-        self::expectException(ValidationException::class);
+        self::expectException(APIException::class);
         $test_order = new Order(
             currency: new Currency('NUL'),
             amount: 500,

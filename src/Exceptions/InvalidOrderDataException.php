@@ -4,7 +4,6 @@ namespace GingerPluginSdk\Exceptions;
 
 use Exception;
 
-class ValidationException extends Exception
+class InvalidOrderDataException extends Exception
 {
-
 }

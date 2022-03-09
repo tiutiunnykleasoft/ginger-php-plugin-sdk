@@ -5,13 +5,11 @@ namespace GingerPluginSdk;
 use Ginger\ApiClient;
 use Ginger\Ginger;
 use GingerPluginSdk\Entities\Order;
-use GingerPluginSdk\Exceptions\ValidationException;
+use GingerPluginSdk\Exceptions\APIException;
+use GingerPluginSdk\Exceptions\InvalidOrderDataException;
 use GingerPluginSdk\Properties\ClientOptions;
 use GingerPluginSdk\Properties\Currency;
-use GingerPluginSdk\Response\GingerHTTPResponse;
-use GingerPluginSdk\Response\GingerHTTPResponseBody;
 use RuntimeException;
-use function PHPUnit\Framework\throwException;
 
 class Client
 {
@@ -91,23 +89,14 @@ class Client
     public function sendOrder(Order $order): array
     {
         try {
-            $success_response = $this->api_client->createOrder($order->toArray());
-            $response = new GingerHTTPResponse(
-                status: true,
-                body: new GingerHTTPResponseBody(
-                    code: '201',
-                    data: $success_response
-                )
-            );
-        } catch (RuntimeException $exception) {
-            if (array_key_exists("args", current($exception->getTrace())) && array_key_exists("error", current(current($exception->getTrace())["args"]))) {
-                $error = current(current($exception->getTrace())["args"])["error"];
-                if (array_key_exists("type", $error) && $error['type'] == 'ValidationError') {
-                    throw new ValidationException($error['value'], $error['status']);
-                }
+            $response = $this->api_client->createOrder($order->toArray());
+            if ($response["status"] == 'error') {
+                throw new InvalidOrderDataException($response["reason"]);
             }
-            throw new \Exception($exception->getMessage());
+
+            return $response;
+        } catch (RuntimeException $exception) {
+            throw new APIException($exception->getMessage());
         }
-        return $response->toArray();
     }
 }
