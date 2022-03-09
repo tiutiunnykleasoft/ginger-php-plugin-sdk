@@ -106,7 +106,7 @@ class Client
                     throw new ValidationException($error['value'], $error['status']);
                 }
             }
-            throw new \Exception('Unhandled Client exception');
+            throw new \Exception($exception->getMessage());
         }
         return $response->toArray();
     }
