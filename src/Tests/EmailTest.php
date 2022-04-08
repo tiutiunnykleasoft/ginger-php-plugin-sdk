@@ -25,7 +25,7 @@ class EmailTest extends TestCase
     {
         self::assertSame(
             (new Email("nanallew@dota.com"))->getPropertyName(),
-            'email'
+            'email_address'
         );
     }
 }

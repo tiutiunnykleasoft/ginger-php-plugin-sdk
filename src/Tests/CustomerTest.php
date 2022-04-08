@@ -212,6 +212,7 @@ class CustomerTest extends TestCase
             'email' => 'order@weed.you',
             'birthdate' => '2021-07-01',
             'merchant_customer_id' => '666',
+            'country' => 'NL',
             'locale' => 'NL_en',
             'ip_address' => '173.0.2.5',
             'phoneNumbers' => [
