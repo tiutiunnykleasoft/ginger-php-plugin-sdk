@@ -8,8 +8,9 @@ use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 class AbstractCollection implements MultiFieldsEntityInterface
 {
     private int $pointer = 0;
-    private array $items;
+    private array $items = [];
     protected string $propertyName;
+
     /**
      * @template T
      * @var class-string T $classname
@@ -21,8 +22,8 @@ class AbstractCollection implements MultiFieldsEntityInterface
     /** @var T $item */
     public function add(mixed $item)
     {
-        $this->items[$this->pointer] = $item;
         $this->next();
+        $this->items[$this->pointer] = $item;
     }
 
     /** @return T */
@@ -80,6 +81,11 @@ class AbstractCollection implements MultiFieldsEntityInterface
     public function count(): int
     {
         return $this->pointer;
+    }
+
+    public function first()
+    {
+        return $this->items[1];
     }
 
     public function getPropertyName(): string

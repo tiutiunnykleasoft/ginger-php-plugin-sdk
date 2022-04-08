@@ -20,7 +20,7 @@ final class Email extends BaseField implements ValidateFieldsInterface
 
     public function __construct($value)
     {
-        parent::__construct('email');
+        parent::__construct('email_address');
         $this->set($value);
     }
 }

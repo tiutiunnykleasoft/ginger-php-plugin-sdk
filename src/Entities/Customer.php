@@ -10,6 +10,7 @@ use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
+use GingerPluginSdk\Properties\Country;
 use GingerPluginSdk\Properties\DateOfBirth;
 use GingerPluginSdk\Properties\Email;
 use GingerPluginSdk\Properties\Locale;
@@ -80,6 +81,10 @@ final class Customer implements MultiFieldsEntityInterface
                 'male', 'female'
             ]
         );
+        $this->country = new Country(
+            $this->additional_addresses->get()->getCountry()
+        );
+
         $this->setMerchantCustomerId($merchantCustomerId)
             ->setPhoneNumbers($phoneNumbers)
             ->setLocale($locale)
