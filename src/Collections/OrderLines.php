@@ -1,15 +1,18 @@
 <?php
 
-namespace GingerPluginSdk\Entities;
+namespace GingerPluginSdk\Collections;
 
 use GingerPluginSdk\Collections\AbstractCollection;
+use GingerPluginSdk\Entities\Line;
 
 final class OrderLines extends AbstractCollection
 {
-    public function __construct(Line $item)
+    public function __construct(Line ...$items)
     {
-        $this->property_name = 'order_lines';
-        $this->add($item);
+        $this->propertyName = 'order_lines';
+        foreach ($items as $item) {
+            $this->add($item);
+        }
         parent::__construct(Line::class, 'order_lines');
     }
 

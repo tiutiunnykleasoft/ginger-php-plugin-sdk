@@ -7,12 +7,12 @@ use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
 abstract class BaseField
 {
     private mixed $value;
-    private string $property_name;
+    private string $propertyName;
     protected array $enum;
 
-    public function __construct($property_name)
+    public function __construct($propertyName)
     {
-        $this->property_name = $property_name;
+        $this->propertyName = $propertyName;
     }
 
     final public function set($value): BaseField
@@ -29,6 +29,6 @@ abstract class BaseField
 
     final public function getPropertyName(): string
     {
-        return $this->property_name;
+        return $this->propertyName;
     }
 }

@@ -16,7 +16,7 @@ trait MultiFieldsEntityTrait
 
     public function getPropertyName(): string
     {
-        return $this->property_name ?: false;
+        return $this->propertyName ?? false;
     }
 
     public function toArray(): array

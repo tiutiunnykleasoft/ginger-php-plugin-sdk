@@ -12,16 +12,16 @@ class Extra implements MultiFieldsEntityInterface
     use MultiFieldsEntityTrait;
     use SingleFieldTrait;
 
-    protected string $property_name = 'extra';
+    protected string $propertyName = 'extra';
 
     public function __construct(
-        ...$attributes
+        array ...$attributes
     )
     {
         foreach ($attributes as $attribute) {
             $key = key($attribute);
             $this->$key = $this->createSimpleField(
-                property_name: $key,
+                propertyName: $key,
                 value: $attribute[$key]
             );
         }

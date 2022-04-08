@@ -9,7 +9,8 @@
     }
   ],
   "require": {
-    "gingerpayments/ginger-php": "^2.1"
+    "gingerpayments/ginger-php": "^2.1",
+    "ext-intl": "*"
   },
   "autoload": {
     "psr-4": {

@@ -17,8 +17,7 @@ final class Locale extends BaseField implements ValidateFieldsInterface
     {
         $this->validatePattern(
             value: $value,
-            pattern: "/^[a-zA-Z]{2}([\\-_][a-zA-Z]{2})?$/",
-            valid: ['UA_ua,NL,BE,FR']
+            pattern: "/^[a-zA-Z]{2}([\\\-_][a-zA-Z]{2})?$/"
         );
     }
 

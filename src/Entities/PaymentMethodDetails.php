@@ -12,7 +12,7 @@ final class PaymentMethodDetails implements MultiFieldsEntityInterface
     use MultiFieldsEntityTrait;
     use SingleFieldTrait;
 
-    private string $property_name = 'payment_method_details';
+    private string $propertyName = 'payment_method_details';
     private BaseField|null $issuer_id = null;
 
     /**
@@ -22,7 +22,7 @@ final class PaymentMethodDetails implements MultiFieldsEntityInterface
     {
         foreach ($attributes as $title => $value) {
             $this->$title = $this->createSimpleField(
-                property_name: $title,
+                propertyName: $title,
                 value: $value
             );
         }
@@ -34,10 +34,10 @@ final class PaymentMethodDetails implements MultiFieldsEntityInterface
      * @param string $issuer
      * @return $this
      */
-    public function setPaymentMethodDetailsIdeal(string $issuer): static
+    public function setPaymentMethodDetailsIdeal(string $issuer): PaymentMethodDetails
     {
         $this->issuer_id = $this->createSimpleField(
-            property_name: 'issuer_id',
+            propertyName: 'issuer_id',
             value: $issuer
         );
         return $this;

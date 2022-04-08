@@ -5,6 +5,7 @@ namespace GingerPluginSdk\Properties;
 use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Exceptions\OutOfPatternException;
 use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
+use JetBrains\PhpStorm\Pure;
 
 final class DateOfBirth extends BaseField implements ValidateFieldsInterface
 {
@@ -15,7 +16,7 @@ final class DateOfBirth extends BaseField implements ValidateFieldsInterface
     {
         $date = \DateTimeImmutable::createFromFormat('Y-m-d', $value);
         if ($date === false || $date->format('Y-m-d') !== $value) {
-            throw new OutOfPatternException($this->getPropertyName(),['2021-09-21', '2022-01-30']);
+            throw new OutOfPatternException($this->getPropertyName());
         }
     }
 
@@ -23,5 +24,10 @@ final class DateOfBirth extends BaseField implements ValidateFieldsInterface
     {
         parent::__construct('birthdate');
         $this->set($value);
+    }
+
+    #[Pure] public function __toString(): string
+    {
+        return $this->get();
     }
 }

@@ -10,31 +10,31 @@ use JetBrains\PhpStorm\Pure;
 trait SingleFieldTrait
 {
     /**
-     * @param $property_name - This attribute will be used while parsing in toArray method as key
+     * @param $propertyName - This attribute will be used while parsing in toArray method as key
      * @param $value - This attribute will be used while parsing in toArray method as value
      * @return \GingerPluginSdk\Bases\BaseField
      */
-    protected function createSimpleField($property_name, $value): BaseField
+    protected function createSimpleField($propertyName, $value): BaseField
     {
-        $new_class = new class($property_name) extends BaseField {
-            #[Pure] public function __construct($property_name)
+        $new_class = new class($propertyName) extends BaseField {
+            #[Pure] public function __construct($propertyName)
             {
-                parent::__construct($property_name);
+                parent::__construct($propertyName);
             }
         };
         $new_class->set($value);
         return $new_class;
     }
 
-    protected function createEnumeratedField($property_name, $value, $enum): ValidateFieldsInterface|BaseField
+    protected function createEnumeratedField($propertyName, $value, $enum): ValidateFieldsInterface|BaseField
     {
-        $new_class = new class($property_name, $enum, $value) extends BaseField implements ValidateFieldsInterface {
+        $new_class = new class($propertyName, $enum) extends BaseField implements ValidateFieldsInterface {
             use FieldsValidatorTrait;
 
-            #[Pure] public function __construct($property_name, $enum)
+            #[Pure] public function __construct($propertyName, $enum)
             {
                 $this->enum = $enum;
-                parent::__construct($property_name);
+                parent::__construct($propertyName);
             }
 
             public function validate($value)
@@ -46,19 +46,19 @@ trait SingleFieldTrait
         return $new_class;
     }
 
-    protected function createFieldWithDiapasonOfValues(string $property_name, mixed $value, int $min, int $max = null): ValidateFieldsInterface|BaseField
+    protected function createFieldWithDiapasonOfValues(string $propertyName, mixed $value, int $min, int $max = null): ValidateFieldsInterface|BaseField
     {
-        $new_class = new class($property_name, $value, $min, $max) extends BaseField implements ValidateFieldsInterface {
+        $new_class = new class($propertyName, $value, $min, $max) extends BaseField implements ValidateFieldsInterface {
             use FieldsValidatorTrait;
 
             private int $min;
             private ?int $max;
 
-            #[Pure] public function __construct($property_name, $value, $min, $max)
+            #[Pure] public function __construct($propertyName, $value, $min, $max)
             {
                 $this->min = $min;
                 $this->max = $max;
-                parent::__construct($property_name);
+                parent::__construct($propertyName);
             }
 
             public function validate($value)

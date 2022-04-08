@@ -2,7 +2,10 @@
 
 namespace GingerPluginSdk\Entities;
 
+use Cassandra\Date;
 use GingerPluginSdk\Bases\BaseField;
+use GingerPluginSdk\Collections\AdditionalAddresses;
+use GingerPluginSdk\Collections\PhoneNumbers;
 use GingerPluginSdk\Helpers\FieldsValidatorTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
@@ -10,7 +13,6 @@ use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Properties\DateOfBirth;
 use GingerPluginSdk\Properties\Email;
 use GingerPluginSdk\Properties\Locale;
-use GingerPluginSdk\Properties\PhoneNumbers;
 use JetBrains\PhpStorm\Pure;
 
 final class Customer implements MultiFieldsEntityInterface
@@ -19,83 +21,79 @@ final class Customer implements MultiFieldsEntityInterface
     use FieldsValidatorTrait;
     use SingleFieldTrait;
 
-    private string $property_name = 'customer';
+    private string $propertyName = 'customer';
     /** ---Required--- */
-    private BaseField $last_name;
-    private BaseField $first_name;
+    private BaseField $lastName;
+    private BaseField $firstName;
     private BaseField $gender;
     /** -------------- */
 
     /** ---not-nullable--- */
     private string $address;
-    private BaseField $address_type;
+    private BaseField $addressType;
     private BaseField $country;
-    private BaseField $postal_code;
+    private BaseField $postalCode;
     /** ------------------ */
 
 
-    private PhoneNumbers|null $phone_numbers = null;
-    private BaseField|null $merchant_customer_id = null;
+    private PhoneNumbers|null $phoneNumbers = null;
+    private BaseField|null $merchantCustomerId = null;
     private BaseField|null $locale = null;
     /** @var BaseField|null - Customer's IP address */
-    private BaseField|null $ip_address = null;
-
-    private DateOfBirth|null $birthdate = null;
-
+    private BaseField|null $ipAddress = null;
 
     /**
      * @param AdditionalAddresses $additional_addresses
-     * @param string $first_name
-     * @param string $last_name
+     * @param string $firstName
+     * @param string $lastName
      * @param Email $email_address
      * @param string $gender - Customer's gender
-     * @param PhoneNumbers|null $phone_numbers
-     * @param string|null $merchant_customer_id - Merchant's internal customer identifier
+     * @param PhoneNumbers|null $phoneNumbers
+     * @param string|null $merchantCustomerId - Merchant's internal customer identifier
      * @param string|null $birthdate - Customer's birthdate (ISO 8601 / RFC 3339)
      * @param Locale|null $locale - POSIX locale or RFC 5646 language tag; only language and region are supported
      */
     public function __construct(
         private AdditionalAddresses $additional_addresses,
-        string                      $first_name,
-        string                      $last_name,
+        string                      $firstName,
+        string                      $lastName,
         private Email               $email_address,
         string                      $gender,
-        ?PhoneNumbers               $phone_numbers = null,
-        ?string                     $merchant_customer_id = null,
-        ?string                     $birthdate = null,
+        ?PhoneNumbers               $phoneNumbers = null,
+        ?string                     $merchantCustomerId = null,
+        private ?DateOfBirth        $birthdate = null,
         ?Locale                     $locale = null
     )
     {
-        $this->first_name = $this->createSimpleField(
-            property_name: 'first_name',
-            value: $first_name
+        $this->firstName = $this->createSimpleField(
+            propertyName: 'first_name',
+            value: $firstName
         );
-        $this->last_name = $this->createSimpleField(
-            property_name: 'last_name',
-            value: $last_name
+        $this->lastName = $this->createSimpleField(
+            propertyName: 'last_name',
+            value: $lastName
         );
         $this->gender = $this->createEnumeratedField(
-            property_name: 'gender',
+            propertyName: 'gender',
             value: $gender,
             enum: [
                 'male', 'female'
             ]
         );
-        $this->setMerchantCustomerId($merchant_customer_id)
-            ->setPhoneNumbers($phone_numbers)
-            ->setBirthdate($birthdate)
+        $this->setMerchantCustomerId($merchantCustomerId)
+            ->setPhoneNumbers($phoneNumbers)
             ->setLocale($locale)
             ->setIpAddress();
     }
 
     #[Pure] public function getFirstName(): string
     {
-        return $this->first_name->get();
+        return $this->firstName->get();
     }
 
     #[Pure] public function getLastName(): string
     {
-        return $this->last_name->get();
+        return $this->lastName->get();
     }
 
     #[Pure] public function getEmailAddress(): string
@@ -125,26 +123,26 @@ final class Customer implements MultiFieldsEntityInterface
 
     #[Pure] public function getIpAddress(): string
     {
-        return $this->ip_address->get();
+        return $this->ipAddress->get();
     }
 
     #[Pure] public function getMerchantCustomerId(): ?string
     {
-        return $this->merchant_customer_id->get();
+        return $this->merchantCustomerId->get();
     }
 
     public function getPhoneNumbers(): array
     {
-        return $this->phone_numbers->toArray();
+        return $this->phoneNumbers->toArray();
     }
 
     /**
-     * @param string|null $date
+     * @param DateOfBirth|null $date
      * @return $this
      */
-    public function setBirthdate(?string $date): Customer
+    public function setBirthdate(?DateOfBirth $date): Customer
     {
-        $this->birthdate = $date ? new DateOfBirth($date) : null;
+        $this->birthdate = $date ?: null;
         return $this;
     }
 
@@ -163,8 +161,8 @@ final class Customer implements MultiFieldsEntityInterface
      */
     public function setIpAddress(): Customer
     {
-        $this->ip_address = $this->createSimpleField(
-            property_name: "ip_address",
+        $this->ipAddress = $this->createSimpleField(
+            propertyName: "ip_address",
             value: $_SERVER['REMOTE_ADDR']
         );
         return $this;
@@ -176,20 +174,20 @@ final class Customer implements MultiFieldsEntityInterface
      */
     public function setMerchantCustomerId(?string $id): Customer
     {
-        $this->merchant_customer_id = $this->createSimpleField(
-            property_name: 'merchant_customer_id',
+        $this->merchantCustomerId = $this->createSimpleField(
+            propertyName: 'merchant_customer_id',
             value: $id
         );
         return $this;
     }
 
     /**
-     * @param PhoneNumbers $phone_numbers
+     * @param PhoneNumbers $phoneNumbers
      * @return Customer
      */
-    public function setPhoneNumbers(PhoneNumbers $phone_numbers): Customer
+    public function setPhoneNumbers(PhoneNumbers $phoneNumbers): Customer
     {
-        $this->phone_numbers = $phone_numbers;
+        $this->phoneNumbers = $phoneNumbers;
         return $this;
     }
 }

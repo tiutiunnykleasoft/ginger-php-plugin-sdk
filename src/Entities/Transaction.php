@@ -15,19 +15,19 @@ final class Transaction implements MultiFieldsEntityInterface
     use MultiFieldsEntityTrait;
     use SingleFieldTrait;
 
-    protected string $property_name = '';
-    private BaseField $payment_method;
-    private MultiFieldsEntityInterface $payment_method_details;
+    protected string $propertyName = '';
+    private BaseField $paymentMethod;
+    private MultiFieldsEntityInterface $paymentMethodDetails;
 
     /**
-     * @param string $payment_method
-     * @param \GingerPluginSdk\Entities\PaymentMethodDetails|null $payment_method_details
+     * @param string $paymentMethod
+     * @param PaymentMethodDetails|null $paymentMethodDetails
      */
-    public function __construct(string $payment_method, PaymentMethodDetails $payment_method_details = null)
+    public function __construct(string $paymentMethod, PaymentMethodDetails $paymentMethodDetails = null)
     {
-        $this->payment_method = $this->createEnumeratedField(
-            property_name: 'payment_method',
-            value: $payment_method,
+        $this->paymentMethod = $this->createEnumeratedField(
+            propertyName: 'payment_method',
+            value: $paymentMethod,
             enum: [
                 "afterpay",
                 "amex",
@@ -36,7 +36,7 @@ final class Transaction implements MultiFieldsEntityInterface
                 "bank-transfer",
                 "credit-card",
                 "google-pay",
-                "ideal" => true,
+                "ideal",
                 "klarna-direct-debit",
                 "klarna-pay-later",
                 "klarna-pay-now",
@@ -46,16 +46,16 @@ final class Transaction implements MultiFieldsEntityInterface
                 "sofort"
             ]
         );
-        $this->payment_method_details = $payment_method_details ?: new PaymentMethodDetails();
+        $this->paymentMethodDetails = $paymentMethodDetails ?: new PaymentMethodDetails();
     }
 
     public function getPaymentMethodDetails(): PaymentMethodDetails|MultiFieldsEntityInterface
     {
-        return $this->payment_method_details;
+        return $this->paymentMethodDetails;
     }
 
     public function getPaymentMethod(): ValidateFieldsInterface|BaseField
     {
-        return $this->payment_method;
+        return $this->paymentMethod;
     }
 }
