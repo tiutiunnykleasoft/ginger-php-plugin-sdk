@@ -33,7 +33,7 @@ class Client
         return $this->api_client;
     }
 
-    public function createClient($apiKey, $useBundle, $endpoint): ApiClient
+    private function createClient($apiKey, $useBundle, $endpoint): ApiClient
     {
         return Ginger::createClient(
             $endpoint,
