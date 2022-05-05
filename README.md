@@ -19,7 +19,7 @@ Should be used with payment plugins or for order creation. <br>
 - Description
 - Amount
 - Customer
-    - DateOfBirth
+    - Birthdate
     - Address
         - Country
 - Order Lines

@@ -18,12 +18,20 @@ final class Transaction implements MultiFieldsEntityInterface
     protected string $propertyName = '';
     private BaseField $paymentMethod;
     private MultiFieldsEntityInterface $paymentMethodDetails;
+    private BaseField $id;
+    private BaseField $merchant_id;
 
     /**
      * @param string $paymentMethod
      * @param PaymentMethodDetails|null $paymentMethodDetails
+     * @param string|null $id
      */
-    public function __construct(string $paymentMethod, PaymentMethodDetails $paymentMethodDetails = null)
+    public function __construct(
+        string               $paymentMethod,
+        PaymentMethodDetails $paymentMethodDetails = null,
+        ?string              $id = null,
+        ?string              $merchantId = null
+    )
     {
         $this->paymentMethod = $this->createEnumeratedField(
             propertyName: 'payment_method',
@@ -47,6 +55,16 @@ final class Transaction implements MultiFieldsEntityInterface
             ]
         );
         $this->paymentMethodDetails = $paymentMethodDetails ?: new PaymentMethodDetails();
+
+        if ($id) $this->id = $this->createSimpleField(
+            'id',
+            $id
+        );
+
+        if ($merchantId) $this->merchant_id = $this->createSimpleField(
+            'merchant_id',
+            $merchantId
+        );
     }
 
     public function getPaymentMethodDetails(): PaymentMethodDetails|MultiFieldsEntityInterface

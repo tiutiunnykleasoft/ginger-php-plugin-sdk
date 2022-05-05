@@ -9,6 +9,8 @@ final class PhoneNumbers extends AbstractCollection
 {
     use SingleFieldTrait;
 
+    const ITEM_TYPE = 'String';
+
     public function __construct(string ...$numbers)
     {
         $this->propertyName = 'phone_numbers';

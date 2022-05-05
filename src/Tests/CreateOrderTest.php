@@ -17,7 +17,7 @@ use GingerPluginSdk\Exceptions\APIException;
 use GingerPluginSdk\Properties\ClientOptions;
 use GingerPluginSdk\Properties\Country;
 use GingerPluginSdk\Properties\Currency;
-use GingerPluginSdk\Properties\Email;
+use GingerPluginSdk\Properties\EmailAddress;
 use GingerPluginSdk\Properties\Locale;
 use PHPUnit\Framework\TestCase;
 
@@ -49,7 +49,7 @@ class CreateOrderTest extends TestCase
                 )
             ),
             customer: new Customer(
-                additional_addresses: new AdditionalAddresses(
+                additionalAddresses: new AdditionalAddresses(
                     new Address(
                         addressType: 'customer',
                         postalCode: '12345',
@@ -72,7 +72,7 @@ class CreateOrderTest extends TestCase
                 ),
                 firstName: 'Alexander',
                 lastName: 'Tiutiunnyk',
-                email_address: new Email(
+                emailAddress: new EmailAddress(
                     'tutunikssa@gmail.com'
                 ),
                 gender: 'male',
@@ -80,7 +80,7 @@ class CreateOrderTest extends TestCase
                     '0951018201'
                 ),
                 merchantCustomerId: '15',
-                birthdate: new \GingerPluginSdk\Properties\DateOfBirth('1999-09-01'),
+                birthdate: new \GingerPluginSdk\Properties\Birthdate('1999-09-01'),
                 locale: new Locale(
                     'Ua_ua'
 
@@ -146,7 +146,7 @@ class CreateOrderTest extends TestCase
                 )
             ),
             customer: new Customer(
-                additional_addresses: new AdditionalAddresses(
+                additionalAddresses: new AdditionalAddresses(
                     new Address(
                         addressType: 'customer',
                         postalCode: '12345',
@@ -169,7 +169,7 @@ class CreateOrderTest extends TestCase
                 ),
                 firstName: 'Alexander',
                 lastName: 'Tiutiunnyk',
-                email_address: new Email(
+                emailAddress: new EmailAddress(
                     'tutunikssa@gmail.com'
                 ),
                 gender: 'male',
@@ -177,7 +177,7 @@ class CreateOrderTest extends TestCase
                     '0951018201'
                 ),
                 merchantCustomerId: '15',
-                birthdate: new \GingerPluginSdk\Properties\DateOfBirth('1999-09-01'),
+                birthdate: new \GingerPluginSdk\Properties\Birthdate('1999-09-01'),
                 locale: new Locale(
                     'Ua_ua'
 

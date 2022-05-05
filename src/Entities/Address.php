@@ -40,6 +40,7 @@ final class Address implements MultiFieldsEntityInterface
         string  $city,
         Country $country,
         ?string $propertyName = null,
+        ?string $address = null,
         ?string $housenumber = null
     )
     {
