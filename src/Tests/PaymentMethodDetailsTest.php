@@ -14,7 +14,7 @@ class PaymentMethodDetailsTest extends TestCase
     {
         $this->payment_method_details = new PaymentMethodDetails(
             issuer: "test",
-            verifiedTerms: "1"
+            verified_terms: "1"
         );
     }
 
@@ -22,7 +22,7 @@ class PaymentMethodDetailsTest extends TestCase
     {
         $expected = [
             "issuer" => "test",
-            "verifiedTerms" => "1"
+            "verified_terms" => "1"
         ];
         self::assertSame(
             $expected,
