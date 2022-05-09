@@ -41,75 +41,15 @@ class CreateOrderTest extends TestCase
             currency: new Currency('EUR'),
             amount: 500,
             transactions: new Transactions(
-                new Transaction(
-                    paymentMethod: 'ideal',
-                    paymentMethodDetails: new PaymentMethodDetails(
-                        issuer_id: "15"
-                    )
-                )
+                $this->getTransactions()
             ),
-            customer: new Customer(
-                additionalAddresses: new AdditionalAddresses(
-                    new Address(
-                        addressType: 'customer',
-                        postalCode: '12345',
-                        street: 'Soborna',
-                        city: 'Poltava',
-                        country: new Country(
-                            'UA'
-                        )
-                    ),
-                    new Address(
-                        addressType: 'billing',
-                        postalCode: '1234567',
-                        street: 'Donauweg',
-                        city: 'Amsterdam',
-                        country: new Country(
-                            'NL'
-                        ),
-                        housenumber: "10"
-                    )
-                ),
-                firstName: 'Alexander',
-                lastName: 'Tiutiunnyk',
-                emailAddress: new EmailAddress(
-                    'tutunikssa@gmail.com'
-                ),
-                gender: 'male',
-                phoneNumbers: new PhoneNumbers(
-                    '0951018201'
-                ),
-                merchantCustomerId: '15',
-                birthdate: new \GingerPluginSdk\Properties\Birthdate('1999-09-01'),
-                locale: new Locale(
-                    'Ua_ua'
-
-                )
-            ),
-            orderLines: new OrderLines(
-                new Line(
-                    type: 'physical',
-                    merchantOrderLineId: "5",
-                    name: 'Milk',
-                    quantity: 1,
-                    amount: 1.00,
-                    vatPercentage: 50,
-                    currency: new Currency(
-                        'EUR'
-                    )
-                )
-            ),
+            customer: $this->getCustomer(),
+            orderLines: $this->getOrderLines(),
             description: 'Test Product',
             extra: new Extra(
                 ['sw_order_id' => 501]
             ),
-            client: new \GingerPluginSdk\Entities\Client(
-                userAgent: $_SERVER['HTTP_USER_AGENT'],
-                platformName: 'docker',
-                platformVersion: '1',
-                pluginName: 'ginger-plugin-sdk',
-                pluginVersion: '1.0.0'
-            )
+            client: $this->getClient()
         );
     }
 
@@ -131,7 +71,107 @@ class CreateOrderTest extends TestCase
         );
     }
 
-    public function test_exception_validation()
+    public function getTransactions()
+    {
+        return new Transaction(
+            paymentMethod: 'ideal',
+            paymentMethodDetails: new PaymentMethodDetails(
+                issuer_id: "15"
+            )
+        );
+    }
+
+    public function getCustomer()
+    {
+        return new Customer(
+            additionalAddresses: new AdditionalAddresses(
+                new Address(
+                    addressType: 'customer',
+                    postalCode: '12345',
+                    street: 'Soborna',
+                    city: 'Poltava',
+                    country: new Country(
+                        'UA'
+                    )
+                ),
+                new Address(
+                    addressType: 'billing',
+                    postalCode: '1234567',
+                    street: 'Donauweg',
+                    city: 'Amsterdam',
+                    country: new Country(
+                        'NL'
+                    ),
+                    housenumber: "10"
+                )
+            ),
+            firstName: 'Alexander',
+            lastName: 'Tiutiunnyk',
+            emailAddress: new EmailAddress(
+                'tutunikssa@gmail.com'
+            ),
+            gender: 'male',
+            phoneNumbers: new PhoneNumbers(
+                '0951018201'
+            ),
+            merchantCustomerId: '15',
+            birthdate: new \GingerPluginSdk\Properties\Birthdate('1999-09-01'),
+            locale: new Locale(
+                'Ua_ua'
+
+            )
+        );
+    }
+
+    public function getOrderLines()
+    {
+        return new OrderLines(
+            new Line(
+                type: 'physical',
+                merchantOrderLineId: "5",
+                name: 'Milk',
+                quantity: 1,
+                amount: 1.00,
+                vatPercentage: 50,
+                currency: new Currency(
+                    'EUR'
+                )
+            )
+        );
+    }
+
+    public function getClient()
+    {
+        return  new \GingerPluginSdk\Entities\Client(
+            userAgent: $_SERVER['HTTP_USER_AGENT'],
+            platformName: 'docker',
+            platformVersion: '1',
+            pluginName: 'ginger-plugin-sdk',
+            pluginVersion: '1.0.0'
+        );
+    }
+
+    public function test_exception_validation_ideal()
+    {
+        self::expectException(APIException::class);
+        $test_order = new Order(
+            currency: new Currency('NUL'),
+            amount: 500,
+            transactions: new Transactions(
+                $this->getTransactions()
+            ),
+            customer: $this->getCustomer(),
+            orderLines: $this->getOrderLines(),
+            description: 'Test Product',
+            extra: new Extra(
+                ['sw_order_id' => 501]
+            ),
+            client: $this->getClient()
+        );
+        $response = $this->client->sendOrder($test_order);
+    }
+
+    public function test_exception_validation_afterpay()
     {
         self::expectException(APIException::class);
         $test_order = new Order(
@@ -139,74 +179,20 @@ class CreateOrderTest extends TestCase
             amount: 500,
             transactions: new Transactions(
                 new Transaction(
-                    paymentMethod: 'ideal',
+                    paymentMethod: 'credit-card',
                     paymentMethodDetails: new PaymentMethodDetails(
-                        issuer_id: "15"
+                        issuer_id: "15",
+                        verified_terms_of_service: true
                     )
                 )
             ),
-            customer: new Customer(
-                additionalAddresses: new AdditionalAddresses(
-                    new Address(
-                        addressType: 'customer',
-                        postalCode: '12345',
-                        street: 'Soborna',
-                        city: 'Poltava',
-                        country: new Country(
-                            'UA'
-                        )
-                    ),
-                    new Address(
-                        addressType: 'billing',
-                        postalCode: '1234567',
-                        street: 'Donauweg',
-                        city: 'Amsterdam',
-                        country: new Country(
-                            'NL'
-                        ),
-                        housenumber: "10"
-                    )
-                ),
-                firstName: 'Alexander',
-                lastName: 'Tiutiunnyk',
-                emailAddress: new EmailAddress(
-                    'tutunikssa@gmail.com'
-                ),
-                gender: 'male',
-                phoneNumbers: new PhoneNumbers(
-                    '0951018201'
-                ),
-                merchantCustomerId: '15',
-                birthdate: new \GingerPluginSdk\Properties\Birthdate('1999-09-01'),
-                locale: new Locale(
-                    'Ua_ua'
-
-                )
-            ),
-            orderLines: new OrderLines(
-                new Line(
-                    type: 'physical',
-                    merchantOrderLineId: "5",
-                    name: 'Milk',
-                    quantity: 1,
-                    amount: 1.00,
-                    vatPercentage: 50,
-                    currency: new Currency(
-                        'EUR'
-                    )
-                )
-            ),
+            customer: $this->getCustomer(),
+            orderLines: $this->getOrderLines(),
             description: 'Test Product',
             extra: new Extra(
                 ['sw_order_id' => 501]
             ),
-            client: new \GingerPluginSdk\Entities\Client(
-                userAgent: $_SERVER['HTTP_USER_AGENT'],
-                platformName: 'docker',
-                platformVersion: '1',
-                pluginName: 'ginger-plugin-sdk',
-                pluginVersion: '1.0.0'
-            )
+            client: $this->getClient()
         );
         $response = $this->client->sendOrder($test_order);
     }
