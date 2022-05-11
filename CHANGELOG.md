@@ -13,4 +13,7 @@ Initial version
 * Implemented new properties for `Transaction` entity :
     * id
     * merchant_id
+    * created
+    * modified
+* Implemented `createFieldInDateTimeISO8601` method into `SingleFieldTrait`
 * Refactored Collections to store `ITEM_TYPE` of included items.

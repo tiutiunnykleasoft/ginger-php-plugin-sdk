@@ -3,12 +3,10 @@
 namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Bases\BaseField;
-use GingerPluginSdk\Collections\AbstractCollection;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
-use phpDocumentor\Reflection\Types\This;
 
 final class Transaction implements MultiFieldsEntityInterface
 {
@@ -20,17 +18,23 @@ final class Transaction implements MultiFieldsEntityInterface
     private MultiFieldsEntityInterface $paymentMethodDetails;
     private BaseField $id;
     private BaseField $merchant_id;
+    private BaseField $created;
+    private BaseField $modified;
 
     /**
      * @param string $paymentMethod
      * @param PaymentMethodDetails|null $paymentMethodDetails
      * @param string|null $id
+     * @param string|null $merchantId
+     * @param string|null $created
      */
     public function __construct(
         string               $paymentMethod,
         PaymentMethodDetails $paymentMethodDetails = null,
         ?string              $id = null,
-        ?string              $merchantId = null
+        ?string              $merchantId = null,
+        ?string              $created = null,
+        ?string              $modified = null
     )
     {
         $this->paymentMethod = $this->createEnumeratedField(
@@ -64,6 +68,16 @@ final class Transaction implements MultiFieldsEntityInterface
         if ($merchantId) $this->merchant_id = $this->createSimpleField(
             'merchant_id',
             $merchantId
+        );
+
+        if ($created) $this->created = $this->createFieldInDateTimeISO8601(
+            propertyName: 'created',
+            value: $created
+        );
+
+        if ($modified) $this->modified = $this->createFieldInDateTimeISO8601(
+            propertyName: 'modified',
+            value: $modified
         );
     }
 

@@ -113,4 +113,35 @@ class TransactionTest extends TestCase
             $expected
         );
     }
+    public function test_additional_property_created()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["created" => "2022-05-05T16:32:20.148139+00:00"]
+            )
+        );
+        $expected = "2022-05-05T16:32:20.148139+00:00";
+
+        self::assertSame(
+            $real->toArray()["created"],
+            $expected
+        );
+    }
+    public function test_additional_property_modified()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["modified" => "2022-05-05T16:32:20.148139+00:00"]
+            )
+        );
+        $expected = "2022-05-05T16:32:20.148139+00:00";
+        self::assertSame(
+            $real->toArray()["modified"],
+            $expected
+        );
+    }
 }
