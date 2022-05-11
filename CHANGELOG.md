@@ -15,5 +15,9 @@ Initial version
     * merchant_id
     * created
     * modified
+    * settled
+    * finalized
+    * completed
+    * expiration_period
 * Implemented `createFieldInDateTimeISO8601` method into `SingleFieldTrait`
 * Refactored Collections to store `ITEM_TYPE` of included items.

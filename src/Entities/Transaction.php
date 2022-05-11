@@ -20,6 +20,10 @@ final class Transaction implements MultiFieldsEntityInterface
     private BaseField $merchant_id;
     private BaseField $created;
     private BaseField $modified;
+    private BaseField $completed;
+    private BaseField $settled;
+    private BaseField $finalized;
+    private BaseField $expirationPeriod;
 
     /**
      * @param string $paymentMethod
@@ -27,6 +31,11 @@ final class Transaction implements MultiFieldsEntityInterface
      * @param string|null $id
      * @param string|null $merchantId
      * @param string|null $created
+     * @param string|null $modified
+     * @param string|null $completed
+     * @param string|null $settled
+     * @param string|null $finalized
+     * @param string|null $expirationPeriod
      */
     public function __construct(
         string               $paymentMethod,
@@ -34,7 +43,11 @@ final class Transaction implements MultiFieldsEntityInterface
         ?string              $id = null,
         ?string              $merchantId = null,
         ?string              $created = null,
-        ?string              $modified = null
+        ?string              $modified = null,
+        ?string              $completed = null,
+        ?string              $settled = null,
+        ?string              $finalized = null,
+        ?string              $expirationPeriod = null
     )
     {
         $this->paymentMethod = $this->createEnumeratedField(
@@ -78,6 +91,26 @@ final class Transaction implements MultiFieldsEntityInterface
         if ($modified) $this->modified = $this->createFieldInDateTimeISO8601(
             propertyName: 'modified',
             value: $modified
+        );
+
+        if ($completed) $this->modified = $this->createFieldInDateTimeISO8601(
+            propertyName: 'completed',
+            value: $completed
+        );
+
+        if ($settled) $this->modified = $this->createFieldInDateTimeISO8601(
+            propertyName: 'settled',
+            value: $settled
+        );
+
+        if ($finalized) $this->modified = $this->createFieldInDateTimeISO8601(
+            propertyName: 'finalized',
+            value: $finalized
+        );
+
+        if ($expirationPeriod) $this->modified = $this->createFieldInDateTimeISO8601(
+            propertyName: 'expiration_period',
+            value: $expirationPeriod
         );
     }
 

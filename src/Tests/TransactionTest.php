@@ -144,4 +144,68 @@ class TransactionTest extends TestCase
             $expected
         );
     }
+
+    public function test_additional_property_completed()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["completed" => "2022-05-05T16:32:20.148139+00:00"]
+            )
+        );
+        $expected = "2022-05-05T16:32:20.148139+00:00";
+        self::assertSame(
+            $real->toArray()["completed"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_settled()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["settled" => "2022-05-05T16:32:20.148139+00:00"]
+            )
+        );
+        $expected = "2022-05-05T16:32:20.148139+00:00";
+        self::assertSame(
+            $real->toArray()["settled"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_finalized()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["finalized" => "2022-05-05T16:32:20.148139+00:00"]
+            )
+        );
+        $expected = "2022-05-05T16:32:20.148139+00:00";
+        self::assertSame(
+            $real->toArray()["finalized"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_expiration_period()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["expiration_period" => "2022-05-05T16:32:20.148139+00:00"]
+            )
+        );
+        $expected = "2022-05-05T16:32:20.148139+00:00";
+        self::assertSame(
+            $real->toArray()["expiration_period"],
+            $expected
+        );
+    }
 }
