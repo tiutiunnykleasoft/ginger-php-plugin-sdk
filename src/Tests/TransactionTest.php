@@ -5,6 +5,7 @@ namespace GingerPluginSdk\Tests;
 use GingerPluginSdk\Client;
 use GingerPluginSdk\Entities\PaymentMethodDetails;
 use GingerPluginSdk\Entities\Transaction;
+use GingerPluginSdk\Exceptions\OutOfDiapasonException;
 use GingerPluginSdk\Exceptions\OutOfEnumException;
 use GingerPluginSdk\Properties\ClientOptions;
 use GingerPluginSdk\Properties\EmailAddress;
@@ -113,6 +114,7 @@ class TransactionTest extends TestCase
             $expected
         );
     }
+
     public function test_additional_property_created()
     {
         $real = $this->client->fromArray(
@@ -129,6 +131,7 @@ class TransactionTest extends TestCase
             $expected
         );
     }
+
     public function test_additional_property_modified()
     {
         $real = $this->client->fromArray(
@@ -206,6 +209,138 @@ class TransactionTest extends TestCase
         self::assertSame(
             $real->toArray()["expiration_period"],
             $expected
+        );
+    }
+
+    public function test_additional_property_currency()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["currency" => "EUR"]
+            )
+        );
+        $expected = "EUR";
+        self::assertSame(
+            $real->toArray()["currency"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_amount_valid()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["amount" => 12.34]
+            )
+        );
+        $expected = 1234;
+        self::assertSame(
+            $real->toArray()["amount"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_amount_invalid()
+    {
+        self::expectException(OutOfDiapasonException::class);
+        $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["amount" => 0.001]
+            )
+        );
+    }
+
+    public function test_additional_property_balance_valid()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["balance" => "test"]
+            )
+        );
+        $expected = "test";
+        self::assertSame(
+            $real->toArray()["balance"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_balance_invalid()
+    {
+        self::expectException(OutOfEnumException::class);
+        $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["balance" => "sss"]
+            )
+        );
+    }
+
+    public function test_additional_property_description()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["description" => "test"]
+            )
+        );
+        $expected = "test";
+        self::assertSame(
+            $real->toArray()["description"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_product_type()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["product_type" => "test"]
+            )
+        );
+        $expected = "test";
+        self::assertSame(
+            $real->toArray()["product_type"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_credit_debit_valid()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["credit_debit" => "credit"]
+            )
+        );
+        $expected = "credit";
+        self::assertSame(
+            $real->toArray()["credit_debit"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_credit_debit_invalid()
+    {
+        self::expectException(OutOfEnumException::class);
+        $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["credit_debit" => "n"]
+            )
         );
     }
 }

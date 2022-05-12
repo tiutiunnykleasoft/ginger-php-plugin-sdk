@@ -19,5 +19,11 @@ Initial version
     * finalized
     * completed
     * expiration_period
+    * currency,
+    * amount,
+    * balance,
+    * description,
+    * product_type,
+    * credit_debit
 * Implemented `createFieldInDateTimeISO8601` method into `SingleFieldTrait`
 * Refactored Collections to store `ITEM_TYPE` of included items.
