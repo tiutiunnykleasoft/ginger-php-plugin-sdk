@@ -343,4 +343,52 @@ class TransactionTest extends TestCase
             )
         );
     }
+
+    public function test_additional_property_payment_method_brand()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["payment_method_brand" => "ideal"]
+            )
+        );
+        $expected = "ideal";
+        self::assertSame(
+            $real->toArray()["payment_method_brand"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_payment_url()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["payment_url" => "https://payment_page.ua"]
+            )
+        );
+        $expected = "https://payment_page.ua";
+        self::assertSame(
+            $real->toArray()["payment_url"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_status_valid()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["status" => "completed"]
+            )
+        );
+        $expected = "completed";
+        self::assertSame(
+            $real->toArray()["status"],
+            $expected
+        );
+    }
 }

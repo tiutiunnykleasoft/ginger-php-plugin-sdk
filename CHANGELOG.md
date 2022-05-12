@@ -25,5 +25,11 @@ Initial version
     * description,
     * product_type,
     * credit_debit
+    * payment_method_brand
+    * payment_url
+    * status
+* Implemented `OrderCreationFailedException`
+* Implemented `Status` Property
+* Implemented `StatusTest`
 * Implemented `createFieldInDateTimeISO8601` method into `SingleFieldTrait`
 * Refactored Collections to store `ITEM_TYPE` of included items.

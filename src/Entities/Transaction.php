@@ -9,6 +9,7 @@ use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
 use GingerPluginSdk\Properties\Currency;
+use GingerPluginSdk\Properties\Status;
 
 final class Transaction implements MultiFieldsEntityInterface
 {
@@ -31,6 +32,8 @@ final class Transaction implements MultiFieldsEntityInterface
     private BaseField $description;
     private BaseField $productType;
     private BaseField $creditDebit;
+    private BaseField $paymentMethodBrand;
+    private BaseField $paymentUrl;
 
     /**
      * @param string $paymentMethod
@@ -66,7 +69,10 @@ final class Transaction implements MultiFieldsEntityInterface
         ?string              $balance = null,
         ?string              $description = null,
         ?string              $productType = null,
-        ?string              $creditDebit = null
+        ?string              $creditDebit = null,
+        ?string              $paymentMethodBrand = null,
+        ?string              $paymentUrl = null,
+        private ?Status      $status = null
     )
     {
         $this->paymentMethod = $this->createEnumeratedField(
@@ -166,6 +172,16 @@ final class Transaction implements MultiFieldsEntityInterface
                 "credit",
                 "debit"
             ]
+        );
+
+        if ($paymentMethod) $this->paymentMethodBrand = $this->createSimpleField(
+            propertyName: 'payment_method_brand',
+            value: $paymentMethodBrand
+        );
+
+        if ($paymentUrl) $this->paymentUrl = $this->createSimpleField(
+            propertyName: 'payment_url',
+            value: $paymentUrl
         );
     }
 
