@@ -24,10 +24,12 @@ Initial version
     * balance,
     * description,
     * product_type,
-    * credit_debit
-    * payment_method_brand
-    * payment_url
-    * status
+    * status,
+    * reason,
+    * isCapturable,
+    * orderId,
+    * channel,
+    * projectType
 * Implemented `OrderCreationFailedException`
 * Implemented `Status` Property
 * Implemented `StatusTest`

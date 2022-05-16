@@ -34,6 +34,11 @@ final class Transaction implements MultiFieldsEntityInterface
     private BaseField $creditDebit;
     private BaseField $paymentMethodBrand;
     private BaseField $paymentUrl;
+    private BaseField $reason;
+    private BaseField $orderId;
+    private BaseField $isCapturable;
+    private BaseField $channel;
+    private BaseField $projectType;
 
     /**
      * @param string $paymentMethod
@@ -72,7 +77,12 @@ final class Transaction implements MultiFieldsEntityInterface
         ?string              $creditDebit = null,
         ?string              $paymentMethodBrand = null,
         ?string              $paymentUrl = null,
-        private ?Status      $status = null
+        private ?Status      $status = null,
+        ?string              $reason = null,
+        ?bool                $isCapturable = null,
+        ?string              $orderId = null,
+        ?string              $channel = null,
+        ?string              $projectType = null
     )
     {
         $this->paymentMethod = $this->createEnumeratedField(
@@ -182,6 +192,36 @@ final class Transaction implements MultiFieldsEntityInterface
         if ($paymentUrl) $this->paymentUrl = $this->createSimpleField(
             propertyName: 'payment_url',
             value: $paymentUrl
+        );
+
+        if ($reason) $this->reason = $this->createSimpleField(
+            propertyName: 'reason',
+            value: $reason
+        );
+
+        if ($isCapturable) $this->isCapturable = $this->createSimpleField(
+            propertyName: 'is_capturable',
+            value: $isCapturable
+        );
+
+        if ($orderId) $this->orderId = $this->createSimpleField(
+            propertyName: 'order_id',
+            value: $orderId
+        );
+
+        if ($projectType) $this->projectType = $this->createSimpleField(
+            propertyName: 'project_type',
+            value: $projectType
+        );
+
+        if ($channel) $this->channel = $this->createEnumeratedField(
+            propertyName: 'channel',
+            value: $channel,
+            enum: [
+                "ecom",
+                "pos",
+                "system"
+            ]
         );
     }
 

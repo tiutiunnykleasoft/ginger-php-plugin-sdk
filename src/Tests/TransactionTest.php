@@ -391,4 +391,96 @@ class TransactionTest extends TestCase
             $expected
         );
     }
+
+    public function test_additional_property_reason()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["reason" => "because"]
+            )
+        );
+        $expected = "because";
+        self::assertSame(
+            $real->toArray()["reason"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_is_capturable()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["is_capturable" => true]
+            )
+        );
+        $expected = true;
+        self::assertSame(
+            $real->toArray()["is_capturable"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_order_id()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["order_id" => "123"]
+            )
+        );
+        $expected = "123";
+        self::assertSame(
+            $real->toArray()["order_id"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_channel_valid()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["channel" => "ecom"]
+            )
+        );
+        $expected = "ecom";
+        self::assertSame(
+            $real->toArray()["channel"],
+            $expected
+        );
+    }
+
+    public function test_additional_property_channel_invalid()
+    {
+        self::expectException(OutOfEnumException::class);
+        $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["channel" => "desp"]
+            )
+        );
+    }
+
+    public function test_additional_property_project_type()
+    {
+        $real = $this->client->fromArray(
+            Transaction::class,
+            array_merge(
+                self::MOCK_DATA_FOR_TRANSACTION,
+                ["project_type" => "ginger"]
+            )
+        );
+        $expected = "ginger";
+        self::assertSame(
+            $real->toArray()["project_type"],
+            $expected
+        );
+    }
 }
