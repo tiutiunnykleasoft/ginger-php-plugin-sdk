@@ -30,6 +30,18 @@ Initial version
     * orderId,
     * channel,
     * projectType
+    * flags
+    * events
+      * event
+        * occurred
+        * noticed
+        * source
+        * id
+        * event
+* Implemented `EventsTest`.
+* Implemented `EventTest`.
+* Implemented `GetOrderTest`.
+* Implemented `test_customer_from_api_array` to `FromArrayTest`.
 * Implemented `OrderCreationFailedException`
 * Implemented `Status` Property
 * Implemented `StatusTest`

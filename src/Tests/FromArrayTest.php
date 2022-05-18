@@ -317,4 +317,18 @@ class FromArrayTest extends TestCase
         );
         self::assertSame($expected_customer->toArray(), $real_customer->toArray());
     }
+
+    public function test_customer_from_api_array()
+    {
+        $order_array = $this->client->getApiClient()->getOrder("06a2cf1d-570d-4461-b8c2-42fc45d18dab");
+        $expected = $order_array["customer"];
+        $real = $this->client->fromArray(
+            Customer::class,
+            $expected
+        )->toArray();
+        self::assertEqualsCanonicalizing(
+            expected: $expected,
+            actual: $real
+        );
+    }
 }
