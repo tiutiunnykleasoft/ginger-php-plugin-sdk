@@ -30,7 +30,7 @@ class FromArrayTest extends TestCase
     {
         $this->client = new \GingerPluginSdk\Client(
             new ClientOptions(
-                endpoint: "https://api.online.emspay.eu",
+                endpoint: $_ENV["PUBLIC_API_URL"],
                 useBundle: true,
                 apiKey: getenv('GINGER_API_KEY'))
         );
@@ -320,7 +320,7 @@ class FromArrayTest extends TestCase
 
     public function test_customer_from_api_array()
     {
-        $order_array = $this->client->getApiClient()->getOrder("06a2cf1d-570d-4461-b8c2-42fc45d18dab");
+        $order_array = $this->client->getApiClient()->getOrder($_ENV["ORDER_ID_FOR_TESTS"]);
         $expected = $order_array["customer"];
         $real = $this->client->fromArray(
             Customer::class,

@@ -20,7 +20,7 @@ class TransactionTest extends TestCase
     {
         $this->client = new Client(
             new ClientOptions(
-                endpoint: "https://api.online.emspay.eu",
+                endpoint: $_ENV["PUBLIC_API_URL"],
                 useBundle: true,
                 apiKey: getenv('GINGER_API_KEY')
             )
