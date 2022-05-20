@@ -4,10 +4,11 @@ namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
+use GingerPluginSdk\Interfaces\ArbitraryArgumentsEntityInterface;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use phpDocumentor\Reflection\Types\This;
 
-class Extra implements MultiFieldsEntityInterface
+class Extra implements MultiFieldsEntityInterface, ArbitraryArgumentsEntityInterface
 {
     use MultiFieldsEntityTrait;
     use SingleFieldTrait;
@@ -15,7 +16,7 @@ class Extra implements MultiFieldsEntityInterface
     protected string $propertyName = 'extra';
 
     public function __construct(
-        array ...$attributes
+        ...$attributes
     )
     {
         foreach ($attributes as $attribute) {

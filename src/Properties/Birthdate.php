@@ -7,7 +7,7 @@ use GingerPluginSdk\Exceptions\OutOfPatternException;
 use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
 use JetBrains\PhpStorm\Pure;
 
-final class DateOfBirth extends BaseField implements ValidateFieldsInterface
+final class Birthdate extends BaseField implements ValidateFieldsInterface
 {
     /**
      * @throws \GingerPluginSdk\Exceptions\OutOfPatternException

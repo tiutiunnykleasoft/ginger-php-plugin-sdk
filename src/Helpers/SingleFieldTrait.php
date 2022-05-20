@@ -4,6 +4,7 @@ namespace GingerPluginSdk\Helpers;
 
 use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Exceptions\OutOfDiapasonException;
+use GingerPluginSdk\Exceptions\OutOfPatternException;
 use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
 use JetBrains\PhpStorm\Pure;
 
@@ -40,6 +41,58 @@ trait SingleFieldTrait
             public function validate($value)
             {
                 $this->validateEnum($value);
+            }
+        };
+        $new_class->set($value);
+        return $new_class;
+    }
+
+    protected function createFieldInDateTimeISO8601($propertyName, $value): ValidateFieldsInterface|BaseField
+    {
+        $new_class = new class($propertyName) extends BaseField implements ValidateFieldsInterface {
+            use FieldsValidatorTrait;
+
+            #[Pure] public function __construct($propertyName)
+            {
+                $this->propertyName = $propertyName;
+                parent::__construct($propertyName);
+            }
+
+            public function validate($value)
+            {
+                $income_date = \DateTime::createFromFormat("Y-m-d\TH:i:s.uO", $value);
+
+                if (!$income_date) {
+                    throw new OutOfPatternException(
+                        $this->propertyName
+                    );
+                }
+            }
+        };
+        $new_class->set($value);
+        return $new_class;
+    }
+
+    protected function createFieldForTimePeriodISO8601($propertyName, $value): ValidateFieldsInterface|BaseField
+    {
+        $new_class = new class($propertyName) extends BaseField implements ValidateFieldsInterface {
+            use FieldsValidatorTrait;
+
+            #[Pure] public function __construct($propertyName)
+            {
+                $this->propertyName = $propertyName;
+                parent::__construct($propertyName);
+            }
+
+            public function validate($value)
+            {
+                try {
+                    $income_date = new \DateInterval($value);
+                } catch (\Exception $exception) {
+                    throw new OutOfPatternException(
+                        $this->propertyName
+                    );
+                }
             }
         };
         $new_class->set($value);

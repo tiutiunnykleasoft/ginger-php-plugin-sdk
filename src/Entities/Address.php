@@ -6,6 +6,7 @@ namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
+use GingerPluginSdk\Helpers\SyncUpSchemasTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Properties\Country;
@@ -15,6 +16,7 @@ final class Address implements MultiFieldsEntityInterface
 {
     use SingleFieldTrait;
     use MultiFieldsEntityTrait;
+    use SyncUpSchemasTrait;
 
     private BaseField $addressType;
     private BaseField $postalCode;
@@ -36,21 +38,24 @@ final class Address implements MultiFieldsEntityInterface
     public function __construct(
         string  $addressType,
         string  $postalCode,
-        string  $street,
-        string  $city,
         Country $country,
+        ?string $street = null,
+        ?string $city = null,
         ?string $propertyName = null,
+        ?string $address = null,
         ?string $housenumber = null
     )
     {
         $this->addressType = $this->createEnumeratedField(
             propertyName: 'address_type',
             value: $addressType,
+            // enum: $this->getJsonSchemaFromAPI('order')
             enum: [
-                "customer",
-                "delivery",
-                "billing"
-            ]);
+                'customer',
+                'billing',
+                'shipping'
+            ]
+        );
         $this->postalCode = $this->createSimpleField(
             propertyName: 'postal_code',
             value: $postalCode
@@ -64,12 +69,18 @@ final class Address implements MultiFieldsEntityInterface
             value: $city
         );
         $this->country = $country;
-        $this->address = $this->createSimpleField(
-            propertyName: 'address',
-            value: $this->generateAddress()
-        );
 
-        $this->setHousenumber($housenumber);
+        if ($housenumber) $this->setHousenumber($housenumber);
+
+        if ($address) {
+            $this->address = $this->createSimpleField(
+                propertyName: 'address',
+                value: $address
+            );
+        } else {
+            $this->setAddressLine();
+        };
+
         if ($propertyName) $this->propertyName = $propertyName;
     }
 
@@ -94,12 +105,12 @@ final class Address implements MultiFieldsEntityInterface
         return $this->country->get();
     }
 
-    #[Pure] public function getCity(): string
+    #[Pure] public function getCity(): ?string
     {
         return $this->city->get();
     }
 
-    #[Pure] public function getStreet(): string
+    #[Pure] public function getStreet(): ?string
     {
         return $this->street->get();
     }

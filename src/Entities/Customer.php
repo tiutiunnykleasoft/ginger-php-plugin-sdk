@@ -11,8 +11,8 @@ use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Properties\Country;
-use GingerPluginSdk\Properties\DateOfBirth;
-use GingerPluginSdk\Properties\Email;
+use GingerPluginSdk\Properties\Birthdate;
+use GingerPluginSdk\Properties\EmailAddress;
 use GingerPluginSdk\Properties\Locale;
 use JetBrains\PhpStorm\Pure;
 
@@ -44,26 +44,30 @@ final class Customer implements MultiFieldsEntityInterface
     private BaseField|null $ipAddress = null;
 
     /**
-     * @param AdditionalAddresses $additional_addresses
+     * @param \GingerPluginSdk\Collections\AdditionalAddresses $additionalAddresses
      * @param string $firstName
      * @param string $lastName
-     * @param Email $email_address
+     * @param EmailAddress $emailAddress
      * @param string $gender - Customer's gender
      * @param PhoneNumbers|null $phoneNumbers
      * @param string|null $merchantCustomerId - Merchant's internal customer identifier
-     * @param string|null $birthdate - Customer's birthdate (ISO 8601 / RFC 3339)
+     * @param \GingerPluginSdk\Properties\Birthdate|null $birthdate - Customer's birthdate (ISO 8601 / RFC 3339)
      * @param Locale|null $locale - POSIX locale or RFC 5646 language tag; only language and region are supported
+     * @param \GingerPluginSdk\Properties\Country|null $country
+     * @param string|null $ipAddress
      */
     public function __construct(
-        private AdditionalAddresses $additional_addresses,
+        private AdditionalAddresses $additionalAddresses,
         string                      $firstName,
         string                      $lastName,
-        private Email               $email_address,
+        private EmailAddress        $emailAddress,
         string                      $gender,
         ?PhoneNumbers               $phoneNumbers = null,
         ?string                     $merchantCustomerId = null,
-        private ?DateOfBirth        $birthdate = null,
-        ?Locale                     $locale = null
+        private ?Birthdate          $birthdate = null,
+        ?Locale                     $locale = null,
+        ?Country                    $country = null,
+        ?string                     $ipAddress = null
     )
     {
         $this->firstName = $this->createSimpleField(
@@ -81,14 +85,14 @@ final class Customer implements MultiFieldsEntityInterface
                 'male', 'female'
             ]
         );
-        $this->country = new Country(
-            $this->additional_addresses->get()->getCountry()
-        );
+        $this->country = $country ?? new Country(
+                $this->additionalAddresses->get()->getCountry()
+            );
 
         $this->setMerchantCustomerId($merchantCustomerId)
             ->setPhoneNumbers($phoneNumbers)
             ->setLocale($locale)
-            ->setIpAddress();
+            ->setIpAddress($ipAddress);
     }
 
     #[Pure] public function getFirstName(): string
@@ -108,7 +112,7 @@ final class Customer implements MultiFieldsEntityInterface
 
     public function getAdditionalAddress(): array
     {
-        return $this->additional_addresses->toArray();
+        return $this->additionalAddresses->toArray();
     }
 
     #[Pure] public function getBirthdate(): string
@@ -142,10 +146,10 @@ final class Customer implements MultiFieldsEntityInterface
     }
 
     /**
-     * @param DateOfBirth|null $date
+     * @param Birthdate|null $date
      * @return $this
      */
-    public function setBirthdate(?DateOfBirth $date): Customer
+    public function setBirthdate(?Birthdate $date): Customer
     {
         $this->birthdate = $date ?: null;
         return $this;
@@ -164,11 +168,11 @@ final class Customer implements MultiFieldsEntityInterface
     /**
      * @return $this
      */
-    public function setIpAddress(): Customer
+    public function setIpAddress($ipAddress = null): Customer
     {
         $this->ipAddress = $this->createSimpleField(
             propertyName: "ip_address",
-            value: $_SERVER['REMOTE_ADDR']
+            value: $ipAddress ?? $_SERVER['REMOTE_ADDR']
         );
         return $this;
     }

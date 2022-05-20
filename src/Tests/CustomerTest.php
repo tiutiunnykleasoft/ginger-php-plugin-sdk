@@ -12,8 +12,8 @@ use GingerPluginSdk\Entities\Customer;
 use GingerPluginSdk\Exceptions\OutOfEnumException;
 use GingerPluginSdk\Exceptions\OutOfPatternException;
 use GingerPluginSdk\Properties\Country;
-use GingerPluginSdk\Properties\DateOfBirth;
-use GingerPluginSdk\Properties\Email;
+use GingerPluginSdk\Properties\Birthdate;
+use GingerPluginSdk\Properties\EmailAddress;
 use GingerPluginSdk\Properties\Locale;
 use PHPUnit\Framework\TestCase;
 
@@ -51,12 +51,12 @@ class CustomerTest extends TestCase
 
     public function getMockEmail()
     {
-        return new Email('test@mail.test');
+        return new EmailAddress('test@mail.test');
     }
 
-    public function getMockDateOfBirth(): DateOfBirth
+    public function getMockBirthdate(): Birthdate
     {
-        return new DateOfBirth('2021-02-08');
+        return new Birthdate('2021-02-08');
     }
 
     public function getMockLocale(): Locale
@@ -69,7 +69,7 @@ class CustomerTest extends TestCase
     public function setUp(): void
     {
         $this->customer = new Customer(
-            additional_addresses: new AdditionalAddresses(
+            additionalAddresses: new AdditionalAddresses(
                 new Address(
                     addressType: 'customer',
                     postalCode: '1642AJ',
@@ -83,7 +83,7 @@ class CustomerTest extends TestCase
             ),
             firstName: 'Ley',
             lastName: 'Paris',
-            email_address: new Email(
+            emailAddress: new EmailAddress(
                 value: 'order@weed.you'
             ),
             gender: 'male',
@@ -92,7 +92,7 @@ class CustomerTest extends TestCase
                 '8-800-555-35-35'
             ),
             merchantCustomerId: '666',
-            birthdate: new DateOfBirth('2021-07-01'),
+            birthdate: new Birthdate('2021-07-01'),
             locale: new Locale(
                 value: 'NL_en'
             )
@@ -103,14 +103,14 @@ class CustomerTest extends TestCase
     {
         self::expectException(\TypeError::class);
         $test = new Customer(
-            additional_addresses: $this->createMockAdditionalAddress($this->createMockAddress()),
+            additionalAddresses: $this->createMockAdditionalAddress($this->createMockAddress()),
             firstName: 'Test',
             lastName: 'Test',
-            email_address: $this->getMockEmail(),
+            emailAddress: $this->getMockEmail(),
             gender: 'animal',
             phoneNumbers: $this->createMockPhoneNumber(),
             merchantCustomerId: '0',
-            birthdate: $this->getMockDateOfBirth(),
+            birthdate: $this->getMockBirthdate(),
             locale: '123'
         );
     }
@@ -119,14 +119,14 @@ class CustomerTest extends TestCase
     {
         self::expectException(\TypeError::class);
         $test = new Customer(
-            additional_addresses: '123',
+            additionalAddresses: '123',
             firstName: 'Test',
             lastName: 'Test',
-            email_address: $this->getMockEmail(),
+            emailAddress: $this->getMockEmail(),
             gender: 'animal',
             phoneNumbers: $this->createMockPhoneNumber(),
             merchantCustomerId: '0',
-            birthdate: $this->getMockDateOfBirth(),
+            birthdate: $this->getMockBirthdate(),
             locale: $this->getMockLocale()
         );
     }
@@ -135,14 +135,14 @@ class CustomerTest extends TestCase
     {
         self::expectException(\TypeError::class);
         $test = new Customer(
-            additional_addresses: $this->createMockAdditionalAddress($this->createMockAddress()),
+            additionalAddresses: $this->createMockAdditionalAddress($this->createMockAddress()),
             firstName: 'Test',
             lastName: 'Test',
-            email_address: 'email',
+            emailAddress: 'email',
             gender: 'animal',
             phoneNumbers: $this->createMockPhoneNumber(),
             merchantCustomerId: '0',
-            birthdate: $this->getMockDateOfBirth(),
+            birthdate: $this->getMockBirthdate(),
             locale: $this->getMockLocale()
         );
     }
@@ -151,14 +151,14 @@ class CustomerTest extends TestCase
     {
         self::expectException(\TypeError::class);
         $test = new Customer(
-            additional_addresses: $this->createMockAdditionalAddress($this->createMockAddress()),
+            additionalAddresses: $this->createMockAdditionalAddress($this->createMockAddress()),
             firstName: 'Test',
             lastName: 'Test',
-            email_address: $this->getMockEmail(),
+            emailAddress: $this->getMockEmail(),
             gender: 'animal',
             phoneNumbers: 'phones',
             merchantCustomerId: '0',
-            birthdate: $this->getMockDateOfBirth(),
+            birthdate: $this->getMockBirthdate(),
             locale: $this->getMockLocale()
         );
     }
@@ -167,10 +167,10 @@ class CustomerTest extends TestCase
     {
         self::expectException(\TypeError::class);
         $test = new Customer(
-            additional_addresses: $this->createMockAdditionalAddress($this->createMockAddress()),
+            additionalAddresses: $this->createMockAdditionalAddress($this->createMockAddress()),
             firstName: 'Test',
             lastName: 'Test',
-            email_address: $this->getMockEmail(),
+            emailAddress: $this->getMockEmail(),
             gender: 'animal',
             phoneNumbers: $this->createMockPhoneNumber(),
             merchantCustomerId: '0',
@@ -183,14 +183,14 @@ class CustomerTest extends TestCase
     {
         self::expectException(OutOfEnumException::class);
         $test = new Customer(
-            additional_addresses: $this->createMockAdditionalAddress($this->createMockAddress()),
+            additionalAddresses: $this->createMockAdditionalAddress($this->createMockAddress()),
             firstName: 'Test',
             lastName: 'Test',
-            email_address: $this->getMockEmail(),
+            emailAddress: $this->getMockEmail(),
             gender: 'animal',
             phoneNumbers: $this->createMockPhoneNumber(),
             merchantCustomerId: '0',
-            birthdate: $this->getMockDateOfBirth(),
+            birthdate: $this->getMockBirthdate(),
             locale: $this->getMockLocale()
         );
     }
@@ -198,7 +198,7 @@ class CustomerTest extends TestCase
     public function test_to_array()
     {
         $expected_customer = [
-            'additional_address' => [
+            'additional_addresses' => [
                 [
                     'address_type' => 'customer',
                     'postal_code' => '1642AJ',

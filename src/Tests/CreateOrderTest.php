@@ -17,7 +17,7 @@ use GingerPluginSdk\Exceptions\APIException;
 use GingerPluginSdk\Properties\ClientOptions;
 use GingerPluginSdk\Properties\Country;
 use GingerPluginSdk\Properties\Currency;
-use GingerPluginSdk\Properties\Email;
+use GingerPluginSdk\Properties\EmailAddress;
 use GingerPluginSdk\Properties\Locale;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +33,7 @@ class CreateOrderTest extends TestCase
 
         $this->client = new \GingerPluginSdk\Client(
             new ClientOptions(
-                endpoint: "https://api.online.emspay.eu",
+                endpoint: $_ENV["PUBLIC_API_URL"],
                 useBundle: true,
                 apiKey: getenv('GINGER_API_KEY'))
         );
@@ -49,30 +49,30 @@ class CreateOrderTest extends TestCase
                 )
             ),
             customer: new Customer(
-                additional_addresses: new AdditionalAddresses(
+                additionalAddresses: new AdditionalAddresses(
                     new Address(
                         addressType: 'customer',
                         postalCode: '12345',
-                        street: 'Soborna',
-                        city: 'Poltava',
                         country: new Country(
                             'UA'
-                        )
+                        ),
+                        street: 'Soborna',
+                        city: 'Poltava'
                     ),
                     new Address(
                         addressType: 'billing',
                         postalCode: '1234567',
-                        street: 'Donauweg',
-                        city: 'Amsterdam',
                         country: new Country(
                             'NL'
                         ),
+                        street: 'Donauweg',
+                        city: 'Amsterdam',
                         housenumber: "10"
                     )
                 ),
                 firstName: 'Alexander',
                 lastName: 'Tiutiunnyk',
-                email_address: new Email(
+                emailAddress: new EmailAddress(
                     'tutunikssa@gmail.com'
                 ),
                 gender: 'male',
@@ -80,7 +80,7 @@ class CreateOrderTest extends TestCase
                     '0951018201'
                 ),
                 merchantCustomerId: '15',
-                birthdate: new \GingerPluginSdk\Properties\DateOfBirth('1999-09-01'),
+                birthdate: new \GingerPluginSdk\Properties\Birthdate('1999-09-01'),
                 locale: new Locale(
                     'Ua_ua'
 
@@ -101,7 +101,7 @@ class CreateOrderTest extends TestCase
             ),
             description: 'Test Product',
             extra: new Extra(
-                ['sw_order_id' => 501]
+                ['sw_order_id' => "501"]
             ),
             client: new \GingerPluginSdk\Entities\Client(
                 userAgent: $_SERVER['HTTP_USER_AGENT'],
@@ -119,7 +119,6 @@ class CreateOrderTest extends TestCase
     public function test_sending()
     {
         $response = $this->client->sendOrder($this->order);
-
         self::assertSame($response["status"], 'new');
     }
 
@@ -146,7 +145,7 @@ class CreateOrderTest extends TestCase
                 )
             ),
             customer: new Customer(
-                additional_addresses: new AdditionalAddresses(
+                additionalAddresses: new AdditionalAddresses(
                     new Address(
                         addressType: 'customer',
                         postalCode: '12345',
@@ -169,7 +168,7 @@ class CreateOrderTest extends TestCase
                 ),
                 firstName: 'Alexander',
                 lastName: 'Tiutiunnyk',
-                email_address: new Email(
+                emailAddress: new EmailAddress(
                     'tutunikssa@gmail.com'
                 ),
                 gender: 'male',
@@ -177,7 +176,7 @@ class CreateOrderTest extends TestCase
                     '0951018201'
                 ),
                 merchantCustomerId: '15',
-                birthdate: new \GingerPluginSdk\Properties\DateOfBirth('1999-09-01'),
+                birthdate: new \GingerPluginSdk\Properties\Birthdate('1999-09-01'),
                 locale: new Locale(
                     'Ua_ua'
 

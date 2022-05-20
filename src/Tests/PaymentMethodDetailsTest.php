@@ -39,12 +39,6 @@ class PaymentMethodDetailsTest extends TestCase
         );
     }
 
-    public function test_invalid_constructor_type()
-    {
-        self::expectException(TypeError::class);
-        $test = new PaymentMethodDetails(['key' => 'valid']);
-    }
-
     public function test_get_property()
     {
         self::assertSame(

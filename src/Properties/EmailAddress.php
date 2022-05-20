@@ -6,7 +6,7 @@ use GingerPluginSdk\Bases\BaseField;
 use GingerPluginSdk\Exceptions\OutOfPatternException;
 use GingerPluginSdk\Interfaces\ValidateFieldsInterface;
 
-final class Email extends BaseField implements ValidateFieldsInterface
+final class EmailAddress extends BaseField implements ValidateFieldsInterface
 {
     /**
      * @throws \GingerPluginSdk\Exceptions\OutOfPatternException

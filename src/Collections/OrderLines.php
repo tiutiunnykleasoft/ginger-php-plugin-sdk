@@ -7,6 +7,7 @@ use GingerPluginSdk\Entities\Line;
 
 final class OrderLines extends AbstractCollection
 {
+    const ITEM_TYPE = Line::class;
     public function __construct(Line ...$items)
     {
         $this->propertyName = 'order_lines';

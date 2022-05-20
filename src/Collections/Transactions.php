@@ -8,6 +8,8 @@ use JetBrains\PhpStorm\Pure;
 
 final class Transactions extends AbstractCollection implements AbstractCollectionContainerInterface
 {
+    const ITEM_TYPE = Transaction::class;
+
     public function __construct(Transaction ...$items)
     {
         $this->propertyName = 'transactions';
