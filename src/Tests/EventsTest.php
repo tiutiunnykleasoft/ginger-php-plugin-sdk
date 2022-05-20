@@ -33,4 +33,20 @@ class EventsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function test_remove_event()
+    {
+        $event = new Event(
+            occurred: '2022-05-17T11:58:33.813534+00:00',
+            event: 'new',
+            source: '123',
+            noticed: '2022-05-17T11:58:33.813534+00:00',
+            id: '123'
+        );
+        $events = new Events($event);
+        $events->removeEvent($events->getCurrentPointer());
+        self::assertSame(
+            expected: 0,
+            actual: $events->count()
+        );
+    }
 }

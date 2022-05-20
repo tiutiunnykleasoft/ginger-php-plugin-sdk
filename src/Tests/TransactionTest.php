@@ -202,10 +202,10 @@ class TransactionTest extends TestCase
             Transaction::class,
             array_merge(
                 self::MOCK_DATA_FOR_TRANSACTION,
-                ["expiration_period" => "2022-05-05T16:32:20.148139+00:00"]
+                ["expiration_period" => "PT30M"]
             )
         );
-        $expected = "2022-05-05T16:32:20.148139+00:00";
+        $expected = "PT30M";
         self::assertSame(
             $real->toArray()["expiration_period"],
             $expected

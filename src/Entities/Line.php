@@ -89,8 +89,8 @@ final class Line implements MultiFieldsEntityInterface
             min: 0,
             max: 10000
         );
-        $this->setDiscountRate($discountRate);
-        $this->setUrl($url);
+        if ($discountRate) $this->setDiscountRate($discountRate);
+        if ($url) $this->setUrl($url);
     }
 
     #[Pure] public function getUrl(): ?string

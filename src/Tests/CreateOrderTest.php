@@ -101,7 +101,7 @@ class CreateOrderTest extends TestCase
             ),
             description: 'Test Product',
             extra: new Extra(
-                ['sw_order_id' => 501]
+                ['sw_order_id' => "501"]
             ),
             client: new \GingerPluginSdk\Entities\Client(
                 userAgent: $_SERVER['HTTP_USER_AGENT'],

@@ -73,6 +73,32 @@ trait SingleFieldTrait
         return $new_class;
     }
 
+    protected function createFieldForTimePeriodISO8601($propertyName, $value): ValidateFieldsInterface|BaseField
+    {
+        $new_class = new class($propertyName) extends BaseField implements ValidateFieldsInterface {
+            use FieldsValidatorTrait;
+
+            #[Pure] public function __construct($propertyName)
+            {
+                $this->propertyName = $propertyName;
+                parent::__construct($propertyName);
+            }
+
+            public function validate($value)
+            {
+                try {
+                    $income_date = new \DateInterval($value);
+                } catch (\Exception $exception) {
+                    throw new OutOfPatternException(
+                        $this->propertyName
+                    );
+                }
+            }
+        };
+        $new_class->set($value);
+        return $new_class;
+    }
+
     protected function createFieldWithDiapasonOfValues(string $propertyName, mixed $value, int $min, int $max = null): ValidateFieldsInterface|BaseField
     {
         $new_class = new class($propertyName, $value, $min, $max) extends BaseField implements ValidateFieldsInterface {

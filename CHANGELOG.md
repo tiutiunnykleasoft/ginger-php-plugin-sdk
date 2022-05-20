@@ -46,4 +46,6 @@ Initial version
 * Implemented `Status` Property
 * Implemented `StatusTest`
 * Implemented `createFieldInDateTimeISO8601` method into `SingleFieldTrait`
+* Implemented `AbstractCollectionTest.php`
+* Updated `AbstractCollection.php`
 * Refactored Collections to store `ITEM_TYPE` of included items.

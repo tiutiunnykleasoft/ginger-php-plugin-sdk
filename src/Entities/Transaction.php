@@ -3,6 +3,7 @@
 namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Bases\BaseField;
+use GingerPluginSdk\Collections\Events;
 use GingerPluginSdk\Helpers\HelperTrait;
 use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
@@ -39,6 +40,7 @@ final class Transaction implements MultiFieldsEntityInterface
     private BaseField $isCapturable;
     private BaseField $channel;
     private BaseField $projectType;
+    private BaseField $project_id;
 
     /**
      * @param string $paymentMethod
@@ -57,6 +59,16 @@ final class Transaction implements MultiFieldsEntityInterface
      * @param string|null $description
      * @param string|null $productType
      * @param string|null $creditDebit
+     * @param string|null $paymentMethodBrand
+     * @param string|null $paymentUrl
+     * @param \GingerPluginSdk\Properties\Status|null $status
+     * @param string|null $reason
+     * @param bool|null $isCapturable
+     * @param string|null $orderId
+     * @param string|null $channel
+     * @param string|null $projectType
+     * @param \GingerPluginSdk\Collections\Events|null $events
+     * @param string|null $projectId
      */
     public function __construct(
         string               $paymentMethod,
@@ -82,7 +94,9 @@ final class Transaction implements MultiFieldsEntityInterface
         ?bool                $isCapturable = null,
         ?string              $orderId = null,
         ?string              $channel = null,
-        ?string              $projectType = null
+        ?string              $projectType = null,
+        private ?Events      $events = null,
+        ?string              $projectId = null
     )
     {
         $this->paymentMethod = $this->createEnumeratedField(
@@ -143,7 +157,7 @@ final class Transaction implements MultiFieldsEntityInterface
             value: $finalized
         );
 
-        if ($expirationPeriod) $this->expiration_period = $this->createFieldInDateTimeISO8601(
+        if ($expirationPeriod) $this->expiration_period = $this->createFieldForTimePeriodISO8601(
             propertyName: 'expiration_period',
             value: $expirationPeriod
         );
@@ -199,10 +213,12 @@ final class Transaction implements MultiFieldsEntityInterface
             value: $reason
         );
 
-        if ($isCapturable) $this->isCapturable = $this->createSimpleField(
-            propertyName: 'is_capturable',
-            value: $isCapturable
-        );
+        if (isset($isCapturable)) {
+            $this->isCapturable = $this->createSimpleField(
+                propertyName: 'is_capturable',
+                value: $isCapturable
+            );
+        }
 
         if ($orderId) $this->orderId = $this->createSimpleField(
             propertyName: 'order_id',
@@ -222,6 +238,11 @@ final class Transaction implements MultiFieldsEntityInterface
                 "pos",
                 "system"
             ]
+        );
+
+        if ($projectId) $this->project_id = $this->createSimpleField(
+            propertyName: 'project_id',
+            value: $projectId
         );
     }
 

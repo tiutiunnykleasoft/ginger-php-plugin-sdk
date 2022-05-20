@@ -30,6 +30,8 @@ trait MultiFieldsEntityTrait
             }
         }
 
-        return array_filter($response);
+        return array_filter($response, function ($value) {
+            return ($value !== null);
+        });
     }
 }

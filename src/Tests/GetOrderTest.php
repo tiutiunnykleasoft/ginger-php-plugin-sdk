@@ -23,12 +23,14 @@ class GetOrderTest extends TestCase
 
     public function test_get_order()
     {
-        $id = "18a11454-af95-421a-a64f-c6f4a7467e0b";
+        $id = $_ENV["ORDER_ID_FOR_TESTS"];
         $expected = $this->client->getApiClient()->getOrder(id: $id);
         $real = $this->client->getOrder(
             id: $id
         )->toArray();
-        self::assertSame(
+        array_multisort($real);
+        array_multisort($expected);
+        self::assertEquals(
             expected: $expected,
             actual: $real
         );
