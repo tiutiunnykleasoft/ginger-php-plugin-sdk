@@ -47,6 +47,18 @@ class Client
     /**
      * @throws \Exception
      */
+    public function getOrder(string $id): object
+    {
+        return self::fromArray(
+            Order::class,
+            $this->api_client->getOrder(
+                id: $id
+            ));
+    }
+
+    /**
+     * @throws \Exception
+     */
     public function fromArray(string $className, array $data): object
     {
         $arguments = [];

@@ -33,7 +33,7 @@ class CreateOrderTest extends TestCase
 
         $this->client = new \GingerPluginSdk\Client(
             new ClientOptions(
-                endpoint: "https://api.online.emspay.eu",
+                endpoint: $_ENV["PUBLIC_API_URL"],
                 useBundle: true,
                 apiKey: getenv('GINGER_API_KEY'))
         );
@@ -43,11 +43,63 @@ class CreateOrderTest extends TestCase
             transactions: new Transactions(
                 $this->getTransactions()
             ),
+            customer: new Customer(
+                additionalAddresses: new AdditionalAddresses(
+                    new Address(
+                        addressType: 'customer',
+                        postalCode: '12345',
+                        country: new Country(
+                            'UA'
+                        ),
+                        street: 'Soborna',
+                        city: 'Poltava'
+                    ),
+                    new Address(
+                        addressType: 'billing',
+                        postalCode: '1234567',
+                        country: new Country(
+                            'NL'
+                        ),
+                        street: 'Donauweg',
+                        city: 'Amsterdam',
+                        housenumber: "10"
+                    )
+                ),
+                firstName: 'Alexander',
+                lastName: 'Tiutiunnyk',
+                emailAddress: new EmailAddress(
+                    'tutunikssa@gmail.com'
+                ),
+                gender: 'male',
+                phoneNumbers: new PhoneNumbers(
+                    '0951018201'
+                ),
+                merchantCustomerId: '15',
+                birthdate: new \GingerPluginSdk\Properties\Birthdate('1999-09-01'),
+                locale: new Locale(
+                    'Ua_ua'
+
+                )
+            ),
+            orderLines: new OrderLines(
+                new Line(
+                    type: 'physical',
+                    merchantOrderLineId: "5",
+                    name: 'Milk',
+                    quantity: 1,
+                    amount: 1.00,
+                    vatPercentage: 50,
+                    currency: new Currency(
+                        'EUR'
+                    )
+                )
+
+            ),
             customer: $this->getCustomer(),
             orderLines: $this->getOrderLines(),
             description: 'Test Product',
             extra: new Extra(
-                ['sw_order_id' => 501]
+                ['sw_order_id' => "501"]
             ),
             client: $this->getClient()
         );
@@ -59,7 +111,6 @@ class CreateOrderTest extends TestCase
     public function test_sending()
     {
         $response = $this->client->sendOrder($this->order);
-
         self::assertSame($response["status"], 'new');
     }
 

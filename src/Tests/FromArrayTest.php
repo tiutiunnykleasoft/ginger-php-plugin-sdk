@@ -30,7 +30,7 @@ class FromArrayTest extends TestCase
     {
         $this->client = new \GingerPluginSdk\Client(
             new ClientOptions(
-                endpoint: "https://api.online.emspay.eu",
+                endpoint: $_ENV["PUBLIC_API_URL"],
                 useBundle: true,
                 apiKey: getenv('GINGER_API_KEY'))
         );
@@ -316,5 +316,19 @@ class FromArrayTest extends TestCase
             ]
         );
         self::assertSame($expected_customer->toArray(), $real_customer->toArray());
+    }
+
+    public function test_customer_from_api_array()
+    {
+        $order_array = $this->client->getApiClient()->getOrder($_ENV["ORDER_ID_FOR_TESTS"]);
+        $expected = $order_array["customer"];
+        $real = $this->client->fromArray(
+            Customer::class,
+            $expected
+        )->toArray();
+        self::assertEqualsCanonicalizing(
+            expected: $expected,
+            actual: $real
+        );
     }
 }
