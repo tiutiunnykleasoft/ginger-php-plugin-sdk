@@ -21,6 +21,11 @@ class GetOrderTest extends TestCase
         );
     }
 
+    /**
+     * original flow : client -> get -> server -> return array
+     * ginger-php-sdk : library client -> get -> from array -> ( original flow )
+     * for tests : to array ( ginger-php-sdk flow ) ?= original flow
+     */
     public function test_get_order()
     {
         $id = $_ENV["ORDER_ID_FOR_TESTS"];
