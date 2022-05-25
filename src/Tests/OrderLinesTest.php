@@ -54,14 +54,16 @@ class OrderLinesTest extends TestCase
                 'name' => 'Milk',
                 'quantity' => 1,
                 'amount' => 5050,
-                'vat_percentage' => 2500
+                'vat_percentage' => 2500,
+                'merchant_order_line_id' => "0"
             ],
             [
                 'type' => 'shipping_fee',
                 'name' => 'Fly',
                 'quantity' => 1,
                 'amount' => 5050,
-                'vat_percentage' => 2500
+                'vat_percentage' => 2500,
+                'merchant_order_line_id' => "0"
             ]
         ];
         $real = $this->order_lines->toArray();
