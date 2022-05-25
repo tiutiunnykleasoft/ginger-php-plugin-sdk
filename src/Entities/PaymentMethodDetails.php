@@ -17,6 +17,7 @@ final class PaymentMethodDetails implements ArbitraryArgumentsEntityInterface, M
 
     private string $propertyName = 'payment_method_details';
     private BaseField|null $issuer_id = null;
+    private BaseField|null $verified_terms_of_service = null;
 
     /**
      * @param string|array ...$attributes
@@ -53,6 +54,21 @@ final class PaymentMethodDetails implements ArbitraryArgumentsEntityInterface, M
         $this->issuer_id = $this->createSimpleField(
             propertyName: 'issuer_id',
             value: $issuer
+        );
+        return $this;
+    }
+
+    /**
+     * Set Payment Method Details for AfterPay payment method.
+     *
+     * @param bool $verifiedTerms
+     * @return $this
+     */
+    public function setPaymentMethodDetailsAfterPay(bool $verifiedTerms): PaymentMethodDetails
+    {
+        $this->verified_terms_of_service = $this->createSimpleField(
+            propertyName: 'verified_terms_of_service',
+            value: $verifiedTerms
         );
         return $this;
     }

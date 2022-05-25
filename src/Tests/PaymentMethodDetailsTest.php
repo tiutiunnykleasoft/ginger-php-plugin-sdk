@@ -13,14 +13,16 @@ class PaymentMethodDetailsTest extends TestCase
     public function setUp(): void
     {
         $this->payment_method_details = new PaymentMethodDetails(
-            issuer: "test"
+            issuer: "test",
+            verified_terms: "1"
         );
     }
 
     public function test_to_array()
     {
         $expected = [
-            "issuer" => "test"
+            "issuer" => "test",
+            "verified_terms" => "1"
         ];
         self::assertSame(
             $expected,
@@ -36,6 +38,17 @@ class PaymentMethodDetailsTest extends TestCase
         self::assertSame(
             $expected,
             (new PaymentMethodDetails())->setPaymentMethodDetailsIdeal('123')->toArray()
+        );
+    }
+
+    public function test_payment_method_details_for_after_pay()
+    {
+        $expected = [
+            'verified_terms_of_service' => true
+        ];
+        self::assertSame(
+            $expected,
+            (new PaymentMethodDetails())->setPaymentMethodDetailsAfterPay(true)->toArray()
         );
     }
 
