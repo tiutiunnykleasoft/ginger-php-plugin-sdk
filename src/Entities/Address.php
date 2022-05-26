@@ -53,7 +53,7 @@ final class Address implements MultiFieldsEntityInterface
             enum: [
                 'customer',
                 'billing',
-                'shipping'
+                'delivery'
             ]
         );
         $this->postalCode = $this->createSimpleField(
