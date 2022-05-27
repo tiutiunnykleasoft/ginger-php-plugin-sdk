@@ -13,14 +13,16 @@ class PaymentMethodDetailsTest extends TestCase
     public function setUp(): void
     {
         $this->payment_method_details = new PaymentMethodDetails(
-            issuer: "test"
+            issuer: "test",
+            verified_terms: "1"
         );
     }
 
     public function test_to_array()
     {
         $expected = [
-            "issuer" => "test"
+            "issuer" => "test",
+            "verified_terms" => "1"
         ];
         self::assertSame(
             $expected,
@@ -39,10 +41,15 @@ class PaymentMethodDetailsTest extends TestCase
         );
     }
 
-    public function test_invalid_constructor_type()
+    public function test_payment_method_details_for_after_pay()
     {
-        self::expectException(TypeError::class);
-        $test = new PaymentMethodDetails(['key' => 'valid']);
+        $expected = [
+            'verified_terms_of_service' => true
+        ];
+        self::assertSame(
+            $expected,
+            (new PaymentMethodDetails())->setPaymentMethodDetailsAfterPay(true)->toArray()
+        );
     }
 
     public function test_get_property()

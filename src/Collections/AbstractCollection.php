@@ -46,7 +46,18 @@ class AbstractCollection implements MultiFieldsEntityInterface
     public function remove($index): static
     {
         unset($this->items[$index]);
+        for ($i = $index; $i + 1 <= $this->count(); $i++) {
+
+            $this->items[$i] = $this->items[$i + 1];
+        }
+        unset($this->items[$this->count()]);
+
         return $this;
+    }
+
+    public function getCurrentPointer(): int
+    {
+        return $this->pointer;
     }
 
     public function toArray(): array
@@ -80,7 +91,7 @@ class AbstractCollection implements MultiFieldsEntityInterface
 
     public function count(): int
     {
-        return $this->pointer;
+        return count($this->items);
     }
 
     public function first()

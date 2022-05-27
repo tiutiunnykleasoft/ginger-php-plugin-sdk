@@ -3,6 +3,7 @@
 namespace GingerPluginSdk\Entities;
 
 use GingerPluginSdk\Bases\BaseField;
+use GingerPluginSdk\Collections\Flags;
 use GingerPluginSdk\Collections\OrderLines;
 use GingerPluginSdk\Collections\Transactions;
 use GingerPluginSdk\Helpers\FieldsValidatorTrait;
@@ -11,6 +12,7 @@ use GingerPluginSdk\Helpers\MultiFieldsEntityTrait;
 use GingerPluginSdk\Helpers\SingleFieldTrait;
 use GingerPluginSdk\Interfaces\MultiFieldsEntityInterface;
 use GingerPluginSdk\Properties\Currency;
+use GingerPluginSdk\Properties\Status;
 use JetBrains\PhpStorm\Pure;
 
 class Order implements MultiFieldsEntityInterface
@@ -25,8 +27,12 @@ class Order implements MultiFieldsEntityInterface
     private BaseField $webhookUrl;
     private BaseField $returnUrl;
     private BaseField $description;
-    private ?Extra $extra;
-    private ?Client $client;
+    private BaseField $created;
+    private BaseField $id;
+    private BaseField $lastTransactionAdded;
+    private BaseField $merchantId;
+    private BaseField $modified;
+    private BaseField $projectId;
 
 
     public function __construct(
@@ -39,14 +45,53 @@ class Order implements MultiFieldsEntityInterface
         ?string              $webhookUrl = null,
         ?string              $merchantOrderId = null,
         ?string              $description = null,
-        ?Extra               $extra = null,
-        ?Client              $client = null
+        private ?Extra       $extra = null,
+        private ?Client      $client = null,
+        ?string              $created = null,
+        private ?Flags       $flags = null,
+        ?string              $id = null,
+        ?string              $lastTransactionAdded = null,
+        ?string              $merchantId = null,
+        ?string              $modified = null,
+        ?string              $projectId = null,
+        private ?Status      $status = null
     )
     {
         $this->amount = $this->createSimpleField(
             propertyName: 'amount',
             value: $this->calculateValueInCents($amount)
         );
+
+        if ($created) $this->created = $this->createFieldInDateTimeISO8601(
+            propertyName: 'created',
+            value: $created
+        );
+
+        if ($id) $this->id = $this->createSimpleField(
+            propertyName: 'id',
+            value: $id
+        );
+
+        if ($lastTransactionAdded) $this->lastTransactionAdded = $this->createFieldInDateTimeISO8601(
+            propertyName: 'last_transaction_added',
+            value: $lastTransactionAdded
+        );
+
+        if ($merchantId) $this->merchantId = $this->createSimpleField(
+            propertyName: 'merchant_id',
+            value: $merchantId
+        );
+
+        if ($modified) $this->modified = $this->createFieldInDateTimeISO8601(
+            propertyName: 'modified',
+            value: $modified
+        );
+
+        if ($projectId) $this->projectId = $this->createSimpleField(
+            propertyName: 'project_id',
+            value: $projectId
+        );
+
         $this->setWebhookUrl($webhookUrl)
             ->setMerchantOrderId($merchantOrderId)
             ->setReturnUrl($returnUrl)

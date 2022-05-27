@@ -7,6 +7,7 @@ use GingerPluginSdk\Entities\Address;
 
 class AdditionalAddresses extends AbstractCollection
 {
+    const ITEM_TYPE = Address::class;
     public function __construct(Address ...$addresses)
     {
         $this->propertyName = 'additional_addresses';
